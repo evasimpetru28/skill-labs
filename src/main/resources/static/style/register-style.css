@@ -18,3 +18,7 @@
 .card-registration .select-arrow {
     top: 13px;
 }
+
+.error {
+    color: #b60f1d;
+}

@@ -22,5 +22,7 @@ public class Admin {
     String id;
     String name;
     String email;
+    String phone;
+    String password;
 
 }
