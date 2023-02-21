@@ -8,6 +8,11 @@
 .h-custom {
     height: calc(100% - 73px);
 }
+
+.error {
+    color: #b60f1d;
+}
+
 @media (max-width: 450px) {
     .h-custom {
         height: 100%;

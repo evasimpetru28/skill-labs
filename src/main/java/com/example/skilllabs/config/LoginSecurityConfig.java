@@ -18,7 +18,6 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 @Slf4j
 public class LoginSecurityConfig {
 
-    public static final String ADMIN = "Admin";
     @Bean
     protected SecurityFilterChain configure(final HttpSecurity http) throws Exception {
 
@@ -29,14 +28,15 @@ public class LoginSecurityConfig {
                             .loginPage("/")
                             .permitAll())
                     .authorizeHttpRequests()
-                    .requestMatchers("/login").permitAll()
+                    .requestMatchers("/login/**").permitAll()
                     .requestMatchers("/register/**").permitAll()
+                    .requestMatchers("/profile/**").permitAll()
                     .requestMatchers("/favicon.ico").permitAll()
                     .requestMatchers("/static/**").permitAll()
                     .and()
                     .logout()
                     .invalidateHttpSession(true)
-                    .logoutSuccessUrl("/").permitAll();
+                    .logoutSuccessUrl("/login").permitAll();
 
         } catch (Exception e) {
             log.error("Security configuration failed", e);
