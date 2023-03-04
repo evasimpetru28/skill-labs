@@ -6,6 +6,7 @@
 
     {{>fragments/links}}
     <!-- Page style -->
+    <link rel="stylesheet" href="../static/style/register-style.css">
 
 </head>
 <body>
@@ -79,6 +80,12 @@
     </div>
   </div>
 </section>
+
+<script>
+  document.querySelectorAll('.form-outline').forEach((formOutline) => {
+    new mdb.Input(formOutline).init();
+  });
+</script>
 
 </body>
 </html>
