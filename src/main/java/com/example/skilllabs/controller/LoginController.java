@@ -29,7 +29,7 @@ public class LoginController {
         var admin = adminService.getAdminByCredentials(email, password);
 
         if (admin.isPresent()) {
-            return "redirect:/profile/" + admin.get().getId();
+            return "redirect:/dashboard";
         }
         else {
             return "redirect:/login?error=true";
