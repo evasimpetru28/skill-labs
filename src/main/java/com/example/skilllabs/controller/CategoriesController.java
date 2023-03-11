@@ -38,9 +38,8 @@ public class CategoriesController {
 
     @PostMapping("/delete-category/{categoryId}")
     public String deleteCategory(@PathVariable String categoryId) {
+        // Delete all related, skills, evalations, quizzez
         categoryService.deleteCategory(categoryId);
-        System.out.println(categoryId);
-
         return "redirect:/categories";
     }
 
@@ -52,7 +51,6 @@ public class CategoriesController {
         } else {
             categoryService.saveCategory(category);
         }
-
         return "redirect:/categories";
     }
 }

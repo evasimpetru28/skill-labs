@@ -7,10 +7,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryModel {
+public class SkillModel {
 
     private String id;
     private Integer index;
     private String name;
     private String description;
+    private String category;
+    private Boolean hasDescription;
 }

@@ -8,12 +8,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+
 @Getter
 @Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Category {
+public class Skill {
 
     @Id
     @GeneratedValue(generator = "UUID")
@@ -21,4 +22,5 @@ public class Category {
     String id;
     String name;
     String description;
+    String categoryId;
 }
