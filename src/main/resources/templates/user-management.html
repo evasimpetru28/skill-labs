@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../static/style/user-management-style.css">
 
 </head>
-<body>
+<body onload="domainSelectOptions()">
 
 <!--Main Navigation-->
 <header>
@@ -42,7 +42,6 @@
                         </div>
                         <div class="modal-body">
 
-
                             <div class="row">
                                 <div class="mb-3">
                                     <div class="form-outline">
@@ -73,15 +72,32 @@
                             <div class="row">
                                 <div class="col-md-6 mb-4 pb-2">
                                     <div class="form-outline">
-                                        <input type="text" id="program" name="program" class="form-control form-control-lg" required />
+                                        <select aria-autocomplete="none" id="program" class="form-control form-control-lg active" name="program" required>
+                                            <option style="display: none" value="">Select a program</option>
+                                            <option class="autocomplete-item" value="Licenta" >Licenta</option>
+                                            <option class="autocomplete-item" value="Master" >Master</option>
+                                            <option class="autocomplete-item" value="Doctorat" >Doctorat</option>
+                                        </select>
                                         <label class="form-label" for="program">Program<span class="error">*</span></label>
+                                        <div class="form-notch">
+                                            <div class="form-notch-leading" style="width: 9px;"></div>
+                                            <div class="form-notch-middle" style="width: 87.2px;"></div>
+                                            <div class="form-notch-trailing"></div>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 mb-4 pb-2">
                                     <div class="form-outline">
-                                        <input type="text" id="domain" name="domain" class="form-control form-control-lg" required />
+                                        <select aria-autocomplete="none" id="domain" class="form-control form-control-lg active" name="program" required>
+                                            <option style="display: none" value="">Select a domain</option>
+                                        </select>
                                         <label class="form-label" for="domain">Domain<span class="error">*</span></label>
+                                        <div class="form-notch">
+                                            <div class="form-notch-leading" style="width: 9px;"></div>
+                                            <div class="form-notch-middle" style="width: 87.2px;"></div>
+                                            <div class="form-notch-trailing"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -89,8 +105,15 @@
                             <div class="row">
                                 <div class="col-md-6 mb-4 pb-2">
                                     <div class="form-outline">
-                                        <input type="text" id="year" name="year" class="form-control form-control-lg" required />
+                                        <select aria-autocomplete="none" id="year" class="form-control form-control-lg active" name="program" required>
+                                            <option style="display: none" value="">Select year</option>
+                                        </select>
                                         <label class="form-label" for="year">Year<span class="error">*</span></label>
+                                        <div class="form-notch">
+                                            <div class="form-notch-leading" style="width: 9px;"></div>
+                                            <div class="form-notch-middle" style="width: 87.2px;"></div>
+                                            <div class="form-notch-trailing"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -114,9 +137,9 @@
                 <th class="th-sm">Name</th>
                 <th class="th-sm">Email</th>
                 <th class="th-sm">Telephone</th>
-                <th class="th-sm">Year</th>
                 <th class="th-sm">Program</th>
                 <th class="th-sm">Domain</th>
+                <th class="th-sm">Year</th>
                 <th class="th-sm">Actions</th>
             </tr>
             </thead>
@@ -128,9 +151,9 @@
                 <td>{{name}}</td>
                 <td>{{email}}</td>
                 <td>{{phone}}</td>
-                <td>{{year}}</td>
                 <td>{{program}}</td>
                 <td>{{domain}}</td>
+                <td>{{year}}</td>
                 <td class="col-3">
 
                     <div class="row">
@@ -155,8 +178,13 @@
                                                 <div class="row">
                                                     <div class="mb-3">
                                                         <div class="form-outline">
-                                                            <input type="text" value="{{name}}" id="name{{index}}" name="name" class="form-control form-control-lg" required />
+                                                            <input type="text" value="{{name}}" id="name{{index}}" name="name" class="form-control form-control-lg active" required/>
                                                             <label class="form-label" for="name{{index}}">Name<span class="error">*</span></label>
+                                                            <div class="form-notch">
+                                                                <div class="form-notch-leading" style="width: 9px;"></div>
+                                                                <div class="form-notch-middle" style="width: 87.2px;"></div>
+                                                                <div class="form-notch-trailing"></div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -164,8 +192,13 @@
                                                 <div class="row">
                                                     <div class="mb-3">
                                                         <div class="form-outline">
-                                                            <input type="email" value="{{email}}" id="email{{index}}" name="email" class="form-control form-control-lg" required />
+                                                            <input type="email" value="{{email}}" id="email{{index}}" name="email" class="form-control form-control-lg active" required />
                                                             <label class="form-label" for="email{{index}}">Email<span class="error">*</span></label>
+                                                            <div class="form-notch">
+                                                                <div class="form-notch-leading" style="width: 9px;"></div>
+                                                                <div class="form-notch-middle" style="width: 87.2px;"></div>
+                                                                <div class="form-notch-trailing"></div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -173,8 +206,13 @@
                                                 <div class="row">
                                                     <div class="col-md-6 mb-4 pb-2">
                                                         <div class="form-outline">
-                                                            <input type="tel" value="{{phone}}" id="phone{{index}}" name="phone" class="form-control form-control-lg" required />
+                                                            <input type="tel" value="{{phone}}" id="phone{{index}}" name="phone" class="form-control form-control-lg active" required />
                                                             <label class="form-label" for="phone{{index}}">Telephone<span class="error">*</span></label>
+                                                            <div class="form-notch">
+                                                                <div class="form-notch-leading" style="width: 9px;"></div>
+                                                                <div class="form-notch-middle" style="width: 87.2px;"></div>
+                                                                <div class="form-notch-trailing"></div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -182,15 +220,33 @@
                                                 <div class="row">
                                                     <div class="col-md-6 mb-4 pb-2">
                                                         <div class="form-outline">
-                                                            <input type="text" value="{{program}}" id="program{{index}}" name="program" class="form-control form-control-lg" required />
+                                                            <select aria-autocomplete="none" onclick="getProgramOptions(this)" id="program{{index}}" class="form-control form-control-lg active" name="program" required>
+                                                                <option style="display: none" value="{{program}}">{{program}}</option>
+                                                                <option class="autocomplete-item" value="Licenta" >Licenta</option>
+                                                                <option class="autocomplete-item" value="Master" >Master</option>
+                                                                <option class="autocomplete-item" value="Doctorat" >Doctorat</option>
+                                                            </select>
                                                             <label class="form-label" for="program{{index}}">Program<span class="error">*</span></label>
+                                                            <div class="form-notch">
+                                                                <div class="form-notch-leading" style="width: 9px;"></div>
+                                                                <div class="form-notch-middle" style="width: 87.2px;"></div>
+                                                                <div class="form-notch-trailing"></div>
+                                                            </div>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6 mb-4 pb-2">
                                                         <div class="form-outline">
-                                                            <input type="text" value="{{domain}}" id="domain{{index}}" name="domain" class="form-control form-control-lg" required />
+                                                            <select aria-autocomplete="none" onclick="getDomainOptions(this)"
+                                                                    id="domain{{index}}" class="form-control form-control-lg active" name="program" required>
+                                                                <option style="display: none" value="{{domain}}">{{domain}}</option>
+                                                            </select>
                                                             <label class="form-label" for="domain{{index}}">Domain<span class="error">*</span></label>
+                                                            <div class="form-notch">
+                                                                <div class="form-notch-leading" style="width: 9px;"></div>
+                                                                <div class="form-notch-middle" style="width: 87.2px;"></div>
+                                                                <div class="form-notch-trailing"></div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -198,8 +254,15 @@
                                                 <div class="row">
                                                     <div class="col-md-6 mb-4 pb-2">
                                                         <div class="form-outline">
-                                                            <input type="text" value="{{year}}" id="year{{index}}" name="year" class="form-control form-control-lg" required />
+                                                            <select aria-autocomplete="none" onclick="getYearOptions(this)" id="year{{index}}" class="form-control form-control-lg active" name="program" required>
+                                                                <option style="display: none" value="{{year}}">{{year}}</option>
+                                                            </select>
                                                             <label class="form-label" for="year{{index}}">Year<span class="error">*</span></label>
+                                                            <div class="form-notch">
+                                                                <div class="form-notch-leading" style="width: 9px;"></div>
+                                                                <div class="form-notch-middle" style="width: 87.2px;"></div>
+                                                                <div class="form-notch-trailing"></div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

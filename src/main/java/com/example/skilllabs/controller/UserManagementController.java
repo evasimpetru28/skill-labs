@@ -26,6 +26,11 @@ public class UserManagementController {
 
     @PostMapping("/add-user")
     public String addUser(@ModelAttribute("user")Student student) {
+        var educationInfo = student.getProgram().split(",");
+        student.setProgram(educationInfo[0]);
+        student.setDomain(educationInfo[1]);
+        student.setYear(Integer.parseInt(educationInfo[2]));
+
         if (studentService.isDuplicate(student.getName())) {
             return "redirect:/users?duplicate=true";
         } else {
@@ -44,6 +49,10 @@ public class UserManagementController {
 
     @PostMapping("/edit-user/{id}")
     public String editCategory(@ModelAttribute("user") Student student, @PathVariable("id") final String id) {
+        var educationInfo = student.getProgram().split(",");
+        student.setProgram(educationInfo[0]);
+        student.setDomain(educationInfo[1]);
+        student.setYear(Integer.parseInt(educationInfo[2]));
         student.setId(id);
         if (studentService.isDuplicateExcept(student.getName(), student.getId())) {
             return "redirect:/users?duplicate=true";
