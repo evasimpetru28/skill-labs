@@ -7,6 +7,7 @@
     {{>fragments/links}}
     <link rel="stylesheet" href="../static/style/navigation-style.css">
     <!-- Page style -->
+    <link rel="stylesheet" href="../static/style/user-management-style.css">
 
 </head>
 <body>
@@ -21,10 +22,252 @@
 <!--Main Navigation-->
 
 <!--Main layout-->
-<main style="margin-top: 58px;">
-    <div class="container pt-4"></div>
+<main style="margin-top: 100px;">
+    <div class="container-fluid container-custom pt-4 table-responsive-lg">
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#addUser">
+            <i class="fa-solid fa-plus fa-fw me-3"></i>Add
+        </button>
+        <br>
+
+        <!-- Modal Add -->
+        <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="addUserTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <form action="/add-user" method="POST" name="user">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addUserTitle">Add user</h5>
+                            <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+
+                            <div class="row">
+                                <div class="mb-3">
+                                    <div class="form-outline">
+                                        <input type="text" id="name" name="name" class="form-control form-control-lg" required />
+                                        <label class="form-label" for="name">Name<span class="error">*</span></label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="mb-3">
+                                    <div class="form-outline">
+                                        <input type="email" id="email" name="email" class="form-control form-control-lg" required />
+                                        <label class="form-label" for="email">Email<span class="error">*</span></label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4 pb-2">
+                                    <div class="form-outline">
+                                        <input type="tel" id="phone" name="phone" class="form-control form-control-lg" required />
+                                        <label class="form-label" for="phone">Telephone<span class="error">*</span></label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4 pb-2">
+                                    <div class="form-outline">
+                                        <input type="text" id="program" name="program" class="form-control form-control-lg" required />
+                                        <label class="form-label" for="program">Program<span class="error">*</span></label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-4 pb-2">
+                                    <div class="form-outline">
+                                        <input type="text" id="domain" name="domain" class="form-control form-control-lg" required />
+                                        <label class="form-label" for="domain">Domain<span class="error">*</span></label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4 pb-2">
+                                    <div class="form-outline">
+                                        <input type="text" id="year" name="year" class="form-control form-control-lg" required />
+                                        <label class="form-label" for="year">Year<span class="error">*</span></label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <table id="dtBasicExample" class="table table-hover table-striped table-bordered table-sm">
+
+            <thead>
+            <tr>
+                <th class="th-sm">Nr.</th>
+                <th class="th-sm">Name</th>
+                <th class="th-sm">Email</th>
+                <th class="th-sm">Telephone</th>
+                <th class="th-sm">Year</th>
+                <th class="th-sm">Program</th>
+                <th class="th-sm">Domain</th>
+                <th class="th-sm">Actions</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {{#studentList}}
+            <tr>
+                <td>{{index}}</td>
+                <td>{{name}}</td>
+                <td>{{email}}</td>
+                <td>{{phone}}</td>
+                <td>{{year}}</td>
+                <td>{{program}}</td>
+                <td>{{domain}}</td>
+                <td class="col-3">
+
+                    <div class="row">
+                        <div class="d-flex justify-content-end col-6">
+
+                            <button type="button" class="btn btn-primary icon-spacing" data-mdb-toggle="modal" data-mdb-target="#edit{{index}}">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                                <span class="remove-action-name">Edit</span>
+                            </button>
+
+                            <!-- Modal Edit -->
+                            <div class="modal fade" id="edit{{index}}" tabindex="-1" role="dialog" aria-labelledby="editUserTitle{{index}}" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <form action="/edit-user/{{id}}" method="POST" name="user">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editUserTitle{{index}}">Edit user {{name}}</h5>
+                                                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                                <div class="row">
+                                                    <div class="mb-3">
+                                                        <div class="form-outline">
+                                                            <input type="text" value="{{name}}" id="name{{index}}" name="name" class="form-control form-control-lg" required />
+                                                            <label class="form-label" for="name{{index}}">Name<span class="error">*</span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="mb-3">
+                                                        <div class="form-outline">
+                                                            <input type="email" value="{{email}}" id="email{{index}}" name="email" class="form-control form-control-lg" required />
+                                                            <label class="form-label" for="email{{index}}">Email<span class="error">*</span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-4 pb-2">
+                                                        <div class="form-outline">
+                                                            <input type="tel" value="{{phone}}" id="phone{{index}}" name="phone" class="form-control form-control-lg" required />
+                                                            <label class="form-label" for="phone{{index}}">Telephone<span class="error">*</span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-4 pb-2">
+                                                        <div class="form-outline">
+                                                            <input type="text" value="{{program}}" id="program{{index}}" name="program" class="form-control form-control-lg" required />
+                                                            <label class="form-label" for="program{{index}}">Program<span class="error">*</span></label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 mb-4 pb-2">
+                                                        <div class="form-outline">
+                                                            <input type="text" value="{{domain}}" id="domain{{index}}" name="domain" class="form-control form-control-lg" required />
+                                                            <label class="form-label" for="domain{{index}}">Domain<span class="error">*</span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-4 pb-2">
+                                                        <div class="form-outline">
+                                                            <input type="text" value="{{year}}" id="year{{index}}" name="year" class="form-control form-control-lg" required />
+                                                            <label class="form-label" for="year{{index}}">Year<span class="error">*</span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Edit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="d-flex justify-content-start col-6">
+
+                            <button type="button" class="btn btn-primary icon-spacing" data-mdb-toggle="modal" data-mdb-target="#delete{{index}}">
+                                <i class="fa-regular fa-trash-can"></i>
+                                <span class="remove-action-name">Delete</span>
+                            </button>
+
+                            <!-- Modal Delete -->
+                            <div class="modal fade" id="delete{{index}}" tabindex="-1" role="dialog" aria-labelledby="deleteUserTitle{{index}}" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <form action="/delete-user/{{id}}" method="POST">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deleteUserTitle{{index}}">Delete user {{name}}</h5>
+                                                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure you want to permanently delete this user?
+                                                <br>
+                                                <p class="error">This will delete all related evaluations and quizzes.</p>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Delete</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {{/studentList}}
+            </tbody>
+        </table>
+
+    </div>
+    {{#duplicate}}
+    <script>alert("User already exists!")</script>
+    {{/duplicate}}
 </main>
 <!--Main layout-->
+
+<script>
+    document.querySelectorAll('.form-outline').forEach((formOutline) => {
+        new mdb.Input(formOutline).init();
+    });
+</script>
+<script type="text/javascript" src="../static/js/user-management.js"></script>
 
 </body>
 </html>

@@ -1,6 +1,5 @@
 package com.example.skilllabs.controller;
 
-import com.example.skilllabs.entity.Category;
 import com.example.skilllabs.entity.Page;
 import com.example.skilllabs.entity.Skill;
 import com.example.skilllabs.service.CategoryService;

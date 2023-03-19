@@ -1,6 +1,5 @@
 package com.example.skilllabs.repository;
 
-import com.example.skilllabs.entity.Category;
 import com.example.skilllabs.entity.Skill;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -24,7 +24,7 @@ public class AdminService {
     }
 
     public Admin getAdminById(String adminId) {
-        return adminRepository.getById(adminId);
+        return adminRepository.findById(adminId).get();
     }
 
 }

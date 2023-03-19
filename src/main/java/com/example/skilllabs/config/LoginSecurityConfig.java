@@ -32,6 +32,8 @@ public class LoginSecurityConfig {
                     .requestMatchers("/register/**").permitAll()
                     .requestMatchers("/dashboard/**").permitAll()
                     .requestMatchers("/users/**").permitAll()
+                    .requestMatchers("/delete-user/**").permitAll()
+                    .requestMatchers("/edit-user/**").permitAll()
                     .requestMatchers("/add**").permitAll()
                     .requestMatchers("/categories/**").permitAll()
                     .requestMatchers("/delete-category/**").permitAll()

@@ -10,10 +10,14 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level= AccessLevel.PRIVATE)
-public class CategoryModel {
-
+public class StudentModel {
     String id;
     Integer index;
     String name;
-    String description;
+    String email;
+    String password;
+    String phone;
+    Integer year;
+    String program;
+    String domain;
 }

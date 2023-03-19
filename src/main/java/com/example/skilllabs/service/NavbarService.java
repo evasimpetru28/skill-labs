@@ -3,7 +3,6 @@ package com.example.skilllabs.service;
 import com.example.skilllabs.entity.Page;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 @Service
