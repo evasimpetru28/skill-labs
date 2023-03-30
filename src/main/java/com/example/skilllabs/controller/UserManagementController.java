@@ -25,7 +25,7 @@ public class UserManagementController {
     }
 
     @PostMapping("/add-user")
-    public String addUser(@ModelAttribute("user")Student student) {
+    public String addUser(@ModelAttribute("user") Student student) {
         var educationInfo = student.getProgram().split(",");
         student.setProgram(educationInfo[0]);
         student.setDomain(educationInfo[1]);
