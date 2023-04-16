@@ -1,7 +1,9 @@
 package com.example.skilllabs.controller;
 
+import com.example.skilllabs.entity.Admin;
 import com.example.skilllabs.entity.Page;
 import com.example.skilllabs.entity.Student;
+import com.example.skilllabs.service.AdminService;
 import com.example.skilllabs.service.NavbarService;
 import com.example.skilllabs.service.StudentService;
 import lombok.RequiredArgsConstructor;
@@ -13,52 +15,94 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class UserManagementController {
 
-    final NavbarService navbarService;
-    final StudentService studentService;
+	final NavbarService navbarService;
+	final StudentService studentService;
+	final AdminService adminService;
 
-    @GetMapping("/users")
-    String getUserManagementPage(Model model, @RequestParam(required = false) final Boolean duplicate) {
-        navbarService.activateNavbarTab(Page.USER_MANAGEMENT, model);
-        model.addAttribute("studentList", studentService.getStudentModelList());
-        model.addAttribute("duplicate", duplicate);
-        return "user-management";
-    }
+	@GetMapping("/users")
+	String getUserManagementPage() {
+		return "redirect:/users/students";
+	}
 
-    @PostMapping("/add-user")
-    public String addUser(@ModelAttribute("user") Student student) {
-        var educationInfo = student.getProgram().split(",");
-        student.setProgram(educationInfo[0]);
-        student.setDomain(educationInfo[1]);
-        student.setYear(Integer.parseInt(educationInfo[2]));
+	@GetMapping("/users/students")
+	String getStudentsPage(Model model, @RequestParam(required = false) final Boolean duplicate) {
+		navbarService.activateNavbarTab(Page.USER_MANAGEMENT, model);
+		model.addAttribute("userList", studentService.getStudentModelList());
+		model.addAttribute("duplicate", duplicate);
+		model.addAttribute("adminUsers", false);
+		return "user-management";
+	}
 
-        if (studentService.isDuplicate(student.getName())) {
-            return "redirect:/users?duplicate=true";
-        } else {
-            studentService.saveStudent(student);
-        }
+	@GetMapping("/users/admins")
+	String getAdminsPage(Model model, @RequestParam(required = false) final Boolean duplicate) {
+		navbarService.activateNavbarTab(Page.USER_MANAGEMENT, model);
+		model.addAttribute("userList", adminService.getAdminModelList());
+		model.addAttribute("duplicate", duplicate);
+		model.addAttribute("adminUsers", true);
+		return "user-management";
+	}
 
-        return "redirect:/users";
-    }
+	@PostMapping("/add-student")
+	public String addStudent(@ModelAttribute("student") Student student) {
+		var educationInfo = student.getProgram().split(",");
+		student.setProgram(educationInfo[0]);
+		student.setDomain(educationInfo[1]);
+		student.setYear(Integer.parseInt(educationInfo[2]));
 
-    @PostMapping("/delete-user/{studentId}")
-    public String deleteCategory(@PathVariable String studentId) {
-        // Delete all evalations, quizzez
-        studentService.deleteStudent(studentId);
-        return "redirect:/users";
-    }
+		if (studentService.isDuplicate(student.getName())) {
+			return "redirect:/users?duplicate=true";
+		} else {
+			studentService.saveStudent(student);
+		}
+		return "redirect:/users";
+	}
 
-    @PostMapping("/edit-user/{id}")
-    public String editCategory(@ModelAttribute("user") Student student, @PathVariable("id") final String id) {
-        var educationInfo = student.getProgram().split(",");
-        student.setProgram(educationInfo[0]);
-        student.setDomain(educationInfo[1]);
-        student.setYear(Integer.parseInt(educationInfo[2]));
-        student.setId(id);
-        if (studentService.isDuplicateExcept(student.getName(), student.getId())) {
-            return "redirect:/users?duplicate=true";
-        } else {
-            studentService.saveStudent(student);
-        }
-        return "redirect:/users";
-    }
+	@PostMapping("/add-admin")
+	public String addAdmin(@ModelAttribute("admin") Admin admin) {
+		if (adminService.isDuplicate(admin.getName())) {
+			return "redirect:/users/admins?duplicate=true";
+		} else {
+			adminService.saveAdmin(admin);
+		}
+		return "redirect:/users/admins";
+	}
+
+	@PostMapping("/delete-student/{studentId}")
+	public String deleteStudent(@PathVariable String studentId) {
+		// Delete all evalations, quizzez
+		studentService.deleteStudent(studentId);
+		return "redirect:/users";
+	}
+
+	@PostMapping("/delete-admin/{adminId}")
+	public String deleteAdmin(@PathVariable String adminId) {
+		adminService.deleteAdmin(adminId);
+		return "redirect:/users/admins";
+	}
+
+	@PostMapping("/edit-student/{studentId}")
+	public String editStudent(@ModelAttribute("student") Student student, @PathVariable("studentId") final String id) {
+		var educationInfo = student.getProgram().split(",");
+		student.setProgram(educationInfo[0]);
+		student.setDomain(educationInfo[1]);
+		student.setYear(Integer.parseInt(educationInfo[2]));
+		student.setId(id);
+		if (studentService.isDuplicateExcept(student.getName(), student.getId())) {
+			return "redirect:/users?duplicate=true";
+		} else {
+			studentService.saveStudent(student);
+		}
+		return "redirect:/users";
+	}
+
+	@PostMapping("/edit-admin/{adminId}")
+	public String editAdmin(@ModelAttribute("admin") Admin admin, @PathVariable("adminId") final String id) {
+		admin.setId(id);
+		if (adminService.isDuplicateExcept(admin.getName(), admin.getId())) {
+			return "redirect:/users/admins?duplicate=true";
+		} else {
+			adminService.saveAdmin(admin);
+		}
+		return "redirect:/users/admins";
+	}
 }

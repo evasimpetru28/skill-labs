@@ -16,13 +16,13 @@ import org.hibernate.annotations.GenericGenerator;
 @NoArgsConstructor
 public class Admin {
 
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    String id;
-    String name;
-    String email;
-    String phone;
-    String password;
+	@Id
+	@GeneratedValue(generator = "UUID")
+	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+	String id;
+	String name;
+	String email;
+	String phone;
+	String password;
 
 }

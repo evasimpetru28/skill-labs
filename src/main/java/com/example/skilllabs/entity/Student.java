@@ -16,15 +16,15 @@ import org.hibernate.annotations.GenericGenerator;
 @NoArgsConstructor
 public class Student {
 
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    String id;
-    String name;
-    String email;
-    String password;
-    String phone;
-    Integer year;
-    String program;
-    String domain;
+	@Id
+	@GeneratedValue(generator = "UUID")
+	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+	String id;
+	String name;
+	String email;
+	String password;
+	String phone;
+	Integer year;
+	String program;
+	String domain;
 }

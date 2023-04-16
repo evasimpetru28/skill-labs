@@ -12,8 +12,8 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CategoryModel {
 
-    String id;
-    Integer index;
-    String name;
-    String description;
+	String id;
+	Integer index;
+	String name;
+	String description;
 }

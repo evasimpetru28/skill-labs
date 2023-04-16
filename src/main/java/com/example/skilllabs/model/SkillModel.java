@@ -12,10 +12,10 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SkillModel {
 
-    String id;
-    Integer index;
-    String name;
-    String description;
-    String category;
-    Boolean hasDescription;
+	String id;
+	Integer index;
+	String name;
+	String description;
+	String category;
+	Boolean hasDescription;
 }

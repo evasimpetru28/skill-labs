@@ -18,60 +18,63 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 @Slf4j
 public class LoginSecurityConfig {
 
-    @Bean
-    protected SecurityFilterChain configure(final HttpSecurity http) throws Exception {
+	@Bean
+	protected SecurityFilterChain configure(final HttpSecurity http) throws Exception {
 
-        try {
-            http
-                    .csrf().disable()
-                    .formLogin((form) -> form
-                            .loginPage("/")
-                            .permitAll())
-                    .authorizeHttpRequests()
-                    .requestMatchers("/login/**").permitAll()
-                    .requestMatchers("/register/**").permitAll()
-                    .requestMatchers("/dashboard/**").permitAll()
-                    .requestMatchers("/users/**").permitAll()
-                    .requestMatchers("/delete-user/**").permitAll()
-                    .requestMatchers("/edit-user/**").permitAll()
-                    .requestMatchers("/add**").permitAll()
-                    .requestMatchers("/categories/**").permitAll()
-                    .requestMatchers("/delete-category/**").permitAll()
-                    .requestMatchers("/edit-category/**").permitAll()
-                    .requestMatchers("/skills/**").permitAll()
-                    .requestMatchers("/edit-skill/**").permitAll()
-                    .requestMatchers("/delete-skill/**").permitAll()
-                    .requestMatchers("/favicon.ico").permitAll()
-                    .requestMatchers("/static/**").permitAll()
-                    .and()
-                    .logout()
-                    .invalidateHttpSession(true)
-                    .logoutSuccessUrl("/login").permitAll();
+		try {
+			http
+					.csrf().disable()
+					.formLogin((form) -> form
+							.loginPage("/")
+							.permitAll())
+					.authorizeHttpRequests()
+					.requestMatchers("/login/**").permitAll()
+					.requestMatchers("/register/**").permitAll()
+					.requestMatchers("/dashboard/**").permitAll()
+					.requestMatchers("/users/**").permitAll()
+					.requestMatchers("/users/admins").permitAll()
+					.requestMatchers("/delete-student/**").permitAll()
+					.requestMatchers("/delete-admin/**").permitAll()
+					.requestMatchers("/edit-student/**").permitAll()
+					.requestMatchers("/edit-admin/**").permitAll()
+					.requestMatchers("/add**").permitAll()
+					.requestMatchers("/categories/**").permitAll()
+					.requestMatchers("/delete-category/**").permitAll()
+					.requestMatchers("/edit-category/**").permitAll()
+					.requestMatchers("/skills/**").permitAll()
+					.requestMatchers("/edit-skill/**").permitAll()
+					.requestMatchers("/delete-skill/**").permitAll()
+					.requestMatchers("/favicon.ico").permitAll()
+					.requestMatchers("/static/**").permitAll()
+					.and()
+					.logout()
+					.invalidateHttpSession(true)
+					.logoutSuccessUrl("/login").permitAll();
 
-        } catch (Exception e) {
-            log.error("Security configuration failed", e);
-        }
-        return http.build();
-    }
+		} catch (Exception e) {
+			log.error("Security configuration failed", e);
+		}
+		return http.build();
+	}
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .invalidSessionUrl("/invalidSession.html")
-                .sessionFixation().migrateSession();
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http.sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+				.invalidSessionUrl("/invalidSession.html")
+				.sessionFixation().migrateSession();
 
-        return http.build();
-    }
+		return http.build();
+	}
 
-    @Bean
-    public HttpSessionEventPublisher httpSessionEventPublisher() {
-        return new HttpSessionEventPublisher();
-    }
+	@Bean
+	public HttpSessionEventPublisher httpSessionEventPublisher() {
+		return new HttpSessionEventPublisher();
+	}
 
 }

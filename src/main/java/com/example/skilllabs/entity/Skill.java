@@ -16,11 +16,11 @@ import org.hibernate.annotations.GenericGenerator;
 @NoArgsConstructor
 public class Skill {
 
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    String id;
-    String name;
-    String description;
-    String categoryId;
+	@Id
+	@GeneratedValue(generator = "UUID")
+	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+	String id;
+	String name;
+	String description;
+	String categoryId;
 }

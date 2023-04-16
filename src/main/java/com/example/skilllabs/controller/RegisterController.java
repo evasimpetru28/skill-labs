@@ -14,29 +14,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class RegisterController {
 
-    final AdminService adminService;
+	final AdminService adminService;
 
-    @GetMapping("/register")
-    public String getRegisterPage(@RequestParam(required = false) final boolean error, Model model) {
-        model.addAttribute("error", error);
-        return "register";
-    }
+	@GetMapping("/register")
+	public String getRegisterPage(@RequestParam(required = false) final boolean error, Model model) {
+		model.addAttribute("error", error);
+		return "register";
+	}
 
-    @PostMapping("/register/submit")
-    public String submitRegister(@ModelAttribute("admin") Admin admin,
-                                 @ModelAttribute("confirmPassword") String confirmPassword) {
+	@PostMapping("/register/submit")
+	public String submitRegister(@ModelAttribute("admin") Admin admin,
+								 @ModelAttribute("confirmPassword") String confirmPassword) {
 
-        if ("".equals(admin.getPhone())) {
-            admin.setPhone(null);
-        }
+		if ("".equals(admin.getPhone())) {
+			admin.setPhone(null);
+		}
 
-        if (!confirmPassword.equals(admin.getPassword())) {
-            return "redirect:/register?error=true";
-        } else {
-            adminService.saveAdmin(admin);
-            return "redirect:/login";
-        }
+		if (!confirmPassword.equals(admin.getPassword())) {
+			return "redirect:/register?error=true";
+		} else {
+			adminService.saveAdmin(admin);
+			return "redirect:/login";
+		}
 
-    }
+	}
 
 }

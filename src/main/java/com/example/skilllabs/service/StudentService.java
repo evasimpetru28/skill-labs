@@ -15,44 +15,44 @@ import java.util.concurrent.atomic.AtomicInteger;
 @AllArgsConstructor
 public class StudentService {
 
-    final StudentRepository studentRepository;
+	final StudentRepository studentRepository;
 
-    public void saveStudent(Student student) {
-        studentRepository.saveAndFlush(student);
-    }
+	public void saveStudent(Student student) {
+		studentRepository.saveAndFlush(student);
+	}
 
-    public void deleteStudent(String studentId) {
-        studentRepository.deleteById(studentId);
-    }
+	public void deleteStudent(String studentId) {
+		studentRepository.deleteById(studentId);
+	}
 
-    public Boolean isDuplicate(String name) {
-        return studentRepository.existsByName(name).isPresent();
-    }
+	public Boolean isDuplicate(String name) {
+		return studentRepository.existsByName(name).isPresent();
+	}
 
-    public Boolean isDuplicateExcept(String name, String id) {
-        return studentRepository.existsByNameExcept(name, id).isPresent();
-    }
+	public Boolean isDuplicateExcept(String name, String id) {
+		return studentRepository.existsByNameExcept(name, id).isPresent();
+	}
 
-    public List<StudentModel> getStudentModelList() {
-        var students = getAllStudents();
-        var index = new AtomicInteger(1);
-        return students.stream()
-                .map(student -> new StudentModel(
-                        student.getId(),
-                        index.getAndIncrement(),
-                        student.getName(),
-                        student.getEmail(),
-                        student.getPassword(),
-                        student.getPhone(),
-                        student.getYear(),
-                        student.getProgram(),
-                        student.getDomain()
-                ))
-                .toList();
-    }
+	public List<StudentModel> getStudentModelList() {
+		var students = getAllStudents();
+		var index = new AtomicInteger(1);
+		return students.stream()
+				.map(student -> new StudentModel(
+						student.getId(),
+						index.getAndIncrement(),
+						student.getName(),
+						student.getEmail(),
+						student.getPassword(),
+						student.getPhone(),
+						student.getYear(),
+						student.getProgram(),
+						student.getDomain()
+				))
+				.toList();
+	}
 
-    public List<Student> getAllStudents() {
-        return studentRepository.findAllByOrderByName();
-    }
+	public List<Student> getAllStudents() {
+		return studentRepository.findAllByOrderByName();
+	}
 
 }

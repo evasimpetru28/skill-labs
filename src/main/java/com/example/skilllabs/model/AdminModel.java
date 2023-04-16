@@ -10,14 +10,11 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class StudentModel {
-	String id;
+public class AdminModel {
 	Integer index;
+	String id;
 	String name;
 	String email;
-	String password;
 	String phone;
-	Integer year;
-	String program;
-	String domain;
+	String password;
 }

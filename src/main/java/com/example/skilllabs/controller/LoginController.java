@@ -12,28 +12,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class LoginController {
 
-    final AdminService adminService;
+	final AdminService adminService;
 
-    @GetMapping("/")
-    String getStartPage() {
-        return "redirect:/login";
-    }
-    @GetMapping("/login")
-    String getLoginPage(@RequestParam(required = false) final boolean error, Model model) {
-        model.addAttribute("error", error);
-        return "login";
-    }
+	@GetMapping("/")
+	String getStartPage() {
+		return "redirect:/login";
+	}
 
-    @PostMapping("/login/submit")
-    String submitLogin(@RequestParam String email, @RequestParam String password) {
-        var admin = adminService.getAdminByCredentials(email, password);
+	@GetMapping("/login")
+	String getLoginPage(@RequestParam(required = false) final boolean error, Model model) {
+		model.addAttribute("error", error);
+		return "login";
+	}
 
-        if (admin.isPresent()) {
-            return "redirect:/dashboard";
-        }
-        else {
-            return "redirect:/login?error=true";
-        }
-    }
+	@PostMapping("/login/submit")
+	String submitLogin(@RequestParam String email, @RequestParam String password) {
+		var admin = adminService.getAdminByCredentials(email, password);
+
+		if (admin.isPresent()) {
+			return "redirect:/dashboard";
+		} else {
+			return "redirect:/login?error=true";
+		}
+	}
 
 }

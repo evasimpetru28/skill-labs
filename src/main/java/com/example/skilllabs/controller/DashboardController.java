@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class DashboardController {
 
-    final NavbarService navbarService;
+	final NavbarService navbarService;
 
-    @GetMapping("/dashboard")
-    String getDashboardPage(Model model) {
-        navbarService.activateNavbarTab(Page.DASHBOARD, model);
+	@GetMapping("/dashboard")
+	String getDashboardPage(Model model) {
+		navbarService.activateNavbarTab(Page.DASHBOARD, model);
 
-        return "dashboard";
-    }
+		return "dashboard";
+	}
 
 
 }

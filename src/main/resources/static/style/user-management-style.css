@@ -1,6 +1,7 @@
 .error {
     color: #b60f1d;
 }
+
 table {
     margin-top: 20px;
 }
@@ -9,6 +10,7 @@ table {
     .remove-action-name {
         display: none;
     }
+
     .icon-spacing {
         margin-inline-start: auto;
         margin-inline-end: auto;

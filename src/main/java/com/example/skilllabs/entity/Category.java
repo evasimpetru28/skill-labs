@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+
 @Getter
 @Setter
 @Entity
@@ -15,10 +16,10 @@ import org.hibernate.annotations.GenericGenerator;
 @NoArgsConstructor
 public class Category {
 
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    String id;
-    String name;
-    String description;
+	@Id
+	@GeneratedValue(generator = "UUID")
+	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+	String id;
+	String name;
+	String description;
 }
