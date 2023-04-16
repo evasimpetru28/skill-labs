@@ -15,19 +15,32 @@
 <!--Main Navigation-->
 <header>
 
+    {{>fragments/logout-btn}}
     {{>fragments/sidebar}}
 
 </header>
 <!--Main Navigation-->
 
 <!--Main layout-->
-<main style="margin-top: 100px;">
+<main style="margin-top: 50px;">
     <div class="container-fluid container-custom pt-4 table-responsive-lg">
 
         <div class="row">
-            <a href="/users/students" class="d-flex justify-content-end col-6">Students</a>
-            <a href="/users/admins" class="d-flex justify-content-start col-6">Admins</a>
+            <div class="justify-content-start col-1">
+                <form action="/users/students" method="GET">
+                    <button type="submit" class="btn {{#adminUsers}}btn-secondary{{/adminUsers}}{{^adminUsers}}btn-primary{{/adminUsers}}">
+                        Students</button>
+                </form>
+            </div>
+            <div class="justify-content-start col-1">
+                <form action="/users/admins" method="GET">
+                    <button type="submit" class="btn {{#adminUsers}}btn-primary{{/adminUsers}}{{^adminUsers}}btn-secondary{{/adminUsers}}">
+                        Admins</button>
+                </form>
+            </div>
         </div>
+
+        <br>
 
         {{#adminUsers}}
             {{>fragments/add-admin}}

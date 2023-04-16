@@ -29,6 +29,7 @@ public class LoginSecurityConfig {
 							.permitAll())
 					.authorizeHttpRequests()
 					.requestMatchers("/login/**").permitAll()
+					.requestMatchers("/logout/**").permitAll()
 					.requestMatchers("/register/**").permitAll()
 					.requestMatchers("/dashboard/**").permitAll()
 					.requestMatchers("/users/**").permitAll()
