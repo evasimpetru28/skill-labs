@@ -5,7 +5,9 @@ import com.example.skilllabs.entity.Page;
 import com.example.skilllabs.entity.Student;
 import com.example.skilllabs.service.AdminService;
 import com.example.skilllabs.service.NavbarService;
+import com.example.skilllabs.service.SmtpMailSender;
 import com.example.skilllabs.service.StudentService;
+import com.example.skilllabs.util.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,7 @@ public class UserManagementController {
 	final NavbarService navbarService;
 	final StudentService studentService;
 	final AdminService adminService;
+	final SmtpMailSender smtpMailSender;
 
 	@GetMapping("/users")
 	String getUserManagementPage() {
@@ -52,9 +55,19 @@ public class UserManagementController {
 		if (studentService.isDuplicate(student.getName())) {
 			return "redirect:/users?duplicate=true";
 		} else {
+			var password = Utils.getShortUUID();
+			var resetCode = Utils.getShortUUID();
+			student.setPassword(password);
+			student.setResetCode(resetCode);
+
 			studentService.saveStudent(student);
+			smtpMailSender.sendMailResetPassword(student.getEmail(), resetCode);
 		}
 		return "redirect:/users";
+	}
+	private String getRandomLink() {
+		//save to db random generated code for reset psswd link
+		return "link!";
 	}
 
 	@PostMapping("/add-admin")

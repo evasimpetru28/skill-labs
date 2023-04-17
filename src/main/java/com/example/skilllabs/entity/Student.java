@@ -23,6 +23,7 @@ public class Student {
 	String name;
 	String email;
 	String password;
+	String resetCode;
 	String phone;
 	Integer year;
 	String program;

@@ -52,14 +52,17 @@ public class AdminService {
 						admin.getId(),
 						admin.getName(),
 						admin.getEmail(),
-						admin.getPhone(),
-						admin.getPassword()
+						admin.getPhone()
 				))
 				.toList();
 	}
 
 	public List<Admin> getAllAdmins() {
 		return adminRepository.findAllByOrderByName();
+	}
+
+	public Optional<Admin> getOptionalAdminById(String id) {
+		return adminRepository.findById(id);
 	}
 
 }

@@ -39,7 +39,7 @@ public class SkillsController {
 	}
 
 	@PostMapping("/delete-skill/{skillId}")
-	public String deleteSkill(@PathVariable String skillId) {
+	public String deleteSkill(@PathVariable final String skillId) {
 		// Delete all related evaluations, quizzes etc
 		skillService.deleteSkill(skillId);
 		return "redirect:/skills";

@@ -15,7 +15,6 @@ public class StudentModel {
 	Integer index;
 	String name;
 	String email;
-	String password;
 	String phone;
 	Integer year;
 	String program;

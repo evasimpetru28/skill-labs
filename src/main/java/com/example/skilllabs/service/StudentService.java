@@ -7,7 +7,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
@@ -42,7 +44,6 @@ public class StudentService {
 						index.getAndIncrement(),
 						student.getName(),
 						student.getEmail(),
-						student.getPassword(),
 						student.getPhone(),
 						student.getYear(),
 						student.getProgram(),
@@ -53,6 +54,10 @@ public class StudentService {
 
 	public List<Student> getAllStudents() {
 		return studentRepository.findAllByOrderByName();
+	}
+
+	public Optional<Student> getOptionalStudentById(String id) {
+		return studentRepository.findById(id);
 	}
 
 }

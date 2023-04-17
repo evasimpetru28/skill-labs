@@ -16,5 +16,4 @@ public class AdminModel {
 	String name;
 	String email;
 	String phone;
-	String password;
 }
