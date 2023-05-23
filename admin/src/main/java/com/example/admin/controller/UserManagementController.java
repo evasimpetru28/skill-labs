@@ -127,10 +127,31 @@ public class UserManagementController {
 	}
 
 	@GetMapping("/reset-password/{resetCode}")
-	public String getResetPasswordPage(Model model, @PathVariable("resetCode") final String resetCode) {
+	public String getResetPasswordPage(@RequestParam(required = false) final String error, Model model, @PathVariable("resetCode") final String resetCode) {
+		var admin = adminService.getAdminByResetCode(resetCode);
+
+		if (admin == null) {
+			return "redirect:/invalid-link";
+		}
+
 		model.addAttribute("resetCode", resetCode);
+		String errorMessage = "";
+		if (error != null) {
+			errorMessage = switch (error) {
+				case "err1" -> "Password and Confirm Password must match.";
+				case "err2" -> "Old Password is incorrect.";
+				case "err3" -> "New Password cannot be Old Password.";
+				default -> "";
+			};
+		}
+		model.addAttribute("error", errorMessage);
 
 		return "reset-password";
+	}
+
+	@GetMapping("/invalid-link")
+	public String getInvaidLinkPage() {
+		return "invalid-link";
 	}
 
 	@PostMapping("/reset-password/submit/{resetCode}")
@@ -138,11 +159,25 @@ public class UserManagementController {
 		var admin = adminService.getAdminByResetCode(resetCode);
 
 		if (passwordEncoder.matches(resetPasswordModel.getOldPassword(), admin.getPassword())) {
-			System.out.println("Passwd matches");
-			return "redirect:/confirm-reset";
+			if (resetPasswordModel.getNewPassword().equals(resetPasswordModel.getConfirmPassword())) {
+				if (resetPasswordModel.getOldPassword().equals(resetPasswordModel.getNewPassword())) {
+					return "redirect:/reset-password/" + resetCode + "?error=err3";
+				} else {
+					admin.setPassword(passwordEncoder.encode(resetPasswordModel.getNewPassword()));
+					admin.setResetCode(Utils.getShortUUID());
+					adminService.saveAdmin(admin);
+					return "redirect:/confirm-reset";
+				}
+			}
+			return "redirect:/reset-password/" + resetCode + "?error=err1";
+		} else {
+			return "redirect:/reset-password/" + resetCode + "?error=err2";
 		}
-		System.out.println(resetPasswordModel.getNewPassword() + " " + resetPasswordModel.getConfirmPassword());
 
-		return "redirect:/reset-password/" + resetCode;
+	}
+
+	@GetMapping("/confirm-reset")
+	public String getConfirmResetPage() {
+		return "confirm-reset";
 	}
 }
