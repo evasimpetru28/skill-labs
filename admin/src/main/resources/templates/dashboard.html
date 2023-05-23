@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Skill Lab - Dashboard</title>
+
+    {{>fragments/links}}
+    <link rel="stylesheet" href="../static/style/navigation-style.css">
+    <!-- Page style -->
+    <link rel="stylesheet" href="../static/style/pie-chart-style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+
+<!--Main Navigation-->
+<header>
+
+    {{>fragments/logout-btn}}
+    {{>fragments/sidebar}}
+
+</header>
+<!--Main Navigation-->
+
+<!--Main layout-->
+<main style="margin-top: 50px;">
+    <div class="container-fluid container-custom pt-4 table-responsive-lg">
+        <div>
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+</main>
+<!--Main layout-->
+
+</body>
+
+<script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{{colors}}},
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+</html>
