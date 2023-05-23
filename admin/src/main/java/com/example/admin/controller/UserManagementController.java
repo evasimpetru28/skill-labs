@@ -3,12 +3,15 @@ package com.example.admin.controller;
 import com.example.admin.entity.Admin;
 import com.example.admin.entity.Page;
 import com.example.admin.entity.Student;
+import com.example.admin.model.ResetPasswordModel;
 import com.example.admin.service.AdminService;
 import com.example.admin.service.NavbarService;
 import com.example.admin.service.SmtpMailSender;
 import com.example.admin.service.StudentService;
 import com.example.admin.util.Utils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +24,8 @@ public class UserManagementController {
 	final StudentService studentService;
 	final AdminService adminService;
 	final SmtpMailSender smtpMailSender;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@GetMapping("/users")
 	String getUserManagementPage() {
@@ -57,17 +62,13 @@ public class UserManagementController {
 		} else {
 			var password = Utils.getShortUUID();
 			var resetCode = Utils.getShortUUID();
-			student.setPassword(password);
 			student.setResetCode(resetCode);
+			student.setPassword(passwordEncoder.encode(password));
 
 			studentService.saveStudent(student);
-			smtpMailSender.sendMailResetPassword(student.getEmail(), resetCode);
+			smtpMailSender.sendMailResetPassword(student.getName(), student.getEmail(), password, resetCode);
 		}
 		return "redirect:/users";
-	}
-	private String getRandomLink() {
-		//save to db random generated code for reset psswd link
-		return "link!";
 	}
 
 	@PostMapping("/add-admin")
@@ -75,7 +76,13 @@ public class UserManagementController {
 		if (adminService.isDuplicate(admin.getName())) {
 			return "redirect:/users/admins?duplicate=true";
 		} else {
+			var password = Utils.getShortUUID();
+			var resetCode = Utils.getShortUUID();
+			admin.setResetCode(resetCode);
+			admin.setPassword(passwordEncoder.encode(password));
+
 			adminService.saveAdmin(admin);
+			smtpMailSender.sendMailResetPassword(admin.getName(), admin.getEmail(), password, resetCode);
 		}
 		return "redirect:/users/admins";
 	}
@@ -117,5 +124,25 @@ public class UserManagementController {
 			adminService.saveAdmin(admin);
 		}
 		return "redirect:/users/admins";
+	}
+
+	@GetMapping("/reset-password/{resetCode}")
+	public String getResetPasswordPage(Model model, @PathVariable("resetCode") final String resetCode) {
+		model.addAttribute("resetCode", resetCode);
+
+		return "reset-password";
+	}
+
+	@PostMapping("/reset-password/submit/{resetCode}")
+	public String resetPassword(@PathVariable("resetCode") final String resetCode, @ModelAttribute("passwords") ResetPasswordModel resetPasswordModel) {
+		var admin = adminService.getAdminByResetCode(resetCode);
+
+		if (passwordEncoder.matches(resetPasswordModel.getOldPassword(), admin.getPassword())) {
+			System.out.println("Passwd matches");
+			return "redirect:/confirm-reset";
+		}
+		System.out.println(resetPasswordModel.getNewPassword() + " " + resetPasswordModel.getConfirmPassword());
+
+		return "redirect:/reset-password/" + resetCode;
 	}
 }

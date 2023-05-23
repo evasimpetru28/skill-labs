@@ -46,6 +46,7 @@ public class LoginSecurityConfig {
 					.requestMatchers("/skills/**").permitAll()
 					.requestMatchers("/edit-skill/**").permitAll()
 					.requestMatchers("/delete-skill/**").permitAll()
+					.requestMatchers("/reset-password/**").permitAll()
 					.requestMatchers("/favicon.ico").permitAll()
 					.requestMatchers("/static/**").permitAll()
 					.and()

@@ -34,16 +34,12 @@ public class AdminService {
 		return adminRepository.existsByNameExcept(name, id).isPresent();
 	}
 
-	public Optional<Admin> getAdminByCredentials(String email, String password) {
-		return adminRepository.findByEmailAndPassword(email, password);
+	public Admin getAdminByResetCode(String resetCode) {
+		return adminRepository.findByResetCode(resetCode);
 	}
 
 	public Optional<Admin> getAdminByEmail(String email) {
 		return adminRepository.findByEmail(email);
-	}
-
-	public Admin getAdminById(String adminId) {
-		return adminRepository.getReferenceById(adminId);
 	}
 
 	public List<AdminModel> getAdminModelList() {

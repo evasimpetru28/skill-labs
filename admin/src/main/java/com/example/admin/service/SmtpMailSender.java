@@ -13,7 +13,7 @@ public class SmtpMailSender {
 	@Value("${spring.mail.username}")
 	private String from;
 	@Value("${skilllab.host.url}")
-	private String link;
+	private String hostLink;
 
 	public void sendMail(String to, String subject, String body) {
 		var message = new SimpleMailMessage();
@@ -24,15 +24,19 @@ public class SmtpMailSender {
 		javaMailSender.send(message);
 	}
 
-	public void sendMailResetPassword(String email, String resetCode) {
+	public void sendMailResetPassword(String name, String email, String password, String resetCode) {
 		var subject = "Reset password";
-		var body = "Please reset your password by clicking the link below:\n\n" + getRandomLink(resetCode);
+		var body = "Hello " + name +
+				   ",\n\nHere are your credentials for Skill Labs:\n\n" +
+				   "User: " + email + "\n" +
+				   "Password: " + password + "\n\n" +
+				   "Please reset your password by clicking the link below:\n\n" + getRandomLink(resetCode);
 
 		sendMail(email, subject, body);
 	}
 
 	private String getRandomLink(String resetCode) {
-		return link + "/reset-password/" + resetCode;
+		return hostLink + "/reset-password/" + resetCode;
 	}
 
 }

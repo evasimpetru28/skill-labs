@@ -24,5 +24,6 @@ public class Admin {
 	String email;
 	String phone;
 	String password;
+	String resetCode;
 
 }

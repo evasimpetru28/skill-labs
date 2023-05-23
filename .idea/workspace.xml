@@ -5,71 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="01f7cf4e-0a41-4df1-b7d5-d2b122d6c76d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/parent/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/SkillLabsApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/config/LoginSecurityConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/controller/CategoriesController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/controller/DashboardController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/controller/LoginController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/controller/RegisterController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/controller/SkillsController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/controller/UserManagementController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/entity/Admin.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/entity/Category.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/entity/Page.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/entity/Skill.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/entity/Student.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/model/AdminModel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/model/CategoryModel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/model/SkillModel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/model/StudentModel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/repository/AdminRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/repository/CategoryRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/repository/SkillRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/repository/StudentRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/service/AdminService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/service/CategoryService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/service/NavbarService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/service/SkillService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/service/SmtpMailSender.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/service/StudentService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/skilllabs/util/Utils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/categories.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/skills.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/user-management.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/style/categories-style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/style/login-style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/style/navigation-style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/style/register-style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/style/skills-style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/style/user-management-style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/categories.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dashboard.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/add-admin.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/add-student.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/delete-admin.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/delete-student.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/edit-admin.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/edit-student.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/footer.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/links.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/logout-btn.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/navbar.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/fragments/sidebar.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/login.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/register.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/skills.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/user-management.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/skilllabs/SkillLabsApplicationTests.java" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/admin/src/main/resources/templates/reset-password.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/example/admin/config/LoginSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/example/admin/config/LoginSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/example/admin/controller/UserManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/example/admin/controller/UserManagementController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/example/admin/entity/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/example/admin/entity/Admin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/example/admin/repository/AdminRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/example/admin/repository/AdminRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/example/admin/service/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/example/admin/service/AdminService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/src/main/java/com/example/admin/service/SmtpMailSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/admin/src/main/java/com/example/admin/service/SmtpMailSender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/student/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,9 +28,9 @@
         <option value="Interface" />
         <option value="AnnotationType" />
         <option value="Record" />
+        <option value="CSS File" />
         <option value="HTML File" />
         <option value="Class" />
-        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -130,7 +74,7 @@
     "WebServerToolWindowFactoryState": "false",
     "jdk.selected.JAVA_MODULE": "17 (2)",
     "js.last.introduce.type": "LET",
-    "last_opened_file_path": "/home/eva/Documents/licenta/skill-labs",
+    "last_opened_file_path": "/home/eva/Documents/facultate/anul3/sem1/IS/project2",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -230,7 +174,7 @@
       <workItem from="1684778647949" duration="409000" />
       <workItem from="1684779204599" duration="226000" />
       <workItem from="1684779485443" duration="2233000" />
-      <workItem from="1684827940126" duration="3588000" />
+      <workItem from="1684827940126" duration="10641000" />
     </task>
     <servers />
   </component>
