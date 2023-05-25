@@ -110,6 +110,9 @@ public class UserManagementController {
 		if (studentService.isDuplicateExcept(student.getName(), student.getId())) {
 			return "redirect:/users?duplicate=true";
 		} else {
+			var oldStudent = studentService.getStudentById(id);
+			student.setPassword(oldStudent.getPassword());
+			student.setResetCode(oldStudent.getResetCode());
 			studentService.saveStudent(student);
 		}
 		return "redirect:/users";
@@ -121,6 +124,9 @@ public class UserManagementController {
 		if (adminService.isDuplicateExcept(admin.getName(), admin.getId())) {
 			return "redirect:/users/admins?duplicate=true";
 		} else {
+			var oldAdmin = adminService.getAdminById(id);
+			admin.setPassword(oldAdmin.getPassword());
+			admin.setResetCode(oldAdmin.getResetCode());
 			adminService.saveAdmin(admin);
 		}
 		return "redirect:/users/admins";
@@ -138,9 +144,9 @@ public class UserManagementController {
 		String errorMessage = "";
 		if (error != null) {
 			errorMessage = switch (error) {
-				case "err1" -> "Password and Confirm Password must match.";
-				case "err2" -> "Old Password is incorrect.";
-				case "err3" -> "New Password cannot be Old Password.";
+				case "err1" -> "New password and Confirm password must match.";
+				case "err2" -> "Old password is incorrect.";
+				case "err3" -> "New password cannot be Old password.";
 				default -> "";
 			};
 		}

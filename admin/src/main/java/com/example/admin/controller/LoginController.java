@@ -32,7 +32,7 @@ public class LoginController {
 	@PostMapping("/login/submit")
 	String submitLogin(@RequestParam String email, @RequestParam String password) {
 		var admin = adminService.getAdminByEmail(email);
-		if (admin.isPresent() && passwordEncoder.matches(password, admin.get().getPassword())) {
+		if (admin != null && passwordEncoder.matches(password, admin.getPassword())) {
 			return "redirect:/dashboard";
 		} else {
 			return "redirect:/login?error=true";

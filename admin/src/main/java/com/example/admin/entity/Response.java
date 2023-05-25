@@ -14,15 +14,13 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Admin {
+public class Response {
 
 	@Id
 	@GeneratedValue(generator = "UUID")
 	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
 	String id;
-	String name;
-	String email;
-	String phone;
-	String password;
-	String resetCode;
+	String studentId;
+	String questionId;
+	String optionId;
 }

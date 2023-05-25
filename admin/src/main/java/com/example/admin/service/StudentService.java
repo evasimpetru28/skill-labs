@@ -55,8 +55,8 @@ public class StudentService {
 		return studentRepository.findAllByOrderByName();
 	}
 
-	public Optional<Student> getOptionalStudentById(String id) {
-		return studentRepository.findById(id);
+	public Student getStudentById(String id) {
+		return studentRepository.getReferenceById(id);
 	}
 
 }

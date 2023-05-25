@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface AdminRepository extends JpaRepository<Admin, String> {
 	Admin findByResetCode(String resetCode);
-	Optional<Admin> findByEmail(String email);
+	Admin findByEmail(String email);
 
 	List<Admin> findAllByOrderByName();
 

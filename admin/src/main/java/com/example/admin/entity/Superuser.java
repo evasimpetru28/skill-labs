@@ -14,7 +14,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Admin {
+public class Superuser {
 
 	@Id
 	@GeneratedValue(generator = "UUID")
@@ -25,4 +25,5 @@ public class Admin {
 	String phone;
 	String password;
 	String resetCode;
+	String type;
 }

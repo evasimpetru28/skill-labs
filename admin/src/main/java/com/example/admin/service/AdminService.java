@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
@@ -38,7 +37,7 @@ public class AdminService {
 		return adminRepository.findByResetCode(resetCode);
 	}
 
-	public Optional<Admin> getAdminByEmail(String email) {
+	public Admin getAdminByEmail(String email) {
 		return adminRepository.findByEmail(email);
 	}
 
@@ -60,8 +59,8 @@ public class AdminService {
 		return adminRepository.findAllByOrderByName();
 	}
 
-	public Optional<Admin> getOptionalAdminById(String id) {
-		return adminRepository.findById(id);
+	public Admin getAdminById(String id) {
+		return adminRepository.getReferenceById(id);
 	}
 
 }
