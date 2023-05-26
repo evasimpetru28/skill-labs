@@ -7,8 +7,7 @@ import com.example.student.service.SkillService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @Controller
@@ -24,6 +23,14 @@ public class AllSkillsController {
 		model.addAttribute("studentId", studentId);
 		model.addAttribute("skillList", skillService.getAllSkillsAndEvaluationsForStudent(studentId));
 		return "all-skills";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/evaluate/{tempId}")
+	public String getSearchResultViaAjax(@PathVariable(value = "tempId") String id)
+	{
+		System.out.println("PRIMIT: " + id);
+		return String.valueOf(id);
 	}
 
 }

@@ -1,9 +1,3 @@
-var addModal = document.getElementById('addSkill');
-addModal.addEventListener('hidden.bs.modal', function (e) {
-    $(this).find('form').trigger('reset');
-    $(this).find('form').find('#description').removeClass('active');
-});
-
 function getStars(callingElementId) {
     let idLength = callingElementId.length;
     let starsNumber = parseInt(callingElementId.substring(idLength - 1, idLength));
@@ -37,9 +31,6 @@ function getStars(callingElementId) {
     }
 
     let trashCanDiv = document.getElementById(callingElementId.substring(0, nameLength) + "-trash-can");
-    console.log(nameLength);
-    console.log(callingElementId.substring(0, nameLength) + "-trash-can");
-
     let trashIcon = document.createElement("i");
     trashIcon.className = "fa-regular fa-trash-can";
     trashIcon.style = "color: #b42727;";
@@ -52,4 +43,26 @@ function loadStars() {
         let itemId = starsDivs.item(i).id;
         getStars(itemId);
     }
+}
+
+function deleteKnowledge(callingElement) {
+    var tempId = callingElement.id;
+    console.log(tempId);
+
+    // $.ajax({
+    //     type : "GET",
+    //     url : "/evaluate/" + tempId,
+    //     timeout : 100000,
+    //     success : function(tempId) {
+    //         console.log("SUCCESS: " + tempId + " :))))\n");
+    //         alert("all good");
+    //     },
+    //     error : function(e) {
+    //         console.log("ERROR: ", e);
+    //         display(e);
+    //     },
+    //     done : function(e) {
+    //         console.log("DONE");
+    //     }
+    // });
 }
