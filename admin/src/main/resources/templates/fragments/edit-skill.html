@@ -1,0 +1,76 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary icon-spacing" data-mdb-toggle="modal" data-mdb-target="#edit{{index}}">
+  <i class="fa-regular fa-pen-to-square"></i>
+  <span class="remove-action-name">Edit</span>
+</button>
+
+<!-- Modal Edit -->
+<div class="modal fade edit-skill" id="edit{{index}}" tabindex="-1" role="dialog" aria-labelledby="editSkillTitle{{index}}" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <form action="/edit-skill/{{id}}" method="POST" name="skill">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editSkillTitle{{index}}">Edit skill {{name}}</h5>
+          <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="mb-3">
+              <div class="form-outline">
+                <input type="text" value="{{name}}" id="name{{index}}" name="name" class="form-control form-control-lg active" required />
+                <label class="form-label" for="name{{index}}">Name<span class="error">*</span></label>
+                <div class="form-notch">
+                  <div class="form-notch-leading" style="width: 9px;"></div>
+                  <div class="form-notch-middle" style="width: 87.2px;"></div>
+                  <div class="form-notch-trailing"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3">
+              <div class="form-outline">
+                <select aria-autocomplete="none" id="category{{index}}" class="form-control form-control-lg active" name="categoryId" required>
+                  {{#categoryList}}
+                  <option class="autocomplete-item" value="{{id}}" >
+                    {{name}}
+                  </option>
+                  {{/categoryList}}
+                </select>
+                <label class="form-label" for="category{{index}}">Category<span class="error">*</span></label>
+                <div class="form-notch">
+                  <div class="form-notch-leading" style="width: 9px;"></div>
+                  <div class="form-notch-middle" style="width: 87.2px;"></div>
+                  <div class="form-notch-trailing"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3">
+              <div class="form-outline">
+                                                            <textarea id="description{{index}}" rows="4"
+                                                                      name="description" class="form-control form-control-lg {{#hasDescription}}active{{/hasDescription}}">{{description}}</textarea>
+                <label class="form-label" for="description{{index}}">Description</label>
+                <div class="form-notch">
+                  <div class="form-notch-leading" style="width: 9px;"></div>
+                  <div class="form-notch-middle" style="width: 87.2px;"></div>
+                  <div class="form-notch-trailing"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Edit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

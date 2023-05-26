@@ -1,0 +1,72 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#addSkill">
+  <i class="fa-solid fa-plus fa-fw me-3"></i>Add
+</button>
+<br>
+
+<!-- Modal Add -->
+<div class="modal fade" id="addSkill" tabindex="-1" role="dialog" aria-labelledby="addSkillTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <form action="/add-skill" method="POST" name="skill">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addSkillTitle">Add evaluation for {{name}}</h5>
+          <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="mb-3">
+              <div class="form-outline">
+                <input type="text" id="name" name="name" class="form-control form-control-lg" required />
+                <label class="form-label" for="name">Name<span class="error">*</span></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3">
+              <div class="form-outline">
+                <select aria-autocomplete="none" id="category" class="form-control form-control-lg active" name="categoryId" required>
+                  <option style="display: none" value="">Select a category</option>
+                  {{#categoryList}}
+                  <option class="autocomplete-item" value="{{id}}">
+                    {{name}}
+                  </option>
+                  {{/categoryList}}
+                </select>
+                <label class="form-label" for="category">Category<span class="error">*</span></label>
+                <div class="form-notch">
+                  <div class="form-notch-leading" style="width: 9px;"></div>
+                  <div class="form-notch-middle" style="width: 87.2px;"></div>
+                  <div class="form-notch-trailing"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3">
+              <div class="form-outline">
+                                    <textarea id="description" rows="4"
+                                              name="description" class="form-control form-control-lg"></textarea>
+                <label class="form-label" for="description">Description</label>
+                <div class="form-notch">
+                  <div class="form-notch-leading" style="width: 9px;"></div>
+                  <div class="form-notch-middle" style="width: 87.2px;"></div>
+                  <div class="form-notch-trailing"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

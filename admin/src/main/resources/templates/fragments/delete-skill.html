@@ -1,0 +1,29 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary icon-spacing" data-mdb-toggle="modal" data-mdb-target="#delete{{index}}">
+  <i class="fa-regular fa-trash-can"></i>
+  <span class="remove-action-name">Delete</span>
+</button>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="delete{{index}}" tabindex="-1" role="dialog" aria-labelledby="deleteSkillTitle{{index}}" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <form action="/delete-skill/{{id}}" method="POST">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteSkillTitle{{index}}">Delete skill {{name}}</h5>
+          <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to permanently delete this skill?
+          <br>
+          <p class="error">This will delete all related evaluations and quizzez.</p>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Delete</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
