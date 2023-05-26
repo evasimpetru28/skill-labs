@@ -3,8 +3,37 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Skill Labs - My Skills</title>
+
+	{{>fragments/links}}
+	<link rel="stylesheet" href="../static/style/navigation-style.css">
+	<!-- Page style -->
+	<link rel="stylesheet" href="../static/style/my-skills-style.css">
+
 </head>
 <body>
+
+<!--Main Navigation-->
+<header>
+
+	{{>fragments/logout-btn}}
+	{{>fragments/sidebar}}
+
+</header>
+<!--Main Navigation-->
+
+<!--Main layout-->
+<main style="margin-top: 50px;">
+	<div class="container-fluid container-custom pt-4 table-responsive-lg">
+my skills list
+	</div>
+</main>
+<!--Main layout-->
+
+<script>
+    document.querySelectorAll('.form-outline').forEach((formOutline) => {
+        new mdb.Input(formOutline).init();
+    });
+</script>
 
 </body>
 </html>

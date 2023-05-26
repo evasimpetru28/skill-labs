@@ -43,7 +43,7 @@ public class LoginSecurityConfig {
 					.requestMatchers("/categories/**").permitAll()
 					.requestMatchers("/delete-category/**").permitAll()
 					.requestMatchers("/edit-category/**").permitAll()
-					.requestMatchers("/skills/**").permitAll()
+					.requestMatchers("/all-skills/**").permitAll()
 					.requestMatchers("/edit-skill/**").permitAll()
 					.requestMatchers("/delete-skill/**").permitAll()
 					.requestMatchers("/reset-password/**").permitAll()

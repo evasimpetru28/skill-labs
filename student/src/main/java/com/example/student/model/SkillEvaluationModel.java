@@ -10,12 +10,14 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class SkillModel {
-
+public class SkillEvaluationModel {
 	String id;
-	Integer index;
 	String name;
 	String description;
 	String category;
-	Boolean hasDescription;
+	String categoryId;
+	Boolean hasEvaluation;
+	Integer interest;
+	Integer knowledge;
+	Integer experience;
 }

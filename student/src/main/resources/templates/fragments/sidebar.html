@@ -3,24 +3,14 @@
 	<div class="position-sticky">
 		<div class="list-group list-group-flush mx-3 mt-4">
 
-			<a href="/dashboard" class="list-group-item list-group-item-action py-2 ripple
-       {{#dashboardActive}}active{{/dashboardActive}}" aria-current="true">
-				<i class="fas fa-chart-line fa-fw me-3"></i><span>Dashboard</span>
+			<a href="/my-skills/{{studentId}}" class="list-group-item list-group-item-action py-2 ripple
+       {{#mySkillsActive}}active{{/mySkillsActive}}" aria-current="true">
+				<i class="fa-regular fa-star fa-fw me-3"></i><span>My Skills</span>
 			</a>
 
-			<a href="/users" class="list-group-item list-group-item-action py-2 ripple
-        {{#userManagementActive}}active{{/userManagementActive}}">
-				<i class="fas fa-users fa-fw me-3"></i><span>User Management</span>
-			</a>
-
-			<a href="/categories" class="list-group-item list-group-item-action py-2 ripple
-        {{#categoriesActive}}active{{/categoriesActive}}">
-				<i class="fa-solid fa-list-ul fa-fw me-3"></i><span>Categories</span>
-			</a>
-
-			<a href="/skills" class="list-group-item list-group-item-action py-2 ripple
-        {{#skillsActive}}active{{/skillsActive}}">
-				<i class="fa-regular fa-circle-dot fa-fw me-3"></i><span>Skills</span>
+			<a href="/all-skills/{{studentId}}" class="list-group-item list-group-item-action py-2 ripple
+        {{#allSkillsActive}}active{{/allSkillsActive}}">
+				<i class="fa-regular fa-circle-dot fa-fw me-3"></i><span>All Skills</span>
 			</a>
 
 		</div>

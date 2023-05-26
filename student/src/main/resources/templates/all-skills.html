@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Skill Labs - All Skills</title>
+
+    {{>fragments/links}}
+    <link rel="stylesheet" href="../static/style/navigation-style.css">
+    <!-- Page style -->
+    <link rel="stylesheet" href="../static/style/all-skills-style.css">
+
+</head>
+<body>
+
+<!--Main Navigation-->
+<header>
+
+    {{>fragments/logout-btn}}
+    {{>fragments/sidebar}}
+
+</header>
+<!--Main Navigation-->
+
+<!--Main layout-->
+<main style="margin-top: 50px;">
+    <div class="container-fluid container-custom pt-4 table-responsive-lg">
+        <div class="row">
+            {{#skillList}}
+            <div class="card col-xl-3 col-lg-4 col-md-5 col-sm-6 col-12 col" style="width: 28rem; margin: 1rem 0.5rem;">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-11">
+                            <h5 class="card-title">{{name}}</h5>
+                        </div>
+                        <div class="col-1">
+                            <a href="" data-mdb-toggle="modal"><i class="fa-solid fa-circle-info"></i></a>
+                        </div>
+                    </div>
+                    <h6 class="card-title">{{category}}</h6>
+                    <p class="card-text">{{description}}</p>
+                </div>
+                <ul class="list-group list-group-light list-group-small">
+                    <li class="list-group-item px-4">
+                        <div class="row">
+                            <div class="col-4">Interest</div>
+                            <div class="col-8">
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item px-4">
+                        <div class="row">
+                            <div class="col-4">Knowledge</div>
+                            <div class="col-8">
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item px-4">
+                        <div class="row">
+                            <div class="col-4">Experience</div>
+                            <div class="col-8">
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                                <i class="fa-regular fa-star fa-fw"></i>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="card-body">
+                    <a href="#" class="card-link">Add/Edit</a>
+                    <a href="#" class="card-link">Delete</a>
+                </div>
+            </div>
+            {{/skillList}}
+        </div>
+    </div>
+</main>
+<!--Main layout-->
+
+<script>
+    document.querySelectorAll('.form-outline').forEach((formOutline) => {
+        new mdb.Input(formOutline).init();
+    });
+</script>
+<script type="text/javascript" src="../static/js/all-skills.js"></script>
+
+</body>
+</html>

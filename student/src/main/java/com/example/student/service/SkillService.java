@@ -1,15 +1,15 @@
 package com.example.student.service;
 
 import com.example.student.entity.Skill;
-import com.example.student.model.SkillModel;
+import com.example.student.model.SkillEvaluationModel;
 import com.example.student.repository.CategoryRepository;
+import com.example.student.repository.EvaluationRepository;
 import com.example.student.repository.SkillRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @Transactional
@@ -18,6 +18,7 @@ public class SkillService {
 
 	final SkillRepository skillRepository;
 	final CategoryRepository categoryRepository;
+	final EvaluationRepository evaluationRepository;
 
 	public void saveSkill(Skill skill) {
 		skillRepository.saveAndFlush(skill);
@@ -35,22 +36,27 @@ public class SkillService {
 		return skillRepository.existsByNameExcept(name, id).isPresent();
 	}
 
-	public List<SkillModel> getSkillModelList() {
-		var skills = getAllSkills();
-		var index = new AtomicInteger(1);
+	public List<SkillEvaluationModel> getAllSkillsAndEvaluationsForStudent(String studentId) {
+		var skills = skillRepository.findAlSkillsAndCategories();
 		return skills.stream()
-				.map(skill -> new SkillModel(
-						skill.getId(),
-						index.getAndIncrement(),
-						skill.getName(),
-						skill.getDescription(),
-						categoryRepository.findById(skill.getCategoryId()).get().getName(),
-						!"".equals(skill.getDescription())))
+				.map(skill -> {
+					var optionalSkill = evaluationRepository.findBySkillIdAndStudentId(skill.getId(), studentId);
+					var skillModel = new SkillEvaluationModel();
+					skillModel.setId(skill.getId());
+					skillModel.setName(skill.getName());
+					skillModel.setDescription(skill.getDescription());
+					skillModel.setCategory(skill.getCategory());
+					skillModel.setCategoryId(skill.getCategoryId());
+					skillModel.setHasEvaluation(false);
+					if (optionalSkill.isPresent()) {
+						skillModel.setInterest(optionalSkill.get().getInterest());
+						skillModel.setExperience(optionalSkill.get().getKnowledge());
+						skillModel.setExperience(optionalSkill.get().getExperience());
+						skillModel.setHasEvaluation(true);
+					}
+					return skillModel;
+				})
 				.toList();
-	}
-
-	public List<Skill> getAllSkills() {
-		return skillRepository.findAllByOrderByNameAndCategoryName();
 	}
 
 }

@@ -33,7 +33,7 @@ public class LoginController {
 	String submitLogin(@RequestParam String email, @RequestParam String password) {
 		var student = studentService.getStudentByEmail(email);
 		if (student != null && passwordEncoder.matches(password, student.getPassword())) {
-			return "redirect:/my-skills";
+			return "redirect:/my-skills/" + student.getId();
 		} else {
 			return "redirect:/login?error=true";
 		}

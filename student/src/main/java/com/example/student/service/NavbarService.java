@@ -12,14 +12,14 @@ public class NavbarService {
 	public void activateNavbarTab(Page tabName, Model model) {
 		inactivateAllNavbarTabs(model);
 		switch (tabName) {
-			case DASHBOARD:
-				model.addAttribute("dashboardActive", true);
+			case MY_SKILLS:
+				model.addAttribute("mySkillsActive", true);
 				break;
 			case USER_MANAGEMENT:
 				model.addAttribute("userManagementActive", true);
 				break;
-			case SKILLS:
-				model.addAttribute("skillsActive", true);
+			case ALL_SKILLS:
+				model.addAttribute("allSkillsActive", true);
 				break;
 			case CATEGORIES:
 				model.addAttribute("categoriesActive", true);

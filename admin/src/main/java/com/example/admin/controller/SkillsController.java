@@ -24,6 +24,8 @@ public class SkillsController {
 		model.addAttribute("categoryList", categoryService.getCategoryModelList());
 		model.addAttribute("skillList", skillService.getSkillModelList());
 		model.addAttribute("duplicate", duplicate);
+
+		//TODO: de fixat selectorul la update
 		return "skills";
 	}
 
