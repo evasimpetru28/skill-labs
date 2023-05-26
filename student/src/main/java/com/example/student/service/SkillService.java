@@ -50,7 +50,7 @@ public class SkillService {
 					skillModel.setHasEvaluation(false);
 					if (optionalSkill.isPresent()) {
 						skillModel.setInterest(optionalSkill.get().getInterest());
-						skillModel.setExperience(optionalSkill.get().getKnowledge());
+						skillModel.setKnowledge(optionalSkill.get().getKnowledge());
 						skillModel.setExperience(optionalSkill.get().getExperience());
 						skillModel.setHasEvaluation(true);
 					}

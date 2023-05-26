@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../static/style/all-skills-style.css">
 
 </head>
-<body>
+<body onload="loadStars()">
 
 <!--Main Navigation-->
 <header>
@@ -43,52 +43,19 @@
                     <li class="list-group-item px-4">
                         <div class="row">
                             <div class="col-4">Interest</div>
-                            <div class="col-8">
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                            </div>
+                            <div class="col-8 stars-div" id="{{name}}-int{{#interest}}-{{interest}}{{/interest}}"></div>
                         </div>
                     </li>
                     <li class="list-group-item px-4">
                         <div class="row">
                             <div class="col-4">Knowledge</div>
-                            <div class="col-8">
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                            </div>
+                            <div class="col-8 stars-div" id="{{name}}-know{{#knowledge}}-{{knowledge}}{{/knowledge}}"></div>
                         </div>
                     </li>
                     <li class="list-group-item px-4">
                         <div class="row">
                             <div class="col-4">Experience</div>
-                            <div class="col-8">
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                                <i class="fa-regular fa-star fa-fw"></i>
-                            </div>
+                            <div class="col-8 stars-div" id="{{name}}-exp{{#experience}}-{{experience}}{{/experience}}"></div>
                         </div>
                     </li>
                 </ul>
