@@ -66,7 +66,7 @@ public class UserManagementController {
 			student.setPassword(passwordEncoder.encode(password));
 
 			studentService.saveStudent(student);
-			smtpMailSender.sendMailResetPassword(student.getName(), student.getEmail(), password, resetCode);
+			smtpMailSender.sendMailResetPassword(true, student.getName(), student.getEmail(), password, resetCode);
 		}
 		return "redirect:/users";
 	}
@@ -82,7 +82,7 @@ public class UserManagementController {
 			admin.setPassword(passwordEncoder.encode(password));
 
 			adminService.saveAdmin(admin);
-			smtpMailSender.sendMailResetPassword(admin.getName(), admin.getEmail(), password, resetCode);
+			smtpMailSender.sendMailResetPassword(false, admin.getName(), admin.getEmail(), password, resetCode);
 		}
 		return "redirect:/users/admins";
 	}
