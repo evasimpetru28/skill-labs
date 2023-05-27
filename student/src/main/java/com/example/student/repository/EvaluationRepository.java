@@ -12,7 +12,12 @@ import java.util.Optional;
 public interface EvaluationRepository extends JpaRepository<Evaluation, String> {
 	Optional<Evaluation> findBySkillIdAndStudentId(String skillId, String studentId);
 	@Query(value = """
-			select new com.example.student.model.SkillEvaluationModel(s.id, s.name, s.description, c.name, true, e.interest, e.knowledge, e.experience)
+			select new com.example.student.model.SkillEvaluationModel(s.id, s.name, s.description, c.name, true, 
+			 case 
+			 	when s.description = '' then false 
+			 	else true
+			 end,
+			 e.interest, e.knowledge, e.experience)
 			from Skill s
 			join Category c on s.categoryId = c.id
 			join Evaluation e on s.id = e.skillId

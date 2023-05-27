@@ -33,7 +33,9 @@
                             <h5 class="card-title">{{name}}</h5>
                         </div>
                         <div class="col-1">
-                            <a href="" data-mdb-toggle="modal"><i class="fa-solid fa-circle-info"></i></a>
+                            {{#hasDescription}}
+                                {{>fragments/show-description}}
+                            {{/hasDescription}}
                         </div>
                     </div>
                     <h6 class="card-title">{{category}}</h6>

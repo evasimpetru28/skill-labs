@@ -45,6 +45,7 @@ public class SkillService {
 					skillModel.setId(skill.getId());
 					skillModel.setName(skill.getName());
 					skillModel.setDescription(skill.getDescription());
+					skillModel.setHasDescription(!"".equals(skill.getDescription()));
 					skillModel.setCategory(skill.getCategory());
 					skillModel.setHasEvaluation(false);
 					if (optionalSkill.isPresent()) {
