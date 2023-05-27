@@ -22,6 +22,7 @@ public interface EvaluationRepository extends JpaRepository<Evaluation, String> 
 			join Category c on s.categoryId = c.id
 			join Evaluation e on s.id = e.skillId
 			where e.studentId = :studentId
+			order by lower(c.name), lower(s.name)
 					""")
 	List<SkillEvaluationModel> findAllEvaluationsByStudentId(@Param("studentId") String studentId);
 }

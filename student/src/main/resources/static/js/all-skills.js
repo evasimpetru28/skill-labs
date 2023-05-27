@@ -45,24 +45,26 @@ function loadStars() {
     }
 }
 
-function deleteKnowledge(callingElement) {
-    var tempId = callingElement.id;
-    console.log(tempId);
+function deleteEvaluation(callingElement){
+    var id = callingElement.id;
+    var data = '{"id":"'+id+'"}';
+    var data2 = {"id":"John"};
 
-    // $.ajax({
-    //     type : "GET",
-    //     url : "/evaluate/" + tempId,
-    //     timeout : 100000,
-    //     success : function(tempId) {
-    //         console.log("SUCCESS: " + tempId + " :))))\n");
-    //         alert("all good");
-    //     },
-    //     error : function(e) {
-    //         console.log("ERROR: ", e);
-    //         display(e);
-    //     },
-    //     done : function(e) {
-    //         console.log("DONE");
-    //     }
-    // });
+    $.ajax({
+        type : "POST",
+        url : "/evaluate",
+        data : data2,
+        dataType: "html",
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        timeout : 100000,
+        success : function(data2) {
+            console.log("SUCCES: ", data2);
+        },
+        error : function(e) {
+            console.log("ERROR: ", e);
+        },
+        done : function(e) {
+        }
+    });
 }

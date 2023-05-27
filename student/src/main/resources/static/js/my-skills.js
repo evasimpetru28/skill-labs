@@ -10,7 +10,6 @@ function getStars(callingElementId) {
         nameLength = idLength - 2;
     }
 
-    console.log(callingElementId + " " + idLength + " stars:" + starsNumber + " namelength:" + nameLength);
     let starsDiv = document.getElementById(callingElementId);
     for (let i = 1; i <= starsNumber; i++) {
         let iTag = document.createElement("i");

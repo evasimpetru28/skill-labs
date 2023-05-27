@@ -25,12 +25,9 @@ public class AllSkillsController {
 		return "all-skills";
 	}
 
-	@ResponseBody
-	@RequestMapping(value = "/evaluate/{tempId}")
-	public String getSearchResultViaAjax(@PathVariable(value = "tempId") String id)
-	{
-		System.out.println("PRIMIT: " + id);
-		return String.valueOf(id);
+	@RequestMapping(value = "/evaluate", method = RequestMethod.POST)
+	public void getSearchResultViaAjax(@RequestBody String data) {
+		System.out.println(data);
 	}
 
 }

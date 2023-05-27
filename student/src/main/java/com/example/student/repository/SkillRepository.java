@@ -16,6 +16,7 @@ public interface SkillRepository extends JpaRepository<Skill, String> {
 							c.name as category
 					from skill s
 					left join category c on s.category_id = c.id
+					order by lower(c.name), lower(s.name)
 			""", nativeQuery = true)
 	List<SkillEvaluationInterface> findAlSkillsAndCategories();
 	@Query("select s from Skill s where lower(s.name) = lower(?1)")
