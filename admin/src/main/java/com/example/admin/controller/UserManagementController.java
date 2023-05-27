@@ -57,7 +57,7 @@ public class UserManagementController {
 		student.setDomain(educationInfo[1]);
 		student.setYear(Integer.parseInt(educationInfo[2]));
 
-		if (studentService.isDuplicate(student.getName())) {
+		if (studentService.isDuplicate(student.getName())) { // TODO: change to email instead of name
 			return "redirect:/users?duplicate=true";
 		} else {
 			var password = Utils.getShortUUID();
