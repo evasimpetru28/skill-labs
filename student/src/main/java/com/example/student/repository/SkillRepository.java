@@ -13,8 +13,7 @@ public interface SkillRepository extends JpaRepository<Skill, String> {
 					select s.id as id,
 							s.name as name, 
 							s.description as description, 
-							c.name as category,
-							c.id as categoryId
+							c.name as category
 					from skill s
 					left join category c on s.category_id = c.id
 			""", nativeQuery = true)

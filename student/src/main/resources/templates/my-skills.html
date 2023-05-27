@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="../static/style/my-skills-style.css">
 
 </head>
-<body>
+<body onload="loadStars()">
 
 <!--Main Navigation-->
 <header>
@@ -24,7 +24,49 @@
 <!--Main layout-->
 <main style="margin-top: 50px;">
 	<div class="container-fluid container-custom pt-4 table-responsive-lg">
-my skills list
+
+		<div class="row">
+			{{#evaluationsList}}
+			<div class="card col-xl-3 col-lg-4 col-md-5 col-sm-6 col-12 col" style="width: 29rem; margin: 1rem 0.5rem;">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-11">
+							<h5 class="card-title">{{name}}</h5>
+						</div>
+						<div class="col-1">
+							<a href="" data-mdb-toggle="modal"><i class="fa-solid fa-circle-info"></i></a>
+						</div>
+					</div>
+					<h6 class="card-title">{{category}}</h6>
+				</div>
+				<ul class="list-group list-group-light list-group-small">
+					<li class="list-group-item px-4">
+						<div class="row">
+							<div class="col-3">Interest</div>
+							<div class="col-8 stars-div" id="{{name}}-int-{{interest}}"></div>
+							<div class="col-1 trash-can-div" id="{{name}}-int-trash-can"></div>
+						</div>
+					</li>
+					<li class="list-group-item px-4">
+						<div class="row">
+							<div class="col-3">Knowledge</div>
+							<div class="col-8 stars-div" id="{{name}}-kno-{{knowledge}}"></div>
+							<div class="col-1 trash-can-div" id="{{name}}-kno-trash-can" onclick="deleteKnowledge(this)"></div>
+						</div>
+					</li>
+					<li class="list-group-item px-4">
+						<div class="row">
+							<div class="col-3">Experience</div>
+							<div class="col-8 stars-div" id="{{name}}-exp-{{experience}}"></div>
+							<div class="col-1 trash-can-div" id="{{name}}-exp-trash-can"></div>
+						</div>
+					</li>
+				</ul>
+				<div class="card-body"></div>
+			</div>
+			{{/evaluationsList}}
+		</div>
+
 	</div>
 </main>
 <!--Main layout-->
@@ -34,6 +76,7 @@ my skills list
         new mdb.Input(formOutline).init();
     });
 </script>
+<script type="text/javascript" src="../static/js/my-skills.js"></script>
 
 </body>
 </html>

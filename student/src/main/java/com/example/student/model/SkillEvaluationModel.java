@@ -15,7 +15,6 @@ public class SkillEvaluationModel {
 	String name;
 	String description;
 	String category;
-	String categoryId;
 	Boolean hasEvaluation;
 	Integer interest;
 	Integer knowledge;

@@ -9,5 +9,4 @@ public interface SkillEvaluationInterface {
 	String getName();
 	String getDescription();
 	String getCategory();
-	String getCategoryId();
 }

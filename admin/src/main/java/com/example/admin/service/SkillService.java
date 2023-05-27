@@ -44,7 +44,7 @@ public class SkillService {
 						index.getAndIncrement(),
 						skill.getName(),
 						skill.getDescription(),
-						categoryRepository.findById(skill.getCategoryId()).get().getName(),
+						categoryRepository.getReferenceById(skill.getCategoryId()).getName(),
 						!"".equals(skill.getDescription())))
 				.toList();
 	}

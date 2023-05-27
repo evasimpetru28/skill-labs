@@ -46,7 +46,6 @@ public class SkillService {
 					skillModel.setName(skill.getName());
 					skillModel.setDescription(skill.getDescription());
 					skillModel.setCategory(skill.getCategory());
-					skillModel.setCategoryId(skill.getCategoryId());
 					skillModel.setHasEvaluation(false);
 					if (optionalSkill.isPresent()) {
 						skillModel.setInterest(optionalSkill.get().getInterest());
@@ -57,6 +56,10 @@ public class SkillService {
 					return skillModel;
 				})
 				.toList();
+	}
+
+	public List<SkillEvaluationModel> getEvaluationsForStudent(String studentId) {
+		return evaluationRepository.findAllEvaluationsByStudentId(studentId);
 	}
 
 }

@@ -22,3 +22,7 @@ table {
         display: none;
     }
 }
+
+.icon-hover:hover {
+    color: #f5d836;
+}
