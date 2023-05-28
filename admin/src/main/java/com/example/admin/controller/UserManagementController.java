@@ -4,10 +4,7 @@ import com.example.admin.entity.Admin;
 import com.example.admin.entity.Page;
 import com.example.admin.entity.Student;
 import com.example.admin.model.ResetPasswordModel;
-import com.example.admin.service.AdminService;
-import com.example.admin.service.NavbarService;
-import com.example.admin.service.SmtpMailSender;
-import com.example.admin.service.StudentService;
+import com.example.admin.service.*;
 import com.example.admin.util.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +15,22 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @Controller
+//@RequestMapping("/admin")
 public class UserManagementController {
 
-	final NavbarService navbarService;
-	final StudentService studentService;
 	final AdminService adminService;
+	final NavbarService navbarService;
 	final SmtpMailSender smtpMailSender;
+	final StudentService studentService;
+	final ResponseService responseService;
+	final AssignmentService assignmentService;
+	final EvaluationService evaluationService;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	@GetMapping("/users")
 	String getUserManagementPage() {
-		return "redirect:/users/students";
+		return "redirect:/users/admins";
 	}
 
 	@GetMapping("/users/students")
@@ -37,7 +38,9 @@ public class UserManagementController {
 		navbarService.activateNavbarTab(Page.USER_MANAGEMENT, model);
 		model.addAttribute("userList", studentService.getStudentModelList());
 		model.addAttribute("duplicate", duplicate);
-		model.addAttribute("adminUsers", false);
+		model.addAttribute("admins", false);
+		model.addAttribute("students", true);
+		model.addAttribute("superusers", false);
 		return "user-management";
 	}
 
@@ -46,7 +49,19 @@ public class UserManagementController {
 		navbarService.activateNavbarTab(Page.USER_MANAGEMENT, model);
 		model.addAttribute("userList", adminService.getAdminModelList());
 		model.addAttribute("duplicate", duplicate);
-		model.addAttribute("adminUsers", true);
+		model.addAttribute("admins", true);
+		model.addAttribute("students", false);
+		model.addAttribute("superusers", false);
+		return "user-management";
+	}
+
+	@GetMapping("/users/professors-companies")
+	String getSuperusersPage(Model model, @RequestParam(required = false) final Boolean duplicate) {
+		navbarService.activateNavbarTab(Page.USER_MANAGEMENT, model);
+		model.addAttribute("duplicate", duplicate);
+		model.addAttribute("admins", false);
+		model.addAttribute("students", false);
+		model.addAttribute("superusers", true);
 		return "user-management";
 	}
 
@@ -57,7 +72,7 @@ public class UserManagementController {
 		student.setDomain(educationInfo[1]);
 		student.setYear(Integer.parseInt(educationInfo[2]));
 
-		if (studentService.isDuplicate(student.getName())) { // TODO: change to email instead of name
+		if (studentService.isDuplicate(student.getEmail())) {
 			return "redirect:/users?duplicate=true";
 		} else {
 			var password = Utils.getShortUUID();
@@ -73,7 +88,7 @@ public class UserManagementController {
 
 	@PostMapping("/add-admin")
 	public String addAdmin(@ModelAttribute("admin") Admin admin) {
-		if (adminService.isDuplicate(admin.getName())) {
+		if (adminService.isDuplicate(admin.getEmail())) {
 			return "redirect:/users/admins?duplicate=true";
 		} else {
 			var password = Utils.getShortUUID();
@@ -89,7 +104,9 @@ public class UserManagementController {
 
 	@PostMapping("/delete-student/{studentId}")
 	public String deleteStudent(@PathVariable String studentId) {
-		// Delete all evalations, quizzez
+		evaluationService.deleteAllEvaluationsForStudent(studentId);
+		assignmentService.deleteAllAssignmentsForStudent(studentId);
+		responseService.deleteAllResponsesForStudent(studentId);
 		studentService.deleteStudent(studentId);
 		return "redirect:/users";
 	}
@@ -107,7 +124,7 @@ public class UserManagementController {
 		student.setDomain(educationInfo[1]);
 		student.setYear(Integer.parseInt(educationInfo[2]));
 		student.setId(id);
-		if (studentService.isDuplicateExcept(student.getName(), student.getId())) {
+		if (studentService.isDuplicateExcept(student.getEmail(), student.getId())) {
 			return "redirect:/users?duplicate=true";
 		} else {
 			var oldStudent = studentService.getStudentById(id);
@@ -121,7 +138,7 @@ public class UserManagementController {
 	@PostMapping("/edit-admin/{adminId}")
 	public String editAdmin(@ModelAttribute("admin") Admin admin, @PathVariable("adminId") final String id) {
 		admin.setId(id);
-		if (adminService.isDuplicateExcept(admin.getName(), admin.getId())) {
+		if (adminService.isDuplicateExcept(admin.getEmail(), admin.getId())) {
 			return "redirect:/users/admins?duplicate=true";
 		} else {
 			var oldAdmin = adminService.getAdminById(id);

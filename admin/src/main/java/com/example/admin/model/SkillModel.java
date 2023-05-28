@@ -17,5 +17,6 @@ public class SkillModel {
 	String name;
 	String description;
 	String category;
+	String categoryId;
 	Boolean hasDescription;
 }

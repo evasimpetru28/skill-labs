@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SkillRepository extends JpaRepository<Skill, String> {
-	@Query("select s from Skill s, Category c where s.categoryId = c.id order by s.name, c.name")
+	@Query("select s from Skill s, Category c where s.categoryId = c.id order by c.name, s.name")
 	List<Skill> findAllByOrderByNameAndCategoryName();
 	@Query("select s from Skill s where lower(s.name) = lower(?1)")
 	Optional<Skill> existsByName(String name);

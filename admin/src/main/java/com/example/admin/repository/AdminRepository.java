@@ -13,8 +13,8 @@ public interface AdminRepository extends JpaRepository<Admin, String> {
 	Admin findByResetCode(String resetCode);
 	Admin findByEmail(String email);
 	List<Admin> findAllByOrderByName();
-	@Query("select a from Admin a where lower(a.name) = lower(?1)")
-	Optional<Admin> existsByName(String name);
-	@Query("select a from Admin a where lower(a.name) = lower(?1) and a.id <> ?2")
-	Optional<Admin> existsByNameExcept(String name, String id);
+	@Query("select a from Admin a where lower(a.email) = lower(?1)")
+	Optional<Admin> existsByEmail(String email);
+	@Query("select a from Admin a where lower(a.email) = lower(?1) and a.id <> ?2")
+	Optional<Admin> existsByEmailExcept(String email, String id);
 }

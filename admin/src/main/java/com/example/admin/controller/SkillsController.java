@@ -2,7 +2,9 @@ package com.example.admin.controller;
 
 import com.example.admin.entity.Page;
 import com.example.admin.entity.Skill;
+import com.example.admin.repository.EvaluationRepository;
 import com.example.admin.service.CategoryService;
+import com.example.admin.service.EvaluationService;
 import com.example.admin.service.NavbarService;
 import com.example.admin.service.SkillService;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +16,10 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class SkillsController {
 
-	final NavbarService navbarService;
 	final SkillService skillService;
+	final NavbarService navbarService;
 	final CategoryService categoryService;
+	final EvaluationService evaluationService;
 
 	@GetMapping("/skills")
 	String getSkillsPage(Model model, @RequestParam(required = false) final Boolean duplicate) {
@@ -24,8 +27,6 @@ public class SkillsController {
 		model.addAttribute("categoryList", categoryService.getCategoryModelList());
 		model.addAttribute("skillList", skillService.getSkillModelList());
 		model.addAttribute("duplicate", duplicate);
-
-		//TODO: de fixat selectorul la update
 		return "skills";
 	}
 
@@ -36,13 +37,12 @@ public class SkillsController {
 		} else {
 			skillService.saveSkill(skill);
 		}
-
 		return "redirect:/skills";
 	}
 
 	@PostMapping("/delete-skill/{skillId}")
 	public String deleteSkill(@PathVariable final String skillId) {
-		// Delete all related evaluations, quizzes etc
+		evaluationService.deleteAllEvaluationsForSkill(skillId);
 		skillService.deleteSkill(skillId);
 		return "redirect:/skills";
 	}

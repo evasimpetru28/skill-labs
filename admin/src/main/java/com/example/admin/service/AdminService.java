@@ -25,12 +25,12 @@ public class AdminService {
 		adminRepository.deleteById(adminId);
 	}
 
-	public Boolean isDuplicate(String name) {
-		return adminRepository.existsByName(name).isPresent();
+	public Boolean isDuplicate(String email) {
+		return adminRepository.existsByEmail(email).isPresent();
 	}
 
-	public Boolean isDuplicateExcept(String name, String id) {
-		return adminRepository.existsByNameExcept(name, id).isPresent();
+	public Boolean isDuplicateExcept(String email, String id) {
+		return adminRepository.existsByEmailExcept(email, id).isPresent();
 	}
 
 	public Admin getAdminByResetCode(String resetCode) {

@@ -31,6 +31,7 @@ public class LoginSecurityConfig {
 					.requestMatchers("/login/**").permitAll()
 					.requestMatchers("/logout/**").permitAll()
 					.requestMatchers("/api/mail/send").permitAll()
+					.requestMatchers("/admin/**").permitAll()
 					.requestMatchers("/register/**").permitAll()
 					.requestMatchers("/dashboard/**").permitAll()
 					.requestMatchers("/users/**").permitAll()

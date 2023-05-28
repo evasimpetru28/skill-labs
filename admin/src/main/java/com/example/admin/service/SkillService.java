@@ -45,6 +45,7 @@ public class SkillService {
 						skill.getName(),
 						skill.getDescription(),
 						categoryRepository.getReferenceById(skill.getCategoryId()).getName(),
+						skill.getCategoryId(),
 						!"".equals(skill.getDescription())))
 				.toList();
 	}

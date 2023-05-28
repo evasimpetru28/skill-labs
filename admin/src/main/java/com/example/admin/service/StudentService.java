@@ -26,12 +26,12 @@ public class StudentService {
 		studentRepository.deleteById(studentId);
 	}
 
-	public Boolean isDuplicate(String name) {
-		return studentRepository.existsByName(name).isPresent();
+	public Boolean isDuplicate(String email) {
+		return studentRepository.existsByEmail(email).isPresent();
 	}
 
-	public Boolean isDuplicateExcept(String name, String id) {
-		return studentRepository.existsByNameExcept(name, id).isPresent();
+	public Boolean isDuplicateExcept(String email, String id) {
+		return studentRepository.existsByEmailExcept(email, id).isPresent();
 	}
 
 	public List<StudentModel> getStudentModelList() {

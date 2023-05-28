@@ -27,27 +27,36 @@
 
         <div class="row">
             <div class="justify-content-start col-1">
-                <form action="/users/students" method="GET">
-                    <button type="submit" class="btn {{#adminUsers}}btn-secondary{{/adminUsers}}{{^adminUsers}}btn-primary{{/adminUsers}}">
-                        Students</button>
+                <form action="/users/admins" method="GET">
+                    <button type="submit" class="btn {{#admins}}btn-primary{{/admins}}{{^admins}}btn-secondary{{/admins}}">
+                        Admins</button>
                 </form>
             </div>
             <div class="justify-content-start col-1">
-                <form action="/users/admins" method="GET">
-                    <button type="submit" class="btn {{#adminUsers}}btn-primary{{/adminUsers}}{{^adminUsers}}btn-secondary{{/adminUsers}}">
-                        Admins</button>
+                <form action="/users/students" method="GET">
+                    <button type="submit" class="btn {{#students}}btn-primary{{/students}}{{^students}}btn-secondary{{/students}}">
+                        Students</button>
+                </form>
+            </div>
+            <div class="justify-content-start col-2">
+                <form action="/users/professors-companies" method="GET">
+                    <button type="submit" class="btn {{#superusers}}btn-primary{{/superusers}}{{^superusers}}btn-secondary{{/superusers}}">
+                        Professors & Companies</button>
                 </form>
             </div>
         </div>
 
         <br>
 
-        {{#adminUsers}}
+        {{#admins}}
             {{>fragments/add-admin}}
-        {{/adminUsers}}
-        {{^adminUsers}}
+        {{/admins}}
+        {{#students}}
             {{>fragments/add-student}}
-        {{/adminUsers}}
+        {{/students}}
+        {{#superusers}}
+
+        {{/superusers}}
 
         <table id="dtBasicExample" class="table table-hover table-striped table-bordered table-sm">
 
@@ -57,11 +66,11 @@
                 <th class="th-sm">Name</th>
                 <th class="th-sm">Email</th>
                 <th class="th-sm">Telephone</th>
-                {{^adminUsers}}
+                {{#students}}
                     <th class="th-sm">Program</th>
                     <th class="th-sm">Domain</th>
                     <th class="th-sm">Year</th>
-                {{/adminUsers}}
+                {{/students}}
                 <th class="th-sm">Actions</th>
             </tr>
             </thead>
@@ -73,34 +82,34 @@
                 <td>{{name}}</td>
                 <td>{{email}}</td>
                 <td>{{phone}}</td>
-                {{^adminUsers}}
+                {{#students}}
                     <td>{{program}}</td>
                     <td>{{domain}}</td>
                     <td>{{year}}</td>
-                {{/adminUsers}}
+                {{/students}}
                 <td class="col-3">
-
                     <div class="row">
                         <div class="d-flex justify-content-end col-6">
-
-                            {{#adminUsers}}
+                            {{#admins}}
                                 {{>fragments/edit-admin}}
-                            {{/adminUsers}}
-                            {{^adminUsers}}
+                            {{/admins}}
+                            {{#students}}
                                 {{>fragments/edit-student}}
-                            {{/adminUsers}}
+                            {{/students}}
+                            {{#superusers}}
 
+                            {{/superusers}}
                         </div>
-
                         <div class="d-flex justify-content-start col-6">
-
-                            {{#adminUsers}}
+                            {{#admins}}
                                 {{>fragments/delete-admin}}
-                            {{/adminUsers}}
-                            {{^adminUsers}}
+                            {{/admins}}
+                            {{#students}}
                                 {{>fragments/delete-student}}
-                            {{/adminUsers}}
+                            {{/students}}
+                            {{#superusers}}
 
+                            {{/superusers}}
                         </div>
                     </div>
                 </td>

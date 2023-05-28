@@ -33,6 +33,7 @@
             <div class="mb-3">
               <div class="form-outline">
                 <select aria-autocomplete="none" id="category{{index}}" class="form-control form-control-lg active" name="categoryId" required>
+                  <option class="autocomplete-item" value="{{categoryId}}" hidden="hidden">{{category}}</option>
                   {{#categoryList}}
                   <option class="autocomplete-item" value="{{id}}" >
                     {{name}}
