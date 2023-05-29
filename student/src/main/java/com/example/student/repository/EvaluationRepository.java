@@ -11,6 +11,7 @@ import java.util.Optional;
 
 public interface EvaluationRepository extends JpaRepository<Evaluation, String> {
 	Optional<Evaluation> findBySkillIdAndStudentId(String skillId, String studentId);
+//	Evaluation getEvaluationBySkillIdAndStudentId(String skillId, String studentId);
 	@Query(value = """
 			select new com.example.student.model.SkillEvaluationModel(s.id, s.name, s.description, c.name, true, 
 			 case 
@@ -25,4 +26,5 @@ public interface EvaluationRepository extends JpaRepository<Evaluation, String> 
 			order by lower(c.name), lower(s.name)
 					""")
 	List<SkillEvaluationModel> findAllEvaluationsByStudentId(@Param("studentId") String studentId);
+
 }

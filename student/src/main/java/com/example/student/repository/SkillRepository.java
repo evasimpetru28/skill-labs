@@ -23,4 +23,5 @@ public interface SkillRepository extends JpaRepository<Skill, String> {
 	Optional<Skill> existsByName(String name);
 	@Query("select s from Skill s where lower(s.name) = lower(?1) and s.id <> ?2")
 	Optional<Skill> existsByNameExcept(String name, String id);
+	Skill findByName(String name);
 }

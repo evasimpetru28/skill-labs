@@ -45,21 +45,19 @@ function loadStars() {
     }
 }
 
-function deleteEvaluation(callingElement){
+function deleteEvaluation(callingElement, studentId){
     var id = callingElement.id;
-    var data = '{"id":"'+id+'"}';
-    var data2 = {"id":"John"};
 
     $.ajax({
         type : "POST",
-        url : "/evaluate",
-        data : data2,
+        url : "/delete-evaluation/" + id + "/" + studentId,
         dataType: "html",
         contentType: 'application/json',
         mimeType: 'application/json',
         timeout : 100000,
-        success : function(data2) {
-            console.log("SUCCES: ", data2);
+        success : function() {
+            console.log("SUCCES: ");
+            location.reload();
         },
         error : function(e) {
             console.log("ERROR: ", e);
@@ -67,4 +65,19 @@ function deleteEvaluation(callingElement){
         done : function(e) {
         }
     });
+}
+
+function deleteEval(id, studentId) {
+    fetch("/delete-evaluation/" + id + "/" + studentId, {
+        method: "POST"
+    }).then(response => {
+        if (response.ok) {
+            // location.reload();
+        } else {
+            alert("Failed to delete the resume. Please try again.");
+        }
+    })
+        .catch(error => {
+            console.error("Error deleting the resume:", error);
+        });
 }
