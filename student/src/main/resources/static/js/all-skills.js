@@ -25,7 +25,7 @@ function getStars(callingElementId) {
 
     for (let i = starsNumber + 1; i <= 10; i++) {
         let iTag = document.createElement("i");
-        iTag.className = "fa-regular fa-star fa-fw";
+        iTag.className = "fa-regular fa-star fa-fw icon-hover";
         starsDiv.appendChild(iTag);
         starsDiv.append('\n');
     }
