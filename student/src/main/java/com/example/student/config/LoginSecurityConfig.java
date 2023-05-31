@@ -51,6 +51,7 @@ public class LoginSecurityConfig {
 					.requestMatchers("/invalid-link/**").permitAll()
 					.requestMatchers("/my-skills/**").permitAll()
 					.requestMatchers("/delete-evaluation/**").permitAll()
+					.requestMatchers("/reevaluate/**").permitAll()
 					.requestMatchers("/favicon.ico").permitAll()
 					.requestMatchers("/static/**").permitAll()
 					.and()

@@ -1,4 +1,23 @@
-function getStars(callingElementId) {
+function getOnclick(skillName, criteria, starsNumber, studentId) {
+    return function update(event) {
+        $.ajax({
+            type : "POST",
+            url : "/reevaluate/" + skillName + "/" + criteria + "/" + starsNumber + "/" + studentId,
+            dataType: "html",
+            contentType: 'application/json',
+            mimeType: 'application/json',
+            timeout : 100000,
+            success : function() {
+                location.reload();
+            },
+            error : function(e) {
+                console.log("ERROR: ", e);
+            }
+        });
+    };
+}
+
+function getStars(callingElementId, studentId) {
     let idLength = callingElementId.length;
     let starsNumber = parseInt(callingElementId.substring(idLength - 1, idLength));
     let nameAndCriteria;
@@ -18,13 +37,16 @@ function getStars(callingElementId) {
         nameAndCriteria = callingElementId + "-";
     }
 
+    let skillName = callingElementId.substring(0, nameLength - 4);
+    let criteria = callingElementId.substring(nameLength - 3, nameLength);
     let starsDiv = document.getElementById(callingElementId);
+
     for (let i = 1; i <= starsNumber; i++) {
         let iTag = document.createElement("i");
         iTag.className = "fa-solid fa-star fa-fw";
         iTag.id = nameAndCriteria + i;
         iTag.style = "color: #f5d836;";
-        iTag.addEventListener("click", updateEvaluation(this));
+        iTag.onclick = getOnclick(skillName, criteria, i, studentId);
         starsDiv.appendChild(iTag);
         starsDiv.append('\n');
     }
@@ -33,7 +55,7 @@ function getStars(callingElementId) {
         let iTag = document.createElement("i");
         iTag.className = "fa-regular fa-star fa-fw icon-hover";
         iTag.id = nameAndCriteria + i;
-        iTag.addEventListener("click", updateEvaluation(this))
+        iTag.onclick = getOnclick(skillName, criteria, i, studentId);
         starsDiv.appendChild(iTag);
         starsDiv.append('\n');
     }
@@ -45,11 +67,11 @@ function getStars(callingElementId) {
     trashCanDiv.appendChild(trashIcon);
 }
 
-function loadStars() {
+function loadStars(studentId) {
     let starsDivs = document.getElementsByClassName('stars-div');
     for (let i = 0; i < starsDivs.length; i++) {
         let itemId = starsDivs.item(i).id;
-        getStars(itemId);
+        getStars(itemId, studentId);
     }
 }
 
@@ -66,17 +88,11 @@ function deleteEvaluation(callingElement, studentId){
         mimeType: 'application/json',
         timeout : 100000,
         success : function() {
-            console.log("SUCCES");
+
             location.reload();
         },
         error : function(e) {
             console.log("ERROR: ", e);
-        },
-        done : function(e) {
         }
     });
-}
-
-function updateEvaluation(callingElement) {
-    console.log(callingElement.id)
 }

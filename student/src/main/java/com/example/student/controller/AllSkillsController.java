@@ -45,4 +45,15 @@ public class AllSkillsController {
 		}
 	}
 
+	@PostMapping("/reevaluate/{skillName}/{criteria}/{starsNumber}/{studentId}")
+	public ResponseEntity<String> reevaluation(@PathVariable String skillName, @PathVariable String criteria, @PathVariable Integer starsNumber, @PathVariable String studentId) {
+		//TODO: Get logged user id from session
+		try {
+			evaluationService.reevaluateCriteriaForSkillAndStudent(skillName, criteria, starsNumber, studentId);
+			return ResponseEntity.ok().build();
+		} catch (Exception e) {
+			log.error("Error reevaluating the skill {} for student with id {}", skillName, studentId);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
 }
