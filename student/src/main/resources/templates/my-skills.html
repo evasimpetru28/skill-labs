@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="../static/style/my-skills-style.css">
 
 </head>
-<body onload="loadStars()">
+<body onload="loadStars('{{studentId}}')">
 
 <!--Main Navigation-->
 <header>
@@ -46,21 +46,21 @@
 						<div class="row">
 							<div class="col-3">Interest</div>
 							<div class="col-8 stars-div" id="{{name}}-int-{{interest}}"></div>
-							<div class="col-1 trash-can-div" id="{{name}}-int-trash-can"></div>
+							<div class="col-1 trash-can-div" id="{{name}}-int-trash-can" onclick="deleteEvaluation(this, '{{studentId}}')"></div>
 						</div>
 					</li>
 					<li class="list-group-item px-4">
 						<div class="row">
 							<div class="col-3">Knowledge</div>
 							<div class="col-8 stars-div" id="{{name}}-kno-{{knowledge}}"></div>
-							<div class="col-1 trash-can-div" id="{{name}}-kno-trash-can" onclick="deleteKnowledge(this)"></div>
+							<div class="col-1 trash-can-div" id="{{name}}-kno-trash-can" onclick="deleteEvaluation(this, '{{studentId}}')"></div>
 						</div>
 					</li>
 					<li class="list-group-item px-4">
 						<div class="row">
 							<div class="col-3">Experience</div>
 							<div class="col-8 stars-div" id="{{name}}-exp-{{experience}}"></div>
-							<div class="col-1 trash-can-div" id="{{name}}-exp-trash-can"></div>
+							<div class="col-1 trash-can-div" id="{{name}}-exp-trash-can" onclick="deleteEvaluation(this, '{{studentId}}')"></div>
 						</div>
 					</li>
 				</ul>

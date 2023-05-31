@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @Transactional
@@ -38,10 +39,12 @@ public class SkillService {
 
 	public List<SkillEvaluationModel> getAllSkillsAndEvaluationsForStudent(String studentId) {
 		var skills = skillRepository.findAlSkillsAndCategories();
+		var index = new AtomicInteger(1);
 		return skills.stream()
 				.map(skill -> {
 					var optionalSkill = evaluationRepository.findBySkillIdAndStudentId(skill.getId(), studentId);
 					var skillModel = new SkillEvaluationModel();
+					skillModel.setIndex(index.getAndIncrement());
 					skillModel.setId(skill.getId());
 					skillModel.setName(skill.getName());
 					skillModel.setDescription(skill.getDescription());
@@ -60,7 +63,25 @@ public class SkillService {
 	}
 
 	public List<SkillEvaluationModel> getEvaluationsForStudent(String studentId) {
-		return evaluationRepository.findAllEvaluationsByStudentId(studentId);
-	}
+		var evaluations = evaluationRepository.findAllEvaluationsByStudentId(studentId);
+		var index = new AtomicInteger(1);
+		return evaluations.stream()
+				.map(skill -> {
+					System.out.println(skill.getCategory());
+					var skillModel = new SkillEvaluationModel();
+					skillModel.setIndex(index.getAndIncrement());
+					skillModel.setId(skill.getId());
+					skillModel.setName(skill.getName());
+					skillModel.setDescription(skill.getDescription());
+					skillModel.setCategory(skill.getCategory());
+					skillModel.setHasEvaluation(skill.getHasEvaluation());
+					skillModel.setHasDescription(skill.getHasDescription());
+					skillModel.setInterest(skill.getInterest());
+					skillModel.setKnowledge(skill.getKnowledge());
+					skillModel.setExperience(skill.getExperience());
 
+					return skillModel;
+				})
+				.toList();
+	}
 }

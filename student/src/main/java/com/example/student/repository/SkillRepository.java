@@ -1,7 +1,7 @@
 package com.example.student.repository;
 
 import com.example.student.entity.Skill;
-import com.example.student.model.SkillEvaluationInterface;
+import com.example.student.model.SkillInterface;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -18,7 +18,7 @@ public interface SkillRepository extends JpaRepository<Skill, String> {
 					left join category c on s.category_id = c.id
 					order by lower(c.name), lower(s.name)
 			""", nativeQuery = true)
-	List<SkillEvaluationInterface> findAlSkillsAndCategories();
+	List<SkillInterface> findAlSkillsAndCategories();
 	@Query("select s from Skill s where lower(s.name) = lower(?1)")
 	Optional<Skill> existsByName(String name);
 	@Query("select s from Skill s where lower(s.name) = lower(?1) and s.id <> ?2")

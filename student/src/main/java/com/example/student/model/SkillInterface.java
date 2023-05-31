@@ -1,6 +1,6 @@
 package com.example.student.model;
 
-public interface SkillEvaluationInterface {
+public interface SkillInterface {
 	String getId();
 	String getName();
 	String getDescription();
