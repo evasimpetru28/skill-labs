@@ -1,24 +1,30 @@
 function getStars(callingElementId) {
     let idLength = callingElementId.length;
     let starsNumber = parseInt(callingElementId.substring(idLength - 1, idLength));
+    let nameAndCriteria;
     let nameLength;
 
     if (callingElementId.substring(idLength - 2, idLength) === '10') {
         starsNumber = parseInt(callingElementId.substring(idLength - 2, idLength));
         nameLength = idLength - 3;
+        nameAndCriteria = callingElementId.substring(0, idLength - 2);
     } else {
         nameLength = idLength - 2;
+        nameAndCriteria = callingElementId.substring(0, idLength - 1);
     }
     if (isNaN(starsNumber)) {
         starsNumber = 0;
         nameLength = idLength;
+        nameAndCriteria = callingElementId + "-";
     }
 
     let starsDiv = document.getElementById(callingElementId);
     for (let i = 1; i <= starsNumber; i++) {
         let iTag = document.createElement("i");
         iTag.className = "fa-solid fa-star fa-fw";
+        iTag.id = nameAndCriteria + i;
         iTag.style = "color: #f5d836;";
+        iTag.addEventListener("click", updateEvaluation(this));
         starsDiv.appendChild(iTag);
         starsDiv.append('\n');
     }
@@ -26,6 +32,8 @@ function getStars(callingElementId) {
     for (let i = starsNumber + 1; i <= 10; i++) {
         let iTag = document.createElement("i");
         iTag.className = "fa-regular fa-star fa-fw icon-hover";
+        iTag.id = nameAndCriteria + i;
+        iTag.addEventListener("click", updateEvaluation(this))
         starsDiv.appendChild(iTag);
         starsDiv.append('\n');
     }
@@ -46,17 +54,19 @@ function loadStars() {
 }
 
 function deleteEvaluation(callingElement, studentId){
-    var id = callingElement.id;
+    let id = callingElement.id;
+    let skillName = id.substring(0, id.length - 14);
+    let criteria = id.substring(id.length - 13, id.length - 10);
 
     $.ajax({
         type : "POST",
-        url : "/delete-evaluation/" + id + "/" + studentId,
+        url : "/delete-evaluation/" + skillName + "/" + criteria + "/" + studentId,
         dataType: "html",
         contentType: 'application/json',
         mimeType: 'application/json',
         timeout : 100000,
         success : function() {
-            console.log("SUCCES: ");
+            console.log("SUCCES");
             location.reload();
         },
         error : function(e) {
@@ -67,17 +77,6 @@ function deleteEvaluation(callingElement, studentId){
     });
 }
 
-function deleteEval(id, studentId) {
-    fetch("/delete-evaluation/" + id + "/" + studentId, {
-        method: "POST"
-    }).then(response => {
-        if (response.ok) {
-            // location.reload();
-        } else {
-            alert("Failed to delete the resume. Please try again.");
-        }
-    })
-        .catch(error => {
-            console.error("Error deleting the resume:", error);
-        });
+function updateEvaluation(callingElement) {
+    console.log(callingElement.id)
 }

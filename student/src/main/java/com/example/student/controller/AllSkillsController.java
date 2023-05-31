@@ -1,7 +1,6 @@
 package com.example.student.controller;
 
 import com.example.student.entity.Page;
-import com.example.student.repository.EvaluationRepository;
 import com.example.student.service.CategoryService;
 import com.example.student.service.EvaluationService;
 import com.example.student.service.NavbarService;
@@ -12,7 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @RequiredArgsConstructor
 @Controller
@@ -32,10 +33,9 @@ public class AllSkillsController {
 		return "all-skills";
 	}
 
-	@PostMapping("/delete-evaluation/{id}/{studentId}")
-	public ResponseEntity<String> deleteEvaluation(@PathVariable String id, @PathVariable String studentId) {
-		String skillName = id.substring(0, id.length() - 14);
-		String criteria = id.substring(id.length() - 13, id.length() - 10);
+	@PostMapping("/delete-evaluation/{skillName}/{criteria}/{studentId}")
+	public ResponseEntity<String> deleteEvaluation(@PathVariable String skillName, @PathVariable String criteria, @PathVariable String studentId) {
+		//TODO: Get logged user id from session
 		try {
 			evaluationService.removeEvaluationCriteriaForSkillAndStudent(skillName, studentId, criteria);
 			return ResponseEntity.ok().build();

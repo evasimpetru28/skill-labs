@@ -29,6 +29,12 @@ public class EvaluationService {
 				evaluation.get().setExperience(0);
 				evaluationRepository.saveAndFlush(evaluation.get());
 			}
+
+			if (evaluation.get().getInterest() == 0
+				&& evaluation.get().getKnowledge() == 0
+				&& evaluation.get().getExperience() == 0) {
+				evaluationRepository.delete(evaluation.get());
+			}
 		}
 	}
 
