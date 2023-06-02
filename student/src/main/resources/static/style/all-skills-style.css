@@ -26,3 +26,7 @@ table {
 .icon-hover:hover {
     color: #f5d836;
 }
+
+.icon-pointer:hover {
+    cursor: pointer;
+}

@@ -1,0 +1,19 @@
+<!-- Sidebar -->
+<nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white" style="padding-top: 100px;">
+	<div class="position-sticky">
+		<div class="list-group list-group-flush mx-3 mt-4">
+
+			<a href="/my-skills/{{studentId}}" class="list-group-item list-group-item-action py-2 ripple
+       {{#mySkillsActive}}active{{/mySkillsActive}}" aria-current="true">
+				<i class="fa-regular fa-star fa-fw me-3"></i><span>My Skills</span>
+			</a>
+
+			<a href="/all-skills/{{studentId}}" class="list-group-item list-group-item-action py-2 ripple
+        {{#allSkillsActive}}active{{/allSkillsActive}}">
+				<i class="fa-regular fa-circle-dot fa-fw me-3"></i><span>All Skills</span>
+			</a>
+
+		</div>
+	</div>
+</nav>
+<!-- Sidebar -->

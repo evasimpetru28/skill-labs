@@ -55,7 +55,7 @@
             {{>fragments/add-student}}
         {{/students}}
         {{#superusers}}
-
+            {{>fragments/add-superuser}}
         {{/superusers}}
 
         <table id="dtBasicExample" class="table table-hover table-striped table-bordered table-sm">
@@ -71,6 +71,9 @@
                     <th class="th-sm">Domain</th>
                     <th class="th-sm">Year</th>
                 {{/students}}
+                {{#superusers}}
+                    <th class="th-sm">Type</th>
+                {{/superusers}}
                 <th class="th-sm">Actions</th>
             </tr>
             </thead>
@@ -87,6 +90,9 @@
                     <td>{{domain}}</td>
                     <td>{{year}}</td>
                 {{/students}}
+                {{#superusers}}
+                <td class="th-sm">{{type}}</td>
+                {{/superusers}}
                 <td class="col-3">
                     <div class="row">
                         <div class="d-flex justify-content-end col-6">
@@ -97,7 +103,7 @@
                                 {{>fragments/edit-student}}
                             {{/students}}
                             {{#superusers}}
-
+                                {{>fragments/edit-superuser}}
                             {{/superusers}}
                         </div>
                         <div class="d-flex justify-content-start col-6">
@@ -108,7 +114,7 @@
                                 {{>fragments/delete-student}}
                             {{/students}}
                             {{#superusers}}
-
+                                {{>fragments/delete-superuser}}
                             {{/superusers}}
                         </div>
                     </div>

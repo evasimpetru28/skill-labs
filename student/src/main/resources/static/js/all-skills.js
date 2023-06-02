@@ -43,7 +43,7 @@ function getStars(callingElementId, studentId) {
 
     for (let i = 1; i <= starsNumber; i++) {
         let iTag = document.createElement("i");
-        iTag.className = "fa-solid fa-star fa-fw";
+        iTag.className = "fa-solid fa-star fa-fw icon-pointer";
         iTag.id = nameAndCriteria + i;
         iTag.style = "color: #f5d836;";
         iTag.onclick = getOnclick(skillName, criteria, i, studentId);
@@ -53,7 +53,7 @@ function getStars(callingElementId, studentId) {
 
     for (let i = starsNumber + 1; i <= 10; i++) {
         let iTag = document.createElement("i");
-        iTag.className = "fa-regular fa-star fa-fw icon-hover";
+        iTag.className = "fa-regular fa-star fa-fw icon-hover icon-pointer";
         iTag.id = nameAndCriteria + i;
         iTag.onclick = getOnclick(skillName, criteria, i, studentId);
         starsDiv.appendChild(iTag);
@@ -62,7 +62,7 @@ function getStars(callingElementId, studentId) {
 
     let trashCanDiv = document.getElementById(callingElementId.substring(0, nameLength) + "-trash-can");
     let trashIcon = document.createElement("i");
-    trashIcon.className = "fa-regular fa-trash-can";
+    trashIcon.className = "fa-regular fa-trash-can icon-pointer";
     trashIcon.style = "color: #b42727;";
     trashCanDiv.appendChild(trashIcon);
 }

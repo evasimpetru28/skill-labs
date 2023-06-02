@@ -1,4 +1,4 @@
-package com.example.student.config;
+package com.example.professor.config;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

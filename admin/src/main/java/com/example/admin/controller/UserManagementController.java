@@ -3,6 +3,7 @@ package com.example.admin.controller;
 import com.example.admin.entity.Admin;
 import com.example.admin.entity.Page;
 import com.example.admin.entity.Student;
+import com.example.admin.entity.Superuser;
 import com.example.admin.model.ResetPasswordModel;
 import com.example.admin.service.*;
 import com.example.admin.util.Utils;
@@ -23,6 +24,7 @@ public class UserManagementController {
 	final SmtpMailSender smtpMailSender;
 	final StudentService studentService;
 	final ResponseService responseService;
+	final SuperuserService superuserService;
 	final AssignmentService assignmentService;
 	final EvaluationService evaluationService;
 	@Autowired
@@ -58,6 +60,7 @@ public class UserManagementController {
 	@GetMapping("/users/professors-companies")
 	String getSuperusersPage(Model model, @RequestParam(required = false) final Boolean duplicate) {
 		navbarService.activateNavbarTab(Page.USER_MANAGEMENT, model);
+		model.addAttribute("userList", superuserService.getSuperuserModelList());
 		model.addAttribute("duplicate", duplicate);
 		model.addAttribute("admins", false);
 		model.addAttribute("students", false);
@@ -81,7 +84,7 @@ public class UserManagementController {
 			student.setPassword(passwordEncoder.encode(password));
 
 			studentService.saveStudent(student);
-			smtpMailSender.sendMailResetPassword(true, student.getName(), student.getEmail(), password, resetCode);
+			smtpMailSender.sendMailResetPassword("STUDENT", student.getName(), student.getEmail(), password, resetCode);
 		}
 		return "redirect:/users";
 	}
@@ -97,9 +100,25 @@ public class UserManagementController {
 			admin.setPassword(passwordEncoder.encode(password));
 
 			adminService.saveAdmin(admin);
-			smtpMailSender.sendMailResetPassword(false, admin.getName(), admin.getEmail(), password, resetCode);
+			smtpMailSender.sendMailResetPassword("ADMIN", admin.getName(), admin.getEmail(), password, resetCode);
 		}
 		return "redirect:/users/admins";
+	}
+
+	@PostMapping("/add-superuser")
+	public String addSuperuser(@ModelAttribute("admin") Superuser superuser) {
+		if (superuserService.isDuplicate(superuser.getEmail())) {
+			return "redirect:/users/professors-companies?duplicate=true";
+		} else {
+			var password = Utils.getShortUUID();
+			var resetCode = Utils.getShortUUID();
+			superuser.setResetCode(resetCode);
+			superuser.setPassword(passwordEncoder.encode(password));
+
+			superuserService.saveSuperuser(superuser);
+			smtpMailSender.sendMailResetPassword("SUPERUSER", superuser.getName(), superuser.getEmail(), password, resetCode);
+		}
+		return "redirect:/users/professors-companies";
 	}
 
 	@PostMapping("/delete-student/{studentId}")
@@ -115,6 +134,13 @@ public class UserManagementController {
 	public String deleteAdmin(@PathVariable String adminId) {
 		adminService.deleteAdmin(adminId);
 		return "redirect:/users/admins";
+	}
+
+	@PostMapping("/delete-superuser/{superuserId}")
+	public String deleteSuperuser(@PathVariable String superuserId) {
+		//TODO: delete all assignment, option, response, question, quiz
+		superuserService.deleteSuperuser(superuserId);
+		return "redirect:/users/professors-companies";
 	}
 
 	@PostMapping("/edit-student/{studentId}")
@@ -147,6 +173,20 @@ public class UserManagementController {
 			adminService.saveAdmin(admin);
 		}
 		return "redirect:/users/admins";
+	}
+
+	@PostMapping("/edit-superuser/{superuserId}")
+	public String editSuperuser(@ModelAttribute("superuser") Superuser superuser, @PathVariable("superuserId") final String id) {
+		superuser.setId(id);
+		if (superuserService.isDuplicateExcept(superuser.getEmail(), superuser.getId())) {
+			return "redirect:/users/professors-companies?duplicate=true";
+		} else {
+			var oldSuperuser = superuserService.getSuperuserById(id);
+			superuser.setPassword(oldSuperuser.getPassword());
+			superuser.setResetCode(oldSuperuser.getResetCode());
+			superuserService.saveSuperuser(superuser);
+		}
+		return "redirect:/users/professors-companies";
 	}
 
 	@GetMapping("/reset-password/{resetCode}")

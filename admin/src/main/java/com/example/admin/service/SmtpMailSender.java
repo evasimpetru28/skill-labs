@@ -16,6 +16,8 @@ public class SmtpMailSender {
 	private String adminHostLink;
 	@Value("${student.host.url}")
 	private String studentHostLink;
+	@Value("${professor.host.url}")
+	private String professorHostLink;
 
 	public void sendMail(String to, String subject, String body) {
 		var message = new SimpleMailMessage();
@@ -26,19 +28,25 @@ public class SmtpMailSender {
 		javaMailSender.send(message);
 	}
 
-	public void sendMailResetPassword(Boolean isStudent, String name, String email, String password, String resetCode) {
+	public void sendMailResetPassword(String role, String name, String email, String password, String resetCode) {
 		var subject = "Skill Labs - Reset password";
 		var body = "Hello " + name +
 				   ",\n\nHere are your credentials for Skill Labs:\n\n" +
 				   "User: " + email + "\n" +
 				   "Password: " + password + "\n\n" +
-				   "Please reset your password by clicking the link below:\n\n" + getHostLink(isStudent, resetCode);
+				   "Please reset your password by clicking the link below:\n\n" + getHostLink(role, resetCode);
 
 		sendMail(email, subject, body);
 	}
 
-	private String getHostLink(Boolean isStudent, String resetCode) {
-		return (isStudent ? studentHostLink : adminHostLink) + "/reset-password/" + resetCode;
+	private String getHostLink(String role, String resetCode) {
+		String link;
+		switch (role) {
+			case "STUDENT" -> link = studentHostLink;
+			case "SUPERUSER" -> link = professorHostLink;
+			default -> link = adminHostLink;
+		}
+		return (link + "/reset-password/" + resetCode);
 	}
 
 }

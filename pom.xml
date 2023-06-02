@@ -12,6 +12,7 @@
         <module>admin</module>
         <module>parent</module>
         <module>student</module>
+        <module>professor</module>
     </modules>
 
     <packaging>pom</packaging>
