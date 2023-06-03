@@ -15,22 +15,18 @@ public class NavbarService {
 			case MY_SKILLS:
 				model.addAttribute("mySkillsActive", true);
 				break;
-			case USER_MANAGEMENT:
-				model.addAttribute("userManagementActive", true);
-				break;
 			case ALL_SKILLS:
 				model.addAttribute("allSkillsActive", true);
 				break;
-			case CATEGORIES:
-				model.addAttribute("categoriesActive", true);
+			case ASSIGNMENTS:
+				model.addAttribute("assignmentsActive", true);
 				break;
 		}
 	}
 
 	public void inactivateAllNavbarTabs(Model model) {
-		model.addAttribute("dashboardActive", false);
-		model.addAttribute("userManagementActive", false);
-		model.addAttribute("skillsActive", false);
-		model.addAttribute("categoriesActive", false);
+		model.addAttribute("mySkillsActive", false);
+		model.addAttribute("allSkillsActive", false);
+		model.addAttribute("assignmentsActive", false);
 	}
 }
