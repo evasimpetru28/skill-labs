@@ -22,20 +22,3 @@ table {
         display: none;
     }
 }
-
-.icon-hover:hover {
-    color: #f5d836;
-}
-
-.icon-pointer:hover {
-    cursor: pointer;
-}
-
-.no-eval-text {
-    height: 300px;
-}
-
-.link {
-    text-decoration: none !important;
-    color: inherit;
-}

@@ -21,6 +21,7 @@ public class MySkillsController {
 		navbarService.activateNavbarTab(Page.MY_SKILLS, model);
 		model.addAttribute("studentId", studentId);
 		model.addAttribute("evaluationsList", skillService.getEvaluationsForStudent(studentId));
+		model.addAttribute("noEvaluations", skillService.getEvaluationsForStudent(studentId).isEmpty());
 
 		return "my-skills";
 	}
