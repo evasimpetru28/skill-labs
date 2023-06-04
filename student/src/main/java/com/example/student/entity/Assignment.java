@@ -22,4 +22,5 @@ public class Assignment {
 	String studentId;
 	String quizId;
 	Integer score;
+	String name;
 }

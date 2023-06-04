@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Skill Labs - Create quiz</title>
+
+	{{>fragments/links}}
+	<link rel="stylesheet" href="../static/style/navigation-style.css">
+	<!-- Page style -->
+	<link rel="stylesheet" href="../static/style/create-quiz-style.css">
+
+</head>
+<body>
+
+<!--Main Navigation-->
+<header>
+
+	{{>fragments/logout-btn}}
+	{{>fragments/sidebar}}
+
+</header>
+<!--Main Navigation-->
+
+<!--Main layout-->
+<main style="margin-top: 50px;">
+	<div class="container-fluid container-custom pt-4 table-responsive-lg">
+
+		{{#questionMap}}
+			{{#entrySet}}
+			<div class="modal-content" style="padding: 30px 0 30px 40px; margin: 1rem;">
+					<div class="modal-body">
+
+						<div class="row">
+							<div class="mb-3">
+								<div class="d-flex align-items-center row">
+									<div class="col-11">
+										<div class="form-outline">
+											<input type="text" id="name" name="name" class="form-control form-control-lg"
+												   oninput="updateQuestion(this, '{{#key}}{{id}}{{/key}}')" value="{{#key}}{{question}}{{/key}}" required />
+											<label class="form-label" for="name">Question<span class="error">*</span></label>
+										</div>
+									</div>
+									<div class="col-1" onclick="deleteQuestion('{{#key}}{{id}}{{/key}}', '{{quizId}}')">
+										<i class="fa-regular fa-trash-can"></i>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+					{{#value}}
+						<div class="row">
+							<div class="mb-3">
+								<div class="d-flex row align-items-center">
+									<div class="col-11">
+										<div class="d-flex align-items-center form-check checkbox-lg">
+											<input class="form-check-input" type="checkbox" onclick="updateOptionChecked(this, '{{id}}')"
+												   id="option{{#key}}{{index}}{{/key}}-{{index}}" {{#isCorrect}}checked{{/isCorrect}}>
+											<input type="text" id="input{{index}}" class="form-control" value="{{optionText}}"
+												   oninput="updateOptionText(this, '{{id}}')" required />
+										</div>
+									</div>
+									<div class="col-1" onclick="deleteOption('{{id}}', '{{quizId}}')">
+										<i class="fa-regular fa-circle-xmark"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					{{/value}}
+						<div class="row">
+							<div class="mb-3">
+								<div class="d-flex row align-items-center">
+									<div class="row" onclick="addOption('{{#key}}{{id}}{{/key}}', '{{quizId}}')">
+										<i class="fa-solid fa-circle-plus"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+			</div>
+			{{/entrySet}}
+
+		<div class="modal-content" style="padding: 30px 0 30px 40px; margin: 1rem;">
+			<div class="row" onclick="addQuestion('{{quizId}}')">
+				<i class="fa-solid fa-circle-plus"></i>
+			</div>
+		</div>
+
+		{{/questionMap}}
+	</div>
+</main>
+<!--Main layout-->
+
+</body>
+
+<script>
+    document.querySelectorAll('.form-outline').forEach((formOutline) => {
+        new mdb.Input(formOutline).init();
+    });
+</script>
+<script type="text/javascript" src="../static/js/create-quiz.js"></script>
+
+</html>

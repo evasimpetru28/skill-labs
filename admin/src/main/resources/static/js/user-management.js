@@ -348,7 +348,7 @@ function getYearOptions(callingElement) {
     option2.text = option2.value;
     select3.appendChild(option2);
 
-    if (select1.value === "Licenta") { // Licenta
+    if (select1.value === "Licenta") {
         let option3 = document.createElement("option");
         option3.value = 3;
         option3.text = option3.value;

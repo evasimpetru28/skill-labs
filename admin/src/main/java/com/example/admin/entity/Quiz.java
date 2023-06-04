@@ -22,5 +22,4 @@ public class Quiz {
 	String id;
 	Integer grade;
 	String superuserId;
-	String name;
 }
