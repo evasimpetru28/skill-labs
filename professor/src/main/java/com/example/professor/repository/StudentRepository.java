@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface StudentRepository extends JpaRepository<Student, String> {
-	@Query("select s from Student s order by lower(s.name)")
-	List<Student> findAllOrderByName();
+	@Query("select concat(concat('\"', s.name), '\"') from Student s order by lower(s.name)")
+	List<String> findAllOrderByName();
+	Student findStudentByName(String name);
 }

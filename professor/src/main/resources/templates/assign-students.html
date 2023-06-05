@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="../static/style/assign-students-style.css">
 
 </head>
-<body>
+<body onload="autocomplete(document.getElementById('searchInput'), {{studentList}}, '{{#quiz}}{{id}}{{/quiz}}')">
 
 <!--Main Navigation-->
 <header>

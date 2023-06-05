@@ -21,7 +21,6 @@ public class QuizzesController {
 	final QuizService quizService;
 	final NavbarService navbarService;
 	final OptionService optionService;
-	final StudentService studentService;
 	final QuestionService questionService;
 
 	@GetMapping("/quizzes/assigned/{superuserId}")
@@ -170,16 +169,6 @@ public class QuizzesController {
 	@PostMapping("/next/{quizId}")
 	public String sendQuiz(@PathVariable String quizId) {
 		return "redirect:/assign-students/" + quizId;
-	}
-
-	@GetMapping("assign-students/{quizId}")
-	public String getAssignStudentsPage(Model model, @PathVariable String quizId) {
-		navbarService.activateNavbarTab(Page.QUIZZES, model);
-		var quiz = quizService.getQuizById(quizId);
-		model.addAttribute("studentList", studentService.getAllStudents());
-		model.addAttribute("quiz", quiz);
-		model.addAttribute("superuserId", quiz.getSuperuserId());
-		return "assign-students";
 	}
 
 }

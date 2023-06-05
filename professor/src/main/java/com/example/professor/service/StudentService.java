@@ -15,8 +15,12 @@ public class StudentService {
 
 	final StudentRepository studentRepository;
 
-	public List<Student> getAllStudents() {
+	public List<String> getAllStudents() {
 		return studentRepository.findAllOrderByName();
+	}
+
+	public Student getStudentByName(String name) {
+		return studentRepository.findStudentByName(name);
 	}
 
 }
