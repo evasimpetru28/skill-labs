@@ -76,7 +76,7 @@ public class UserManagementController {
 		student.setYear(Integer.parseInt(educationInfo[2]));
 
 		if (studentService.isDuplicate(student.getEmail())) {
-			return "redirect:/users?duplicate=true";
+			return "redirect:/users/students?duplicate=true";
 		} else {
 			var password = Utils.getShortUUID();
 			var resetCode = Utils.getShortUUID();
@@ -86,7 +86,7 @@ public class UserManagementController {
 			studentService.saveStudent(student);
 			smtpMailSender.sendMailResetPassword("STUDENT", student.getName(), student.getEmail(), password, resetCode);
 		}
-		return "redirect:/users";
+		return "redirect:/users/students";
 	}
 
 	@PostMapping("/add-admin")

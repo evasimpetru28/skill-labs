@@ -29,12 +29,12 @@ public class SuperuserService {
 		superuserRepository.deleteById(studentId);
 	}
 
-	public Boolean isDuplicate(String name) {
-		return superuserRepository.existsByName(name).isPresent();
+	public Boolean isDuplicate(String email) {
+		return superuserRepository.existsByEmail(email).isPresent();
 	}
 
-	public Boolean isDuplicateExcept(String name, String id) {
-		return superuserRepository.existsByNameExcept(name, id).isPresent();
+	public Boolean isDuplicateExcept(String email, String id) {
+		return superuserRepository.existsByEmailExcept(email, id).isPresent();
 	}
 
 	public Superuser getSuperuserByResetCode(String resetCode) {
