@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Controller
 public class QuizzesController {
@@ -29,6 +31,8 @@ public class QuizzesController {
 		model.addAttribute("superuserId", superuserId);
 		model.addAttribute("assigned", true);
 		model.addAttribute("returned", false);
+		model.addAttribute("drafted", false);
+		model.addAttribute("quizList", List.of());
 
 		return "quizzes";
 	}
@@ -40,6 +44,21 @@ public class QuizzesController {
 		model.addAttribute("superuserId", superuserId);
 		model.addAttribute("assigned", false);
 		model.addAttribute("returned", true);
+		model.addAttribute("drafted", false);
+		model.addAttribute("quizList", List.of());
+
+		return "quizzes";
+	}
+
+	@GetMapping("/quizzes/drafted/{superuserId}")
+	public String getDraftedQuizzesPage(Model model, @PathVariable String superuserId) {
+		//TODO: Get logged user id from session
+		navbarService.activateNavbarTab(Page.QUIZZES, model);
+		model.addAttribute("superuserId", superuserId);
+		model.addAttribute("assigned", false);
+		model.addAttribute("returned", false);
+		model.addAttribute("drafted", true);
+		model.addAttribute("quizList", quizService.getDraftedQuizzesBySuperuserId(superuserId));
 
 		return "quizzes";
 	}

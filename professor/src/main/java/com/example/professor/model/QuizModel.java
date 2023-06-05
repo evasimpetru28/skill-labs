@@ -14,6 +14,7 @@ public class QuizModel {
 
 	String id;
 	Integer index;
-	String name;
 	String superuserId;
+	String name;
+	String description;
 }

@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Skill Labs - Quizzes</title>
+	<meta charset="UTF-8">
+	<title>Skill Labs - Quizzes</title>
 
-    {{>fragments/links}}
-    <link rel="stylesheet" href="../../static/style/navigation-style.css">
-    <!-- Page style -->
-    <link rel="stylesheet" href="../../static/style/quizzes-style.css">
+	{{>fragments/links}}
+	<link rel="stylesheet" href="../../static/style/navigation-style.css">
+	<!-- Page style -->
+	<link rel="stylesheet" href="../../static/style/quizzes-style.css">
 
 </head>
 <body>
@@ -15,42 +15,54 @@
 <!--Main Navigation-->
 <header>
 
-    {{>fragments/logout-btn}}
-    {{>fragments/sidebar}}
+	{{>fragments/logout-btn}}
+	{{>fragments/sidebar}}
 
 </header>
 <!--Main Navigation-->
 
 <!--Main layout-->
 <main style="margin-top: 50px;">
-    <div class="container-fluid container-custom pt-4 table-responsive-lg">
+	<div class="container-fluid container-custom pt-4 table-responsive-lg">
 
-        <div class="row">
-            <div class="justify-content-start col-1">
-                <form action="/quizzes/assigned/{{superuserId}}" method="GET">
-                    <button type="submit" class="btn {{#assigned}}btn-primary{{/assigned}}{{^assigned}}btn-secondary{{/assigned}}">
-                        Assigned</button>
-                </form>
-            </div>
-            <div class="justify-content-start col-1">
-                <form action="/quizzes/returned/{{superuserId}}" method="GET">
-                    <button type="submit" class="btn {{#returned}}btn-primary{{/returned}}{{^returned}}btn-secondary{{/returned}}">
-                        Returned</button>
-                </form>
-            </div>
-        </div>
+		<div class="row">
+			<div class="justify-content-start col-1">
+				<form action="/quizzes/assigned/{{superuserId}}" method="GET">
+					<button type="submit"
+							class="btn {{#assigned}}btn-primary{{/assigned}}{{^assigned}}btn-secondary{{/assigned}}">
+						Assigned
+					</button>
+				</form>
+			</div>
+			<div class="justify-content-start col-1">
+				<form action="/quizzes/returned/{{superuserId}}" method="GET">
+					<button type="submit"
+							class="btn {{#returned}}btn-primary{{/returned}}{{^returned}}btn-secondary{{/returned}}">
+						Returned
+					</button>
+				</form>
+			</div>
+			<div class="justify-content-start col-1">
+				<form action="/quizzes/drafted/{{superuserId}}" method="GET">
+					<button type="submit"
+							class="btn {{#drafted}}btn-primary{{/drafted}}{{^drafted}}btn-secondary{{/drafted}}">
+						Drafted
+					</button>
+				</form>
+			</div>
+		</div>
 
-        <br>
+		<br>
 
-        {{#assigned}}
-            <form action="/add-quiz/{{superuserId}}" method="POST">
-                <button type="submit" class="btn btn-primary">
-                    <i class="fa-solid fa-plus fa-fw me-3"></i>Add
-                </button>
-            </form>
-        {{/assigned}}
+		<form action="/add-quiz/{{superuserId}}" method="POST">
+			<button type="submit" class="btn btn-primary">
+				<i class="fa-solid fa-plus fa-fw me-3"></i>New
+			</button>
+		</form>
 
-    </div>
+		{{>fragments/drafted-quizzes}}
+
+	</div>
 </main>
 <!--Main layout-->
 
