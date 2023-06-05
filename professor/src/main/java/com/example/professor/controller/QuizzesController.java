@@ -4,10 +4,7 @@ import com.example.professor.entity.Option;
 import com.example.professor.entity.Page;
 import com.example.professor.entity.Question;
 import com.example.professor.entity.Quiz;
-import com.example.professor.service.NavbarService;
-import com.example.professor.service.OptionService;
-import com.example.professor.service.QuestionService;
-import com.example.professor.service.QuizService;
+import com.example.professor.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +18,9 @@ public class QuizzesController {
 
 	final QuizService quizService;
 	final NavbarService navbarService;
-	final QuestionService questionService;
 	final OptionService optionService;
+	final StudentService studentService;
+	final QuestionService questionService;
 
 	@GetMapping("/quizzes/assigned/{superuserId}")
 	public String getAssignedQuizzesPage(Model model, @PathVariable String superuserId) {
@@ -50,11 +48,25 @@ public class QuizzesController {
 	public String addQuiz(@PathVariable String superuserId) {
 		var quiz = new Quiz();
 		quiz.setSuperuserId(superuserId);
+		quiz.setName("Untitled");
 		quizService.saveQuiz(quiz);
 
 		addQuestionAndOption(quiz.getId());
-
 		return "redirect:/create-quiz/" + quiz.getId();
+	}
+
+	@PostMapping("/update-quiz-name/{quizId}/{quizName}")
+	public void updateQuizName(@PathVariable String quizId, @PathVariable String quizName) {
+		var quiz = quizService.getQuizById(quizId);
+		quiz.setName(quizName);
+		quizService.saveQuiz(quiz);
+	}
+
+	@PostMapping("/update-quiz-descr/{quizId}/{description}")
+	public void updateQuizDescription(@PathVariable String quizId, @PathVariable String description) {
+		var quiz = quizService.getQuizById(quizId);
+		quiz.setDescription(description);
+		quizService.saveQuiz(quiz);
 	}
 
 	@GetMapping("/create-quiz/{quizId}")
@@ -64,6 +76,7 @@ public class QuizzesController {
 		navbarService.activateNavbarTab(Page.QUIZZES, model);
 		model.addAttribute("superuserId", quiz.getSuperuserId());
 		model.addAttribute("quizId", quizId);
+		model.addAttribute("quiz", quiz);
 		model.addAttribute("questionMap", questionService.getQuestionMap(quizId));
 		return "create-quiz";
 	}
@@ -133,6 +146,21 @@ public class QuizzesController {
 		optionService.deleteOptionById(optionId);
 		return "redirect:/create-quiz/" + quizId;
 
+	}
+
+	@PostMapping("/send-quiz/{quizId}")
+	public String sendQuiz(@PathVariable String quizId) {
+		return "redirect:/assign-students/" + quizId;
+	}
+
+	@GetMapping("assign-students/{quizId}")
+	public String getAssignStudentsPage(Model model, @PathVariable String quizId) {
+		navbarService.activateNavbarTab(Page.QUIZZES, model);
+		var quiz = quizService.getQuizById(quizId);
+		model.addAttribute("studentList", studentService.getAllStudents());
+		model.addAttribute("quiz", quiz);
+		model.addAttribute("superuserId", quiz.getSuperuserId());
+		return "assign-students";
 	}
 
 }

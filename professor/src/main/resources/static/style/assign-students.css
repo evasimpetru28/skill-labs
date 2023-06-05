@@ -17,29 +17,8 @@ table {
     }
 }
 
-.form-outline .form-control {
-    background-color: white;
-}
-
 @media (max-width: 700px) {
     .remove-description {
         display: none;
     }
 }
-
-i {
-    cursor: pointer;
-}
-
-.fa-trash-can {
-    color: #b42727;
-}
-
-#title {
-    font-size: 40px;
-}
-
-body {
-    background-color: #e9e8fa;
-}
-

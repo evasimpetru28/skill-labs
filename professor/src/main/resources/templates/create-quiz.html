@@ -26,63 +26,100 @@
 	<div class="col-1"></div>
 	<div class="container-fluid container-custom pt-4 table-responsive-lg col-9" style="padding-bottom: 40px;">
 
+		<div class="modal-content" style="padding: 30px 0 30px 40px; margin: 1rem; background-color: #f1f1f6;">
+			{{#quiz}}
+			<div class="row">
+				<div class="mb-3">
+					<div class="d-flex align-items-center row">
+						<div class="col-11">
+							<div class="form-outline">
+								<input type="text" id="title" name="name" class="form-control form-control-lg"
+									   oninput="updateQuizName(this, '{{id}}')" value="{{name}}" required/>
+								<label class="form-label" for="title">Quiz title<span class="error">*</span></label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="mb-3">
+					<div class="col-11">
+						<div class="form-outline">
+                             <textarea id="description" rows="1" name="description" oninput="updateQuizDescr(this, '{{id}}')"
+									   class="form-control form-control-lg">{{#description}}{{description}}{{/description}}</textarea>
+							<label class="form-label" for="description">Description</label>
+							<div class="form-notch">
+								<div class="form-notch-leading" style="width: 9px;"></div>
+								<div class="form-notch-middle" style="width: 87.2px;"></div>
+								<div class="form-notch-trailing"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{{/quiz}}
+		</div>
+
 		{{#questionMap}}
-			{{#entrySet}}
-			<div class="modal-content" style="padding: 30px 0 30px 40px; margin: 1rem;">
-					<div class="modal-body">
+		{{#entrySet}}
+		<div class="modal-content" style="padding: 30px 0 30px 40px; margin: 1rem; background-color: #f1f1f6">
+			<div class="modal-body">
 
-						<div class="row">
-							<div class="mb-3">
-								<div class="d-flex align-items-center row">
-									<div class="col-11">
-										<div class="form-outline">
-											<input type="text" id="name" name="name" class="form-control form-control-lg"
-												   oninput="updateQuestion(this, '{{#key}}{{id}}{{/key}}')" value="{{#key}}{{question}}{{/key}}" required />
-											<label class="form-label" for="name">Question<span class="error">*</span></label>
-										</div>
-									</div>
-									<div class="col-1" onclick="deleteQuestion('{{#key}}{{id}}{{/key}}', '{{quizId}}')">
-										<i class="fa-regular fa-trash-can"></i>
-									</div>
-								</div>
-
-							</div>
-						</div>
-
-					{{#value}}
-						<div class="row">
-							<div class="mb-3">
-								<div class="d-flex row align-items-center">
-									<div class="col-11">
-										<div class="d-flex align-items-center form-check checkbox-lg">
-											<input class="form-check-input" type="checkbox" onclick="updateOptionChecked(this, '{{id}}')"
-												   id="option{{#key}}{{index}}{{/key}}-{{index}}" {{#isCorrect}}checked{{/isCorrect}}>
-											<input type="text" id="input{{index}}" class="form-control" value="{{optionText}}"
-												   oninput="updateOptionText(this, '{{id}}')" required />
-										</div>
-									</div>
-									<div class="col-1" onclick="deleteOption('{{id}}', '{{quizId}}')">
-										<i class="fa-regular fa-circle-xmark"></i>
-									</div>
+				<div class="row">
+					<div class="mb-3">
+						<div class="d-flex align-items-center row">
+							<div class="col-11">
+								<div class="form-outline">
+									<input type="text" id="name" name="name" class="form-control form-control-lg"
+										   oninput="updateQuestion(this, '{{#key}}{{id}}{{/key}}')"
+										   value="{{#key}}{{question}}{{/key}}" required/>
+									<label class="form-label" for="name">Question<span class="error">*</span></label>
 								</div>
 							</div>
-						</div>
-					{{/value}}
-						<div class="row">
-							<div class="mb-3">
-								<div class="d-flex row align-items-center">
-									<div class="row" onclick="addOption('{{#key}}{{id}}{{/key}}', '{{quizId}}')">
-										<i class="fa-solid fa-circle-plus"></i>
-									</div>
-								</div>
+							<div class="col-1" onclick="deleteQuestion('{{#key}}{{id}}{{/key}}', '{{quizId}}')">
+								<i class="fa-regular fa-trash-can"></i>
 							</div>
 						</div>
 
 					</div>
-			</div>
-			{{/entrySet}}
+				</div>
 
-		<div class="modal-content" style="padding: 30px 0 30px 40px; margin: 1rem;">
+				{{#value}}
+				<div class="row">
+					<div class="mb-3">
+						<div class="d-flex row align-items-center">
+							<div class="col-11">
+								<div class="d-flex align-items-center form-check checkbox-lg">
+									<input class="form-check-input" type="checkbox"
+										   onclick="updateOptionChecked(this, '{{id}}')"
+										   id="option{{#key}}{{index}}{{/key}}-{{index}}" {{#isCorrect}}checked{{/isCorrect}}>
+									<input type="text" id="input{{index}}" class="form-control" value="{{optionText}}"
+										   oninput="updateOptionText(this, '{{id}}')" required/>
+								</div>
+							</div>
+							<div class="col-1" onclick="deleteOption('{{id}}', '{{quizId}}')">
+								<i class="fa-regular fa-circle-xmark"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+				{{/value}}
+				<div class="row">
+					<div class="mb-3">
+						<div class="d-flex row align-items-center">
+							<div class="row" onclick="addOption('{{#key}}{{id}}{{/key}}', '{{quizId}}')">
+								<i class="fa-solid fa-circle-plus"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		{{/entrySet}}
+
+		<div class="modal-content" style="padding: 30px 0 30px 40px; margin: 1rem; background-color: #f1f1f6">
 			<div class="row" onclick="addQuestion('{{quizId}}')">
 				<i class="fa-solid fa-circle-plus"></i>
 			</div>
