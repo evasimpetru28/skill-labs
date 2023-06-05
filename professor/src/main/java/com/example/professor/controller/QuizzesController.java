@@ -167,7 +167,7 @@ public class QuizzesController {
 
 	}
 
-	@PostMapping("/send-quiz/{quizId}")
+	@PostMapping("/next/{quizId}")
 	public String sendQuiz(@PathVariable String quizId) {
 		return "redirect:/assign-students/" + quizId;
 	}

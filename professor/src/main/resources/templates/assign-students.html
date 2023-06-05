@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Skill Labs - Assign student for Quiz</title>
+	<meta charset="UTF-8">
+	<title>Skill Labs - Assign student for Quiz</title>
 
-    {{>fragments/links}}
-    <link rel="stylesheet" href="../static/style/navigation-style.css">
-    <!-- Page style -->
-    <link rel="stylesheet" href="../static/style/assign-students-style.css">
+	{{>fragments/links}}
+	<link rel="stylesheet" href="../static/style/navigation-style.css">
+	<!-- Page style -->
+	<link rel="stylesheet" href="../static/style/assign-students-style.css">
 
 </head>
 <body>
@@ -15,17 +15,60 @@
 <!--Main Navigation-->
 <header>
 
-    {{>fragments/logout-btn}}
-    {{>fragments/sidebar}}
+	{{>fragments/logout-btn}}
+	{{>fragments/sidebar}}
 
 </header>
 <!--Main Navigation-->
 
 <!--Main layout-->
-<main style="margin-top: 50px;">
-    <div class="container-fluid container-custom pt-4 table-responsive-lg">
+<main style="margin-top: 50px;" class="row">
+	<div class="col-1"></div>
+	<div class="container-fluid container-custom pt-4 table-responsive-lg col-9" style="padding-bottom: 40px;">
 
-    </div>
+		<div class="modal-content">
+			{{#quiz}}
+			<div class="row">
+				<div class="mb-3">
+					<div class="d-flex align-items-center row">
+						<div class="col-11">
+							<div class="form-outline">
+								<p id="title">Title: {{name}}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="mb-3">
+					<div class="col-12">
+						<div class="form-outline">
+                            Description: {{#description}}{{description}}{{/description}}
+						</div>
+					</div>
+				</div>
+			</div>
+			{{/quiz}}
+		</div>
+
+
+		<div class="modal-content">
+            <div class="modal-header">
+
+                <div class="autocomplete col-11 form-outline form-control" >
+                    <input id="searchInput" type="text" name="students" placeholder="Type a name" >
+                </div>
+
+            </div>
+			<div class="modal-body">
+
+
+			</div>
+		</div>
+
+	</div>
+	{{>fragments/next}}
 </main>
 <!--Main layout-->
 

@@ -43,3 +43,9 @@ body {
     background-color: #e9e8fa;
 }
 
+.modal-content {
+    background-color: #f1f1f6;
+    padding: 30px 0 30px 40px;
+    margin: 1rem;
+}
+
