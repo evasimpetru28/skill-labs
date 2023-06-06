@@ -127,7 +127,7 @@ public class UserManagementController {
 		assignmentService.deleteAllAssignmentsForStudent(studentId);
 		responseService.deleteAllResponsesForStudent(studentId);
 		studentService.deleteStudent(studentId);
-		return "redirect:/users";
+		return "redirect:/users/students";
 	}
 
 	@PostMapping("/delete-admin/{adminId}")
@@ -151,14 +151,14 @@ public class UserManagementController {
 		student.setYear(Integer.parseInt(educationInfo[2]));
 		student.setId(id);
 		if (studentService.isDuplicateExcept(student.getEmail(), student.getId())) {
-			return "redirect:/users?duplicate=true";
+			return "redirect:/users/students?duplicate=true";
 		} else {
 			var oldStudent = studentService.getStudentById(id);
 			student.setPassword(oldStudent.getPassword());
 			student.setResetCode(oldStudent.getResetCode());
 			studentService.saveStudent(student);
 		}
-		return "redirect:/users";
+		return "redirect:/users/students";
 	}
 
 	@PostMapping("/edit-admin/{adminId}")
