@@ -67,7 +67,6 @@ public class SkillService {
 		var index = new AtomicInteger(1);
 		return evaluations.stream()
 				.map(skill -> {
-					System.out.println(skill.getCategory());
 					var skillModel = new SkillEvaluationModel();
 					skillModel.setIndex(index.getAndIncrement());
 					skillModel.setId(skill.getId());

@@ -137,8 +137,6 @@ function updateQuizName(callingElem, quizId) {
 }
 
 function updateQuizDescr(callingElem, quizId) {
-
-    console.log(callingElem.value)
     $.ajax({
         type : "POST",
         url : "/update-quiz-descr/" + quizId + "/" + callingElem.value,

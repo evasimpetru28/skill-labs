@@ -22,3 +22,7 @@ table {
         display: none;
     }
 }
+
+.no-eval-text {
+    height: 300px;
+}

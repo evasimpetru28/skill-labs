@@ -15,8 +15,8 @@ public class StudentService {
 
 	final StudentRepository studentRepository;
 
-	public List<String> getAllStudents() {
-		return studentRepository.findAllOrderByName();
+	public List<String> getAllStudentsNotAssignedByQuiz(String quizId) {
+		return studentRepository.findAllNotAssignedByQuizOrderByName(quizId);
 	}
 
 	public Student getStudentByName(String name) {

@@ -4,6 +4,7 @@ import com.example.professor.entity.Option;
 import com.example.professor.entity.Page;
 import com.example.professor.entity.Question;
 import com.example.professor.entity.Quiz;
+import com.example.professor.model.QuizModel;
 import com.example.professor.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,7 @@ public class QuizzesController {
 		model.addAttribute("returned", false);
 		model.addAttribute("drafted", false);
 		model.addAttribute("quizList", List.of());
+		model.addAttribute("noQuizzes", true);
 
 		return "quizzes";
 	}
@@ -45,6 +47,7 @@ public class QuizzesController {
 		model.addAttribute("returned", true);
 		model.addAttribute("drafted", false);
 		model.addAttribute("quizList", List.of());
+		model.addAttribute("noQuizzes", true);
 
 		return "quizzes";
 	}
@@ -53,11 +56,13 @@ public class QuizzesController {
 	public String getDraftedQuizzesPage(Model model, @PathVariable String superuserId) {
 		//TODO: Get logged user id from session
 		navbarService.activateNavbarTab(Page.QUIZZES, model);
+		var draftedQuizzesBySuperuserId = quizService.getDraftedQuizzesBySuperuserId(superuserId);
 		model.addAttribute("superuserId", superuserId);
 		model.addAttribute("assigned", false);
 		model.addAttribute("returned", false);
 		model.addAttribute("drafted", true);
-		model.addAttribute("quizList", quizService.getDraftedQuizzesBySuperuserId(superuserId));
+		model.addAttribute("quizList", draftedQuizzesBySuperuserId);
+		model.addAttribute("noQuizzes", draftedQuizzesBySuperuserId.isEmpty());
 
 		return "quizzes";
 	}

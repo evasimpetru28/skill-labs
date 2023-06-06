@@ -22,26 +22,33 @@ public class AssignmentController {
 	final StudentService studentService;
 	final AssignmentService assignmentService;
 
-	@GetMapping("assign-students/{quizId}")
+	@GetMapping("/assign-students/{quizId}")
 	public String getAssignStudentsPage(Model model, @PathVariable String quizId) {
 		navbarService.activateNavbarTab(Page.QUIZZES, model);
 		var quiz = quizService.getQuizById(quizId);
-		model.addAttribute("studentList", studentService.getAllStudents());
+		model.addAttribute("studentList", studentService.getAllStudentsNotAssignedByQuiz(quizId));
+		model.addAttribute("assignedStudents", assignmentService.getAssignedStudentsOfQuiz(quizId));
 		model.addAttribute("quiz", quiz);
 		model.addAttribute("superuserId", quiz.getSuperuserId());
+
 		return "assign-students";
 	}
 
-	@PostMapping("assign/{quizId}/{name}")
-	public void assignStudent(Model model, @PathVariable String quizId, @PathVariable String name) {
-		navbarService.activateNavbarTab(Page.QUIZZES, model);
-
+	@PostMapping("/assign/{quizId}/{name}")
+	public String assignStudent(@PathVariable String quizId, @PathVariable String name) {
 		var student = studentService.getStudentByName(name);
-
 		var assignment = new Assignment();
 		assignment.setQuizId(quizId);
 		assignment.setStudentId(student.getId());
 		assignmentService.saveAssignment(assignment);
 
+		return "redirect:/assign-students/" + quizId;
+	}
+
+	@PostMapping("/remove-student/{quizId}/{studentId}")
+	public String removeAssignedStudent(@PathVariable String quizId, @PathVariable String studentId) {
+		var assignment = assignmentService.getAssignmentByStudentAndQuiz(studentId, quizId);
+		assignmentService.deleteAssignment(assignment);
+		return "redirect:/assign-students/" + quizId;
 	}
 }

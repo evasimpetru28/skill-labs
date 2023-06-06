@@ -44,7 +44,7 @@
 				<div class="mb-3">
 					<div class="col-12">
 						<div class="form-outline">
-                            Description: {{#description}}{{description}}{{/description}}
+							Description: {{#description}}{{description}}{{/description}}
 						</div>
 					</div>
 				</div>
@@ -54,15 +54,41 @@
 
 
 		<div class="modal-content">
-            <div class="modal-header">
+			<div>
+				<div class="row">
+					<div class="col-12 label-custom">
+						Assign students
+					</div>
+				</div>
+				<br>
+				<div class="autocomplete col-11 form-outline form-control">
+					<input id="searchInput" type="text" name="students" placeholder="Type a name">
+				</div>
+			</div>
+		</div>
 
-                <div class="autocomplete col-11 form-outline form-control" >
-                    <input id="searchInput" type="text" name="students" placeholder="Type a name" >
-                </div>
+		<div class="modal-content">
+			<div class="row">
+				<div class="col-11">
+					<table id="dtBasicExample" class="table table-hover table-striped table-bordered">
 
-            </div>
-			<div class="modal-body">
-
+						<tbody>
+						{{#assignedStudents}}
+						<tr>
+							<td class="col-6">{{name}}</td>
+							<td class="col-6">{{email}}</td>
+						</tr>
+						{{/assignedStudents}}
+						</tbody>
+					</table>
+				</div>
+				<div class="col-1 remove-buttons">
+					{{#assignedStudents}}
+					<div class="delete-icon" onclick="removeStudent('{{id}}', '{{#quiz}}{{id}}{{/quiz}}')">
+						<i class="fa-solid fa-x"></i>
+					</div>
+					{{/assignedStudents}}
+				</div>
 
 			</div>
 		</div>

@@ -99,4 +99,21 @@ input[type=text] {
     background-color: #e5e4fd !important;
 }
 
+.label-custom {
+    font-size: 20px;
+}
+
+.remove-buttons {
+    margin-top: 20px;
+}
+
+.delete-icon {
+    padding: 1rem 0;
+    text-align: center;
+}
+
+.delete-icon:hover {
+    color: #b60f1d;
+}
+
 

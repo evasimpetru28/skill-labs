@@ -1,33 +1,44 @@
+{{#noQuizzes}}
+<div class="row">
+	<div class="no-eval-text d-flex align-items-center justify-content-center">
+		<h4>You don't have any
+			{{#drafted}}drafted{{/drafted}}{{#returned}}returned{{/returned}}{{#assigned}}assigned{{/assigned}} quizzes
+			yet.</h4>
+	</div>
+</div>
+{{/noQuizzes}}
+
+{{^noQuizzes}}
 <table id="dtBasicExample" class="table table-hover table-striped table-bordered table-sm">
+	<thead>
+	<tr>
+		<th class="th-sm">Nr.</th>
+		<th class="th-sm">Name</th>
+		<th class="th-sm">Actions</th>
+	</tr>
+	</thead>
 
-  <thead>
-  <tr>
-    <th class="th-sm">Nr.</th>
-    <th class="th-sm">Name</th>
-    <th class="th-sm">Actions</th>
-  </tr>
-  </thead>
-
-  <tbody>
-  {{#quizList}}
-  <tr>
-    <td class="col-1">{{index}}</td>
-    <td>
-      {{name}}
-      <br>
-      <small>{{#description}}{{description}}{{/description}}</small>
-    </td>
-    <td class="col-3">
-      <div class="row">
-        <div class="d-flex justify-content-end col-6">
-          edit quiz
-        </div>
-        <div class="d-flex justify-content-start col-6">
-          delete quiz
-        </div>
-      </div>
-    </td>
-  </tr>
-  {{/quizList}}
-  </tbody>
+	<tbody>
+	{{#quizList}}
+	<tr>
+		<td class="col-1">{{index}}</td>
+		<td>
+			{{name}}
+			<br>
+			<small>{{#description}}{{description}}{{/description}}</small>
+		</td>
+		<td class="col-3">
+			<div class="row">
+				<div class="d-flex justify-content-end col-6">
+					edit quiz
+				</div>
+				<div class="d-flex justify-content-start col-6">
+					delete quiz
+				</div>
+			</div>
+		</td>
+	</tr>
+	{{/quizList}}
+	</tbody>
 </table>
+{{/noQuizzes}}
