@@ -11,8 +11,15 @@ public interface QuizRepository extends JpaRepository<Quiz, String> {
 			select q
 			from Quiz q
 			where q.superuserId = ?1
-			  and q.id not in (select a.quizId
-			                   from Assignment a)
+			  and q.isReady = false
 			""")
-	List<Quiz> getAllBySuperuserIdNotAssigned(String superuserId);
+	List<Quiz> getAllBySuperuserIdNotReady(String superuserId);
+
+	@Query(value = """
+			select q
+			from Quiz q
+			where q.superuserId = ?1
+			  and q.isReady = true
+			""")
+	List<Quiz> getAllBySuperuserIdReady(String superuserId);
 }

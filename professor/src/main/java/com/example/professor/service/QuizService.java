@@ -27,7 +27,23 @@ public class QuizService {
 
 	public List<QuizModel> getDraftedQuizzesBySuperuserId(String superuserId) {
 		var index = new AtomicInteger(1);
-		return quizRepository.getAllBySuperuserIdNotAssigned(superuserId)
+		return quizRepository.getAllBySuperuserIdNotReady(superuserId)
+				.stream()
+				.map(quiz -> new QuizModel(
+						quiz.getId(),
+						index.getAndIncrement(),
+						quiz.getSuperuserId(),
+						quiz.getName(),
+						(quiz.getDescription() != null && quiz.getDescription().length() > 100)
+								? quiz.getDescription().substring(0, 100) + "..."
+								: quiz.getDescription()
+				))
+				.toList();
+	}
+
+	public List<QuizModel> getAssignedQuizzesBySuperuserId(String superuserId) {
+		var index = new AtomicInteger(1);
+		return quizRepository.getAllBySuperuserIdReady(superuserId)
 				.stream()
 				.map(quiz -> new QuizModel(
 						quiz.getId(),

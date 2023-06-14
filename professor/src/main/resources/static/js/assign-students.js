@@ -105,6 +105,7 @@ function autocomplete(inp, studentList, quizId) {
 }
 
 function assignStudent(name, quizId) {
+    console.log(name + " " + quizId)
     $.ajax({
         type: "POST",
         url: "/assign/" + quizId + "/" + name,

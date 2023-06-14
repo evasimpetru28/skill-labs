@@ -28,23 +28,25 @@ public class QuizzesController {
 	public String getAssignedQuizzesPage(Model model, @PathVariable String superuserId) {
 		//TODO: Get logged user id from session
 		navbarService.activateNavbarTab(Page.QUIZZES, model);
+		var assignedQuizzesBySuperuserId = quizService.getAssignedQuizzesBySuperuserId(superuserId);
+
 		model.addAttribute("superuserId", superuserId);
 		model.addAttribute("assigned", true);
-		model.addAttribute("returned", false);
+		model.addAttribute("expired", false);
 		model.addAttribute("drafted", false);
-		model.addAttribute("quizList", List.of());
-		model.addAttribute("noQuizzes", true);
+		model.addAttribute("quizList", assignedQuizzesBySuperuserId);
+		model.addAttribute("noQuizzes", assignedQuizzesBySuperuserId.isEmpty());
 
 		return "quizzes";
 	}
 
-	@GetMapping("/quizzes/returned/{superuserId}")
-	public String getReturnedQuizzesPage(Model model, @PathVariable String superuserId) {
+	@GetMapping("/quizzes/expired/{superuserId}")
+	public String getExpiredQuizzesPage(Model model, @PathVariable String superuserId) {
 		//TODO: Get logged user id from session
 		navbarService.activateNavbarTab(Page.QUIZZES, model);
 		model.addAttribute("superuserId", superuserId);
 		model.addAttribute("assigned", false);
-		model.addAttribute("returned", true);
+		model.addAttribute("expired", true);
 		model.addAttribute("drafted", false);
 		model.addAttribute("quizList", List.of());
 		model.addAttribute("noQuizzes", true);
@@ -59,7 +61,7 @@ public class QuizzesController {
 		var draftedQuizzesBySuperuserId = quizService.getDraftedQuizzesBySuperuserId(superuserId);
 		model.addAttribute("superuserId", superuserId);
 		model.addAttribute("assigned", false);
-		model.addAttribute("returned", false);
+		model.addAttribute("expired", false);
 		model.addAttribute("drafted", true);
 		model.addAttribute("quizList", draftedQuizzesBySuperuserId);
 		model.addAttribute("noQuizzes", draftedQuizzesBySuperuserId.isEmpty());
@@ -72,6 +74,8 @@ public class QuizzesController {
 		var quiz = new Quiz();
 		quiz.setSuperuserId(superuserId);
 		quiz.setName("Untitled");
+		quiz.setStatus("PUBLIC");
+		quiz.setIsReady(false);
 		quizService.saveQuiz(quiz);
 
 		addQuestionAndOption(quiz.getId());
@@ -174,6 +178,13 @@ public class QuizzesController {
 	@PostMapping("/next/{quizId}")
 	public String sendQuiz(@PathVariable String quizId) {
 		return "redirect:/assign-students/" + quizId;
+	}
+
+	@PostMapping("/change-quiz-status/{quizId}/{status}")
+	public void changeQuizStatus(@PathVariable String quizId, @PathVariable String status) {
+		var quiz = quizService.getQuizById(quizId);
+		quiz.setStatus(status);
+		quizService.saveQuiz(quiz);
 	}
 
 }

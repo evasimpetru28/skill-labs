@@ -24,4 +24,6 @@ public class Quiz {
 	String superuserId;
 	String name;
 	String description;
+	String status;
+	Boolean isReady;
 }

@@ -7,6 +7,7 @@ import com.example.professor.service.NavbarService;
 import com.example.professor.service.QuizService;
 import com.example.professor.service.StudentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,4 +52,13 @@ public class AssignmentController {
 		assignmentService.deleteAssignment(assignment);
 		return "redirect:/assign-students/" + quizId;
 	}
+
+	@PostMapping("/ready-quiz/{quizId}/{superuserId}")
+	public String readyQuiz(@PathVariable String quizId, @PathVariable String superuserId) {
+		var quiz = quizService.getQuizById(quizId);
+		quiz.setIsReady(true);
+		quizService.saveQuiz(quiz);
+		return "redirect:/quizzes/assigned/" + superuserId;
+	}
+
 }

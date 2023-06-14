@@ -7,8 +7,10 @@ import com.example.admin.entity.Superuser;
 import com.example.admin.model.ResetPasswordModel;
 import com.example.admin.service.*;
 import com.example.admin.util.Utils;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +31,24 @@ public class UserManagementController {
 	final EvaluationService evaluationService;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	@Value("${admin.name}")
+	String adminName;
+	@Value("${admin.mail}")
+	String adminMail;
+	@Value("${admin.password}")
+	String adminPassword;
+
+	@PostConstruct
+	public void defaultAdmin() {
+		var admin = new Admin();
+		admin.setName(adminName);
+		admin.setEmail(adminMail);
+		admin.setPhone("0000000000");
+		admin.setResetCode(Utils.getShortUUID());
+		admin.setPassword(passwordEncoder.encode(adminPassword));
+
+		adminService.saveAdmin(admin);
+	}
 
 	@GetMapping("/users")
 	String getUserManagementPage() {

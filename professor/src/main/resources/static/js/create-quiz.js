@@ -159,3 +159,21 @@ $("textarea").each(function () {
     this.style.height = 0;
     this.style.height = (this.scrollHeight) + "px";
 });
+
+function changeQuizStatus(id, status) {
+    $.ajax({
+        type: "POST",
+        url: "/change-quiz-status/" + id + "/" + status,
+        dataType: "html",
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        timeout: 100000,
+        success: function () {
+            console.log("success")
+            location.reload();
+        },
+        error: function (e) {
+            console.log("ERROR: ", e);
+        }
+    });
+}

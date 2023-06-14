@@ -44,7 +44,16 @@
 				<div class="mb-3">
 					<div class="col-12">
 						<div class="form-outline">
-							Description: {{#description}}{{description}}{{/description}}
+							Description: {{#description}}{{description}}{{/description}}{{^description}}-{{/description}}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="mb-3">
+					<div class="col-12">
+						<div class="form-outline">
+							Status: {{status}}
 						</div>
 					</div>
 				</div>
@@ -94,7 +103,7 @@
 		</div>
 
 	</div>
-	{{>fragments/next}}
+	{{>fragments/ready-quiz}}
 </main>
 <!--Main layout-->
 

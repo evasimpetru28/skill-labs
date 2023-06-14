@@ -35,6 +35,14 @@
 
 		<div class="row">
 			<div class="justify-content-start col-1">
+				<form action="/quizzes/drafted/{{superuserId}}" method="GET">
+					<button type="submit"
+							class="btn {{#drafted}}btn-primary{{/drafted}}{{^drafted}}btn-secondary{{/drafted}}">
+						Drafted
+					</button>
+				</form>
+			</div>
+			<div class="justify-content-start col-1">
 				<form action="/quizzes/assigned/{{superuserId}}" method="GET">
 					<button type="submit"
 							class="btn {{#assigned}}btn-primary{{/assigned}}{{^assigned}}btn-secondary{{/assigned}}">
@@ -43,24 +51,16 @@
 				</form>
 			</div>
 			<div class="justify-content-start col-1">
-				<form action="/quizzes/returned/{{superuserId}}" method="GET">
+				<form action="/quizzes/expired/{{superuserId}}" method="GET">
 					<button type="submit"
-							class="btn {{#returned}}btn-primary{{/returned}}{{^returned}}btn-secondary{{/returned}}">
-						Returned
-					</button>
-				</form>
-			</div>
-			<div class="justify-content-start col-1">
-				<form action="/quizzes/drafted/{{superuserId}}" method="GET">
-					<button type="submit"
-							class="btn {{#drafted}}btn-primary{{/drafted}}{{^drafted}}btn-secondary{{/drafted}}">
-						Drafted
+							class="btn {{#expired}}btn-primary{{/expired}}{{^expired}}btn-secondary{{/expired}}">
+						Expired
 					</button>
 				</form>
 			</div>
 		</div>
 
-		{{>fragments/drafted-quizzes}}
+		{{>fragments/quizzes-table}}
 
 	</div>
 </main>
