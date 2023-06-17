@@ -20,7 +20,7 @@ public class Admin {
 	@GeneratedValue(generator = "UUID")
 	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
 	String id;
-	String name;
+	String name; //TODO: surname
 	String email;
 	String phone;
 	String password;

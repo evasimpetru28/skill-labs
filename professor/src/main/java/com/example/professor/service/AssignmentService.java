@@ -26,6 +26,14 @@ public class AssignmentService {
 		assignmentRepository.delete(assignment);
 	}
 
+	public void deleteAllAssignmentsForQuizId(String quizId) {
+		assignmentRepository.deleteAll(getAllAssignmentsForQuiz(quizId));
+	}
+
+	public List<Assignment> getAllAssignmentsForQuiz(String quizId) {
+		return assignmentRepository.findAllByQuizId(quizId);
+	}
+
 	public void saveAssignment(Assignment assignment) {
 		assignmentRepository.saveAndFlush(assignment);
 	}

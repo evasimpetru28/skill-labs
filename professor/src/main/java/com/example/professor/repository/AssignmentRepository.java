@@ -13,4 +13,6 @@ public interface AssignmentRepository extends JpaRepository<Assignment, String> 
 
 	Assignment findAssignmentByStudentIdAndQuizId(String studentId, String quizId);
 
+	List<Assignment> findAllByQuizId(String quizId);
+
 }

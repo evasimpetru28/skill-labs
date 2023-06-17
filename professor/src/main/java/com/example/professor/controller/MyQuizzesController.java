@@ -6,14 +6,14 @@ import com.example.professor.entity.Question;
 import com.example.professor.entity.Quiz;
 import com.example.professor.service.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.List;
-
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class MyQuizzesController {
@@ -22,6 +22,8 @@ public class MyQuizzesController {
 	final NavbarService navbarService;
 	final OptionService optionService;
 	final QuestionService questionService;
+	final ResponseService responseService;
+	final AssignmentService assignmentService;
 
 	@GetMapping("/quizzes/assigned/{superuserId}")
 	public String getAssignedQuizzesPage(Model model, @PathVariable String superuserId) {
@@ -203,6 +205,27 @@ public class MyQuizzesController {
 	@PostMapping("edit-assigned/{quizId}")
 	public String editAsignedQuiz(@PathVariable String quizId) {
 		return "redirect:/assign-students/" + quizId;
+	}
+
+	@PostMapping("delete-quiz/{quizId}/{quizType}")
+	public String deleteQuiz(@PathVariable String quizId, @PathVariable String quizType) {
+		var superuserId = quizService.getQuizById(quizId).getSuperuserId();
+		var questions = questionService.getAllQuestionsByQuizId(quizId);
+		questions.forEach(question -> {
+			log.info("Delete all responses for question with id {}", question.getId());
+			responseService.deleteAllResponsesByQuestionId(question.getId());
+			log.info("Delete all options for question with id {}", question.getId());
+			optionService.deleteOptionsOfQuestion(question.getId());
+			log.info("Delete question with id {}", question.getId());
+			questionService.deleteQuestionById(question.getId());
+		});
+
+		log.info("Delete assignments for quiz with id {}", quizId);
+		assignmentService.deleteAllAssignmentsForQuizId(quizId);
+		log.info("Delete quiz with id {}", quizId);
+		quizService.deleteQuiz(quizId);
+
+		return "redirect:/quizzes/" + quizType + "/" + superuserId;
 	}
 
 }

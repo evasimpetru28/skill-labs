@@ -73,4 +73,8 @@ public class QuizService {
 				.toList();
 	}
 
+	public void deleteQuiz(String quizId) {
+		quizRepository.deleteById(quizId);
+	}
+
 }
