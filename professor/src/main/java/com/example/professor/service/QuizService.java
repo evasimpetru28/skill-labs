@@ -57,4 +57,20 @@ public class QuizService {
 				.toList();
 	}
 
+	public List<QuizModel> getExpiredQuizzesBySuperuserId(String superuserId) {
+		var index = new AtomicInteger(1);
+		return quizRepository.getAllExpiredBySuperuserId(superuserId)
+				.stream()
+				.map(quiz -> new QuizModel(
+						quiz.getId(),
+						index.getAndIncrement(),
+						quiz.getSuperuserId(),
+						quiz.getName(),
+						(quiz.getDescription() != null && quiz.getDescription().length() > 100)
+								? quiz.getDescription().substring(0, 100) + "..."
+								: quiz.getDescription()
+				))
+				.toList();
+	}
+
 }

@@ -13,13 +13,18 @@ public class NavbarService {
 		inactivateAllNavbarTabs(model);
 		if (tabName == Page.DASHBOARD) {
 			model.addAttribute("dashboardActive", true);
-		} else {
+		}
+		if (tabName == Page.MY_QUIZZES){
 			model.addAttribute("quizzesActive", true);
+		}
+		if (tabName == Page.PUBLIC_QUIZZES){
+			model.addAttribute("publicQuizzesActive", true);
 		}
 	}
 
 	public void inactivateAllNavbarTabs(Model model) {
 		model.addAttribute("dashboardActive", false);
 		model.addAttribute("quizzesActive", false);
+		model.addAttribute("publicQuizzesActive", false);
 	}
 }

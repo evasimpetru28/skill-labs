@@ -1,5 +1,5 @@
 package com.example.professor.entity;
 
 public enum Page {
-	DASHBOARD, QUIZZES
+	DASHBOARD, MY_QUIZZES, PUBLIC_QUIZZES
 }

@@ -12,6 +12,7 @@ public interface QuizRepository extends JpaRepository<Quiz, String> {
 			from Quiz q
 			where q.superuserId = ?1
 			  and q.isReady = false
+			  and q.status <> "EXPIRED"
 			""")
 	List<Quiz> getAllBySuperuserIdNotReady(String superuserId);
 
@@ -20,6 +21,14 @@ public interface QuizRepository extends JpaRepository<Quiz, String> {
 			from Quiz q
 			where q.superuserId = ?1
 			  and q.isReady = true
+			  and q.status <> "EXPIRED"
 			""")
 	List<Quiz> getAllBySuperuserIdReady(String superuserId);
+	@Query(value = """
+			select q
+			from Quiz q
+			where q.superuserId = ?1
+			  and q.status = "EXPIRED"
+			""")
+	List<Quiz> getAllExpiredBySuperuserId(String superuserId);
 }

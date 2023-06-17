@@ -27,14 +27,42 @@
 			<br>
 			<small>{{#description}}{{description}}{{/description}}</small>
 		</td>
-		<td class="col-3">
+		<td class="col-4">
 			<div class="row">
+
+<!--				Details btn			-->
+				{{#assigned}}
+				<div class="d-flex justify-content-end col-4">
+					{{>fragments/details}}
+				</div>
+				{{/assigned}}
+				{{#expired}}
 				<div class="d-flex justify-content-end col-6">
-					edit quiz
+					{{>fragments/details}}
 				</div>
+				{{/expired}}
+<!--				Edit btn			-->
+				{{#drafted}}
+				<div class="d-flex justify-content-end col-6">
+					{{>fragments/edit-drafted}}
+				</div>
+				{{/drafted}}
+				{{#assigned}}
+				<div class="d-flex justify-content-end col-4">
+					{{>fragments/edit-assigned}}
+				</div>
+				{{/assigned}}
+<!--				Delete btn			-->
+				{{#assigned}}
+				<div class="d-flex justify-content-start col-4">
+					{{>fragments/delete-quiz}}
+				</div>
+				{{/assigned}}
+				{{^assigned}}
 				<div class="d-flex justify-content-start col-6">
-					delete quiz
+					{{>fragments/delete-quiz}}
 				</div>
+				{{/assigned}}
 			</div>
 		</td>
 	</tr>

@@ -25,7 +25,7 @@ public class AssignmentController {
 
 	@GetMapping("/assign-students/{quizId}")
 	public String getAssignStudentsPage(Model model, @PathVariable String quizId) {
-		navbarService.activateNavbarTab(Page.QUIZZES, model);
+		navbarService.activateNavbarTab(Page.MY_QUIZZES, model);
 		var quiz = quizService.getQuizById(quizId);
 		model.addAttribute("studentList", studentService.getAllStudentsNotAssignedByQuiz(quizId));
 		model.addAttribute("assignedStudents", assignmentService.getAssignedStudentsOfQuiz(quizId));

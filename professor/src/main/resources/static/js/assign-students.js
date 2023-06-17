@@ -145,3 +145,21 @@ function removeStudent(studentId, quizId) {
         }
     });
 }
+
+function makeExpired(quizId) {
+    $.ajax({
+        type: "POST",
+        url: "/make-expired/" + quizId,
+        dataType: "html",
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        timeout: 100000,
+        success: function () {
+            console.log("success")
+            location.reload();
+        },
+        error: function (e) {
+            console.log("ERROR: ", e);
+        }
+    });
+}

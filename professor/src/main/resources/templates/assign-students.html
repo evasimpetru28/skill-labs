@@ -44,16 +44,27 @@
 				<div class="mb-3">
 					<div class="col-12">
 						<div class="form-outline">
-							Description: {{#description}}{{description}}{{/description}}{{^description}}-{{/description}}
+							Description:
+							{{#description}}{{description}}{{/description}}{{^description}}-{{/description}}
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="mb-3">
-					<div class="col-12">
-						<div class="form-outline">
-							Status: {{status}}
+					<div class="d-flex row align-items-center">
+						<div class="col-3">
+							<div class="form-outline">
+								Status: {{status}}
+							</div>
+						</div>
+						<div class="col-9">
+							{{#isReady}}
+							<div class="">
+								<input class="" type="checkbox" id="expired" onclick="makeExpired('{{id}}')" name="expired">
+								<label class="" for="expired">Mark as Expired</label>
+							</div>
+							{{/isReady}}
 						</div>
 					</div>
 				</div>

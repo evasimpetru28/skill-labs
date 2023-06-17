@@ -4,7 +4,6 @@ import com.example.professor.entity.Option;
 import com.example.professor.entity.Page;
 import com.example.professor.entity.Question;
 import com.example.professor.entity.Quiz;
-import com.example.professor.model.QuizModel;
 import com.example.professor.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,7 +16,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
-public class QuizzesController {
+public class MyQuizzesController {
 
 	final QuizService quizService;
 	final NavbarService navbarService;
@@ -27,7 +26,7 @@ public class QuizzesController {
 	@GetMapping("/quizzes/assigned/{superuserId}")
 	public String getAssignedQuizzesPage(Model model, @PathVariable String superuserId) {
 		//TODO: Get logged user id from session
-		navbarService.activateNavbarTab(Page.QUIZZES, model);
+		navbarService.activateNavbarTab(Page.MY_QUIZZES, model);
 		var assignedQuizzesBySuperuserId = quizService.getAssignedQuizzesBySuperuserId(superuserId);
 
 		model.addAttribute("superuserId", superuserId);
@@ -37,27 +36,29 @@ public class QuizzesController {
 		model.addAttribute("quizList", assignedQuizzesBySuperuserId);
 		model.addAttribute("noQuizzes", assignedQuizzesBySuperuserId.isEmpty());
 
-		return "quizzes";
+		return "my-quizzes";
 	}
 
 	@GetMapping("/quizzes/expired/{superuserId}")
 	public String getExpiredQuizzesPage(Model model, @PathVariable String superuserId) {
 		//TODO: Get logged user id from session
-		navbarService.activateNavbarTab(Page.QUIZZES, model);
+		navbarService.activateNavbarTab(Page.MY_QUIZZES, model);
+		var expiredQuizzesBySuperuserId = quizService.getExpiredQuizzesBySuperuserId(superuserId);
+
 		model.addAttribute("superuserId", superuserId);
 		model.addAttribute("assigned", false);
 		model.addAttribute("expired", true);
 		model.addAttribute("drafted", false);
-		model.addAttribute("quizList", List.of());
-		model.addAttribute("noQuizzes", true);
+		model.addAttribute("quizList", expiredQuizzesBySuperuserId);
+		model.addAttribute("noQuizzes", expiredQuizzesBySuperuserId.isEmpty());
 
-		return "quizzes";
+		return "my-quizzes";
 	}
 
 	@GetMapping("/quizzes/drafted/{superuserId}")
 	public String getDraftedQuizzesPage(Model model, @PathVariable String superuserId) {
 		//TODO: Get logged user id from session
-		navbarService.activateNavbarTab(Page.QUIZZES, model);
+		navbarService.activateNavbarTab(Page.MY_QUIZZES, model);
 		var draftedQuizzesBySuperuserId = quizService.getDraftedQuizzesBySuperuserId(superuserId);
 		model.addAttribute("superuserId", superuserId);
 		model.addAttribute("assigned", false);
@@ -66,7 +67,7 @@ public class QuizzesController {
 		model.addAttribute("quizList", draftedQuizzesBySuperuserId);
 		model.addAttribute("noQuizzes", draftedQuizzesBySuperuserId.isEmpty());
 
-		return "quizzes";
+		return "my-quizzes";
 	}
 
 	@PostMapping("/add-quiz/{superuserId}")
@@ -79,7 +80,7 @@ public class QuizzesController {
 		quizService.saveQuiz(quiz);
 
 		addQuestionAndOption(quiz.getId());
-		return "redirect:/create-quiz/" + quiz.getId();
+		return "redirect:/new-quiz/" + quiz.getId();
 	}
 
 	@PostMapping("/update-quiz-name/{quizId}/{quizName}")
@@ -96,11 +97,11 @@ public class QuizzesController {
 		quizService.saveQuiz(quiz);
 	}
 
-	@GetMapping("/create-quiz/{quizId}")
+	@GetMapping("/new-quiz/{quizId}")
 	public String getCreateQuizPage(Model model, @PathVariable String quizId) {
 		//TODO: Get logged user id from session
 		var quiz = quizService.getQuizById(quizId);
-		navbarService.activateNavbarTab(Page.QUIZZES, model);
+		navbarService.activateNavbarTab(Page.MY_QUIZZES, model);
 		model.addAttribute("superuserId", quiz.getSuperuserId());
 		model.addAttribute("quizId", quizId);
 		model.addAttribute("quiz", quiz);
@@ -139,7 +140,14 @@ public class QuizzesController {
 		optionService.deleteOptionsOfQuestion(questionId);
 		questionService.deleteQuestionById(questionId);
 		return "redirect:/create-quiz/" + quizId;
+	}
 
+	@PostMapping("/make-expired/{quizId}")
+	public String makeExpiredQuiz(@PathVariable String quizId) {
+		var quiz = quizService.getQuizById(quizId);
+		quiz.setStatus("EXPIRED");
+		quizService.saveQuiz(quiz);
+		return "redirect:/create-quiz/" + quizId;
 	}
 
 	@PostMapping("/add-option/{questionId}/{quizId}")
@@ -185,6 +193,16 @@ public class QuizzesController {
 		var quiz = quizService.getQuizById(quizId);
 		quiz.setStatus(status);
 		quizService.saveQuiz(quiz);
+	}
+
+	@PostMapping("edit-drafted/{quizId}")
+	public String editDraftedQuiz(@PathVariable String quizId) {
+		return "redirect:/new-quiz/" + quizId;
+	}
+
+	@PostMapping("edit-assigned/{quizId}")
+	public String editAsignedQuiz(@PathVariable String quizId) {
+		return "redirect:/assign-students/" + quizId;
 	}
 
 }
