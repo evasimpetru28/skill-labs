@@ -112,7 +112,7 @@ public class MyQuizzesController {
 	@PostMapping("/add-question/{quizId}")
 	public String addQuestion(@PathVariable String quizId) {
 		addQuestionAndOption(quizId);
-		return "redirect:/create-quiz/" + quizId;
+		return "redirect:/new-quiz/" + quizId;
 	}
 
 	private void addQuestionAndOption(String quizId) {
@@ -139,7 +139,7 @@ public class MyQuizzesController {
 	public String deleteQuestion(@PathVariable String questionId, @PathVariable String quizId) {
 		optionService.deleteOptionsOfQuestion(questionId);
 		questionService.deleteQuestionById(questionId);
-		return "redirect:/create-quiz/" + quizId;
+		return "redirect:/new-quiz/" + quizId;
 	}
 
 	@PostMapping("/make-expired/{quizId}")
@@ -147,7 +147,7 @@ public class MyQuizzesController {
 		var quiz = quizService.getQuizById(quizId);
 		quiz.setStatus("EXPIRED");
 		quizService.saveQuiz(quiz);
-		return "redirect:/create-quiz/" + quizId;
+		return "redirect:/new-quiz/" + quizId;
 	}
 
 	@PostMapping("/add-option/{questionId}/{quizId}")
@@ -159,7 +159,7 @@ public class MyQuizzesController {
 		option.setOptionText("Option " + (optionNumber + 1));
 		option.setIsCorrect(false);
 		optionService.saveOption(option);
-		return "redirect:/create-quiz/" + quizId;
+		return "redirect:/new-quiz/" + quizId;
 	}
 
 	@PostMapping("/update-option-text/{optionId}/{optionText}")
@@ -179,7 +179,7 @@ public class MyQuizzesController {
 	@PostMapping("/delete-option/{optionId}/{quizId}")
 	public String deleteOption(@PathVariable String optionId, @PathVariable String quizId) {
 		optionService.deleteOptionById(optionId);
-		return "redirect:/create-quiz/" + quizId;
+		return "redirect:/new-quiz/" + quizId;
 
 	}
 
