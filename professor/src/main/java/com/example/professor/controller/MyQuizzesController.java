@@ -185,11 +185,6 @@ public class MyQuizzesController {
 
 	}
 
-	@PostMapping("/next/{quizId}")
-	public String sendQuiz(@PathVariable String quizId) {
-		return "redirect:/assign-students/" + quizId;
-	}
-
 	@PostMapping("/change-quiz-status/{quizId}/{status}")
 	public void changeQuizStatus(@PathVariable String quizId, @PathVariable String status) {
 		var quiz = quizService.getQuizById(quizId);
@@ -200,11 +195,6 @@ public class MyQuizzesController {
 	@PostMapping("edit-drafted/{quizId}")
 	public String editDraftedQuiz(@PathVariable String quizId) {
 		return "redirect:/new-quiz/" + quizId;
-	}
-
-	@PostMapping("edit-assigned/{quizId}")
-	public String editAsignedQuiz(@PathVariable String quizId) {
-		return "redirect:/assign-students/" + quizId;
 	}
 
 	@PostMapping("delete-quiz/{quizId}/{quizType}")

@@ -34,6 +34,16 @@ public class AssignmentController {
 		return "assign-students";
 	}
 
+	@PostMapping("edit-assigned/{quizId}")
+	public String editAsignedQuiz(@PathVariable String quizId) {
+		return "redirect:/assign-students/" + quizId;
+	}
+
+	@PostMapping("/next/{quizId}")
+	public String sendQuiz(@PathVariable String quizId) {
+		return "redirect:/assign-students/" + quizId;
+	}
+
 	@PostMapping("/assign/{quizId}/{name}")
 	public String assignStudent(@PathVariable String quizId, @PathVariable String name) {
 		var student = studentService.getStudentByName(name);
