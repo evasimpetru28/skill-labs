@@ -1,0 +1,64 @@
+<div class="modal-content">
+  {{#quiz}}
+  <div class="row">
+    <div class="mb-3">
+      <div class="d-flex align-items-center row">
+        <div class="col-11">
+          <div class="form-outline">
+            <p id="title">Title: {{name}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="mb-3">
+      <div class="col-12">
+        <div class="form-outline">
+          Description:
+          {{#description}}{{description}}{{/description}}{{^description}}-{{/description}}
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/quiz}}
+</div>
+
+{{#questionMap}}
+{{#entrySet}}
+<div class="modal-content">
+  <div class="modal-body">
+
+    <div class="row">
+      <div class="mb-3">
+        <div class="d-flex align-items-center row">
+          <div class="col-12">
+            <div class="form-outline">
+              <h6>{{#key}}{{index}}. {{question}}{{/key}}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{#value}}
+    <div class="row">
+      <div class="mb-3">
+        <div class="d-flex row align-items-center">
+          <div class="col-12">
+            <div class="d-flex align-items-center form-check checkbox-lg">
+              <input class="form-check-input" type="checkbox"
+                     onclick="addOrDeleteResponse(this, '{{id}}', '{{questionId}}', '{{studentId}}', '{{#responseId}}{{responseId}}{{/responseId}}')"
+                     id="option{{#key}}{{index}}{{/key}}-{{index}}" {{#responseId}}checked{{/responseId}}>
+              <label for="option{{#key}}{{index}}{{/key}}-{{index}}">{{optionText}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/value}}
+  </div>
+</div>
+{{/entrySet}}
+{{/questionMap}}

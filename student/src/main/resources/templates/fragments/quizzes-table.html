@@ -1,0 +1,47 @@
+{{#noQuizzes}}
+<div class="row">
+  <div class="no-eval-text d-flex align-items-center justify-content-center">
+    <h4>You have no quizzes assigned.</h4>
+  </div>
+</div>
+{{/noQuizzes}}
+
+{{^noQuizzes}}
+<table id="dtBasicExample" class="table table-hover table-striped table-bordered table-sm">
+  <thead>
+  <tr>
+    <th class="th-sm">Nr.</th>
+    <th class="th-sm">Date</th>
+    <th class="th-sm">Author</th>
+    <th class="th-sm">Name</th>
+    <th class="th-sm">Actions</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  {{#quizList}}
+  <tr>
+    <td class="col-1">{{index}}</td>
+    <td class="col-2">{{createdAt}}</td>
+    <td class="col-2">{{superuserName}}</td>
+    <td>
+      {{quizName}}
+      <br>
+      <small>{{#description}}{{description}}{{/description}}</small>
+    </td>
+    <td class="col-3">
+      <div class="row">
+        <!--				Answer btn			-->
+        <div class="d-flex justify-content-center col-6">
+          {{>fragments/answer-quiz}}
+        </div>
+        <div class="d-flex justify-content-center col-6">
+          <span><b>Grade: {{#score}}{{score}}%{{/score}}{{^score}}-{{/score}}</b></span>
+        </div>
+      </div>
+    </td>
+  </tr>
+  {{/quizList}}
+  </tbody>
+</table>
+{{/noQuizzes}}

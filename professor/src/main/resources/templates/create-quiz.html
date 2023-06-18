@@ -121,8 +121,8 @@
 				<div class="row">
 					<div class="mb-3">
 						<div class="d-flex row align-items-center">
-							<div class="row" onclick="addOption('{{#key}}{{id}}{{/key}}', '{{quizId}}')">
-								<i class="fa-solid fa-circle-plus"></i>
+							<div class="icon-and-text" onclick="addOption('{{#key}}{{id}}{{/key}}', '{{quizId}}')">
+								<i class="fa-solid fa-circle-plus"></i> Add Option
 							</div>
 						</div>
 					</div>
@@ -133,8 +133,8 @@
 		{{/entrySet}}
 
 		<div class="modal-content">
-			<div class="row" onclick="addQuestion('{{quizId}}')">
-				<i class="fa-solid fa-circle-plus"></i>
+			<div class="icon-and-text" onclick="addQuestion('{{quizId}}')">
+				<i class="fa-solid fa-circle-plus"></i> Add Question
 			</div>
 		</div>
 

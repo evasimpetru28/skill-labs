@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Skill Labs - Answer quiz</title>
+
+	{{>fragments/links}}
+	<link rel="stylesheet" href="/static/style/navigation-style.css">
+	<!-- Page style -->
+	<link rel="stylesheet" href="/static/style/quiz-form-style.css">
+</head>
+<body>
+<!--Main Navigation-->
+<header>
+
+	{{>fragments/logout-btn}}
+	{{>fragments/sidebar}}
+
+</header>
+<!--Main Navigation-->
+
+<!--Main layout-->
+<main style="margin-top: 50px;" class="row">
+	<div class="col-1"></div>
+	<div class="container-fluid container-custom pt-4 table-responsive-lg col-9" style="padding-bottom: 40px;">
+		{{>fragments/quiz-form}}
+	</div>
+	{{>fragments/submit}}
+</main>
+<!--Main layout-->
+
+<script type="text/javascript" src="/static/js/answer-quiz.js"></script>
+
+</body>
+</html>
