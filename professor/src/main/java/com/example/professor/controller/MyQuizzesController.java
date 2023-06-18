@@ -144,12 +144,13 @@ public class MyQuizzesController {
 		return "redirect:/new-quiz/" + quizId;
 	}
 
-	@PostMapping("/make-expired/{quizId}")
-	public String makeExpiredQuiz(@PathVariable String quizId) {
+	@PostMapping("/make-expired/{quizId}/{superuserId}")
+	public String makeExpiredQuiz(@PathVariable String quizId, @PathVariable String superuserId) {
+		System.out.println("------------EXPIRED--------------");
 		var quiz = quizService.getQuizById(quizId);
 		quiz.setStatus("EXPIRED");
 		quizService.saveQuiz(quiz);
-		return "redirect:/new-quiz/" + quizId;
+		return "redirect:/quizzes/expired/" + superuserId;
 	}
 
 	@PostMapping("/add-option/{questionId}/{quizId}")
@@ -216,6 +217,14 @@ public class MyQuizzesController {
 		quizService.deleteQuiz(quizId);
 
 		return "redirect:/quizzes/" + quizType + "/" + superuserId;
+	}
+
+	@PostMapping("/ready-quiz/{quizId}/{superuserId}")
+	public String readyQuiz(@PathVariable String quizId, @PathVariable String superuserId) {
+		var quiz = quizService.getQuizById(quizId);
+		quiz.setIsReady(true);
+		quizService.saveQuiz(quiz);
+		return "redirect:/quizzes/assigned/" + superuserId;
 	}
 
 }

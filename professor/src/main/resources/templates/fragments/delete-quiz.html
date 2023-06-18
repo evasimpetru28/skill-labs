@@ -15,8 +15,10 @@
         </div>
         <div class="modal-body">
           Are you sure you want to permanently delete this quiz?
+          {{^drafted}}
           <br>
-          {{^drafted}}<p class="error">This will delete all related assigned students and their answers.</p>{{/drafted}}
+          <p class="error">This will delete all related assigned students and their answers.</p>
+          {{/drafted}}
         </div>
 
         <div class="modal-footer">

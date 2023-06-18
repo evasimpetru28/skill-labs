@@ -1,0 +1,27 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary icon-spacing" data-mdb-toggle="modal" data-mdb-target="#expire{{index}}">
+  <i class="fa-solid fa-lock"></i>
+  <span class="remove-action-name">Expire</span>
+</button>
+
+<!-- Modal Expire -->
+<div class="modal fade" id="expire{{index}}" tabindex="-1" role="dialog" aria-labelledby="expireQuiz{{index}}" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <form action="/make-expired/{{id}}/{{superuserId}}" method="POST">
+        <div class="modal-header">
+          <h5 class="modal-title" id="expireQuiz{{index}}">Expire quiz {{name}}</h5>
+          <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to mark this quiz as expired?
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Expire</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

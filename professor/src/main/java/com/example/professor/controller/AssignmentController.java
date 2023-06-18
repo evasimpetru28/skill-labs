@@ -62,12 +62,4 @@ public class AssignmentController {
 		return "redirect:/assign-students/" + quizId;
 	}
 
-	@PostMapping("/ready-quiz/{quizId}/{superuserId}")
-	public String readyQuiz(@PathVariable String quizId, @PathVariable String superuserId) {
-		var quiz = quizService.getQuizById(quizId);
-		quiz.setIsReady(true);
-		quizService.saveQuiz(quiz);
-		return "redirect:/quizzes/assigned/" + superuserId;
-	}
-
 }
