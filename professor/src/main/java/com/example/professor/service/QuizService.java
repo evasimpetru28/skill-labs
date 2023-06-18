@@ -3,6 +3,7 @@ package com.example.professor.service;
 import com.example.professor.entity.Quiz;
 import com.example.professor.model.QuizModel;
 import com.example.professor.repository.QuizRepository;
+import com.example.professor.repository.SuperuserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class QuizService {
 
 	final QuizRepository quizRepository;
+	final SuperuserRepository superuserRepository;
 
 	public void saveQuiz(Quiz quiz) {
 		quizRepository.saveAndFlush(quiz);
@@ -33,6 +35,7 @@ public class QuizService {
 						quiz.getId(),
 						index.getAndIncrement(),
 						quiz.getSuperuserId(),
+						superuserRepository.getReferenceById(quiz.getSuperuserId()).getName(),
 						quiz.getName(),
 						(quiz.getDescription() != null && quiz.getDescription().length() > 100)
 								? quiz.getDescription().substring(0, 100) + "..."
@@ -49,6 +52,7 @@ public class QuizService {
 						quiz.getId(),
 						index.getAndIncrement(),
 						quiz.getSuperuserId(),
+						superuserRepository.getReferenceById(quiz.getSuperuserId()).getName(),
 						quiz.getName(),
 						(quiz.getDescription() != null && quiz.getDescription().length() > 100)
 								? quiz.getDescription().substring(0, 100) + "..."
@@ -65,6 +69,7 @@ public class QuizService {
 						quiz.getId(),
 						index.getAndIncrement(),
 						quiz.getSuperuserId(),
+						superuserRepository.getReferenceById(quiz.getSuperuserId()).getName(),
 						quiz.getName(),
 						(quiz.getDescription() != null && quiz.getDescription().length() > 100)
 								? quiz.getDescription().substring(0, 100) + "..."
@@ -75,6 +80,23 @@ public class QuizService {
 
 	public void deleteQuiz(String quizId) {
 		quizRepository.deleteById(quizId);
+	}
+
+	public List<QuizModel> getPublicQuizzes() {
+		var index = new AtomicInteger(1);
+		return quizRepository.getAllPublicQuizzes()
+				.stream()
+				.map(quiz -> new QuizModel(
+						quiz.getId(),
+						index.getAndIncrement(),
+						quiz.getSuperuserId(),
+						superuserRepository.getReferenceById(quiz.getSuperuserId()).getName(),
+						quiz.getName(),
+						(quiz.getDescription() != null && quiz.getDescription().length() > 100)
+								? quiz.getDescription().substring(0, 100) + "..."
+								: quiz.getDescription()
+				))
+				.toList();
 	}
 
 }

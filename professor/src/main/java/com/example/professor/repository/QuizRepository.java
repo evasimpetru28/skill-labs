@@ -31,4 +31,11 @@ public interface QuizRepository extends JpaRepository<Quiz, String> {
 			  and q.status = "EXPIRED"
 			""")
 	List<Quiz> getAllExpiredBySuperuserId(String superuserId);
+
+	@Query(value = """
+			select q
+			from Quiz q
+			where q.status = "PUBLIC"
+			""")
+	List<Quiz> getAllPublicQuizzes();
 }

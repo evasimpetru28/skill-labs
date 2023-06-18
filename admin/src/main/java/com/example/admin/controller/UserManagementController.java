@@ -9,6 +9,7 @@ import com.example.admin.service.*;
 import com.example.admin.util.Utils;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,16 +17,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 //@RequestMapping("/admin")
 public class UserManagementController {
 
+	final QuizService quizService;
 	final AdminService adminService;
 	final NavbarService navbarService;
+	final OptionService optionService;
 	final SmtpMailSender smtpMailSender;
 	final StudentService studentService;
 	final ResponseService responseService;
+	final QuestionService questionService;
 	final SuperuserService superuserService;
 	final AssignmentService assignmentService;
 	final EvaluationService evaluationService;
@@ -40,14 +45,16 @@ public class UserManagementController {
 
 	@PostConstruct
 	public void defaultAdmin() {
-		var admin = new Admin();
-		admin.setName(adminName);
-		admin.setEmail(adminMail);
-		admin.setPhone("0000000000");
-		admin.setResetCode(Utils.getShortUUID());
-		admin.setPassword(passwordEncoder.encode(adminPassword));
+		if (!adminService.isDuplicate(adminMail)) {
+			var admin = new Admin();
+			admin.setName(adminName);
+			admin.setEmail(adminMail);
+			admin.setPhone("0000000000");
+			admin.setResetCode(Utils.getShortUUID());
+			admin.setPassword(passwordEncoder.encode(adminPassword));
 
-		adminService.saveAdmin(admin);
+			adminService.saveAdmin(admin);
+		}
 	}
 
 	@GetMapping("/users")
@@ -158,7 +165,25 @@ public class UserManagementController {
 
 	@PostMapping("/delete-superuser/{superuserId}")
 	public String deleteSuperuser(@PathVariable String superuserId) {
-		//TODO: delete all assignment, option, response, question, quiz
+		var quizzes = quizService.getAllBySuperuser(superuserId);
+		quizzes.forEach(quiz -> {
+			var questions = questionService.getAllQuestionsByQuizId(quiz.getId());
+			questions.forEach(question -> {
+				log.info("Delete all responses for question with id {}", question.getId());
+				responseService.deleteAllResponsesByQuestionId(question.getId());
+				log.info("Delete all options for question with id {}", question.getId());
+				optionService.deleteOptionsOfQuestion(question.getId());
+				log.info("Delete question with id {}", question.getId());
+				questionService.deleteQuestionById(question.getId());
+			});
+
+			log.info("Delete assignments for quiz with id {}", quiz.getId());
+			assignmentService.deleteAllAssignmentsForQuizId(quiz.getId());
+			log.info("Delete quiz with id {}", quiz.getId());
+			quizService.deleteQuiz(quiz.getId());
+		});
+
+		log.info("Delete superuser with id {}", superuserId);
 		superuserService.deleteSuperuser(superuserId);
 		return "redirect:/users/professors-companies";
 	}
