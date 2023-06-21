@@ -52,7 +52,7 @@
                      {{#reviewMode}}disabled{{/reviewMode}}
                      onclick="addOrDeleteResponse(this, '{{#key}}{{quizId}}{{/key}}', '{{id}}', '{{questionId}}', '{{studentId}}', '{{#responseId}}{{responseId}}{{/responseId}}')"
                      id="option{{#key}}{{index}}{{/key}}-{{index}}" {{#responseId}}checked{{/responseId}}>
-              <label class="{{#isCorrect}}correct{{/isCorrect}} {{^isCorrect}}{{#responseId}}error{{/responseId}}{{/isCorrect}}" for="option{{#key}}{{index}}{{/key}}-{{index}}">{{optionText}}</label>
+              <label class="{{#reviewMode}}{{#isCorrect}}correct{{/isCorrect}} {{^isCorrect}}{{#responseId}}error{{/responseId}}{{/isCorrect}}"{{/reviewMode}} for="option{{#key}}{{index}}{{/key}}-{{index}}">{{optionText}}</label>
             </div>
           </div>
         </div>

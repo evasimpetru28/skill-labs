@@ -227,4 +227,21 @@ public class MyQuizzesController {
 		return "redirect:/quizzes/assigned/" + superuserId;
 	}
 
+	@GetMapping("/details/{quizId}/{superuserId}")
+	public String getQuizDetailsPage(Model model, @PathVariable String quizId, @PathVariable String superuserId) {
+		//TODO: Get logged user id from session
+		navbarService.activateNavbarTab(Page.MY_QUIZZES, model);
+		var studentListSubmitted = assignmentService.getStudentInfoByQuizSubmitted(quizId);
+		var studentListNotSubmitted = assignmentService.getStudentInfoByQuizNotSubmitted(quizId);
+
+		model.addAttribute("quiz", quizService.getQuizById(quizId));
+		model.addAttribute("superuserId", superuserId);
+		model.addAttribute("studentListSubmitted", studentListSubmitted);
+		model.addAttribute("noQuizzes", studentListSubmitted.isEmpty());
+		model.addAttribute("studentListNotSubmitted", studentListNotSubmitted);
+		model.addAttribute("allSubmitted", studentListNotSubmitted.isEmpty());
+
+		return "quiz-details";
+	}
+
 }

@@ -1,0 +1,36 @@
+<h4>Assigned student</h3>
+{{#allSubmitted}}
+<div class="row">
+  <div class="no-eval-text d-flex align-items-center justify-content-center">
+    <h4>ceva msj de modificat si de pus la tabel.</h4>
+  </div>
+</div>
+{{/allSubmitted}}
+
+{{^allSubmitted}}
+<table id="dtBasicExample" class="table table-hover table-striped table-bordered table-sm">
+  <thead>
+  <tr>
+    <th class="th-sm">Nr.</th>
+    <th class="th-sm">Name</th>
+    <th class="th-sm">Email</th>
+    <th class="th-sm">Year</th>
+    <th class="th-sm">Program</th>
+    <th class="th-sm">Domain</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  {{#studentListNotSubmitted}}
+  <tr>
+    <td class="">{{index}}</td>
+    <td class="">{{studentName}}</td>
+    <td class="">{{studentEmail}}</td>
+    <td class="">{{studentYear}}</td>
+    <td class="">{{studentProgram}}</td>
+    <td class="">{{studentDomain}}</td>
+  </tr>
+  {{/studentListNotSubmitted}}
+  </tbody>
+</table>
+{{/allSubmitted}}

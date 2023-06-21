@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Skill Labs - Quiz details</title>
+
+	{{>fragments/links}}
+	<link rel="stylesheet" href="/static/style/navigation-style.css">
+	<!-- Page style -->
+	<link rel="stylesheet" href="/static/style/quiz-details-style.css">
+
+</head>
+<body>
+
+<!--Main Navigation-->
+<header>
+
+	{{>fragments/logout-btn}}
+	{{>fragments/sidebar}}
+
+</header>
+<!--Main Navigation-->
+
+<!--Main layout-->
+<main style="margin-top: 50px;">
+	<div class="container-fluid container-custom pt-4 table-responsive-lg">
+		{{>fragments/students-table-submitted}}
+		{{>fragments/students-table-not-submitted}}
+	</div>
+</main>
+<!--Main layout-->
+
+</body>
+</html>
