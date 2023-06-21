@@ -37,8 +37,8 @@ public class QuizService {
 						quiz.getSuperuserId(),
 						superuserRepository.getReferenceById(quiz.getSuperuserId()).getName(),
 						quiz.getName(),
-						(quiz.getDescription() != null && quiz.getDescription().length() > 100)
-								? quiz.getDescription().substring(0, 100) + "..."
+						(quiz.getDescription() != null && quiz.getDescription().length() > 110)
+								? quiz.getDescription().substring(0, 110) + "..."
 								: quiz.getDescription()
 				))
 				.toList();
@@ -54,8 +54,8 @@ public class QuizService {
 						quiz.getSuperuserId(),
 						superuserRepository.getReferenceById(quiz.getSuperuserId()).getName(),
 						quiz.getName(),
-						(quiz.getDescription() != null && quiz.getDescription().length() > 100)
-								? quiz.getDescription().substring(0, 100) + "..."
+						(quiz.getDescription() != null && quiz.getDescription().length() > 110)
+								? quiz.getDescription().substring(0, 110) + "..."
 								: quiz.getDescription()
 				))
 				.toList();
@@ -71,8 +71,8 @@ public class QuizService {
 						quiz.getSuperuserId(),
 						superuserRepository.getReferenceById(quiz.getSuperuserId()).getName(),
 						quiz.getName(),
-						(quiz.getDescription() != null && quiz.getDescription().length() > 100)
-								? quiz.getDescription().substring(0, 100) + "..."
+						(quiz.getDescription() != null && quiz.getDescription().length() > 110)
+								? quiz.getDescription().substring(0, 110) + "..."
 								: quiz.getDescription()
 				))
 				.toList();
@@ -92,8 +92,8 @@ public class QuizService {
 						quiz.getSuperuserId(),
 						superuserRepository.getReferenceById(quiz.getSuperuserId()).getName(),
 						quiz.getName(),
-						(quiz.getDescription() != null && quiz.getDescription().length() > 100)
-								? quiz.getDescription().substring(0, 100) + "..."
+						(quiz.getDescription() != null && quiz.getDescription().length() > 110)
+								? quiz.getDescription().substring(0, 110) + "..."
 								: quiz.getDescription()
 				))
 				.toList();

@@ -21,4 +21,6 @@ public class QuizModel {
 	String superuserName;
 	String studentId;
 	Integer score;
+	String status;
+	Boolean isExpired;
 }

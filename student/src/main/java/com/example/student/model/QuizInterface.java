@@ -10,4 +10,5 @@ public interface QuizInterface {
 	String getSuperuserName();
 	String getStudentId();
 	Integer getScore();
+	String getStatus();
 }

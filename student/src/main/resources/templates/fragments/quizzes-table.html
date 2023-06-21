@@ -14,6 +14,7 @@
     <th class="th-sm">Date</th>
     <th class="th-sm">Author</th>
     <th class="th-sm">Name</th>
+    <th class="th-sm">Status</th>
     <th class="th-sm">Actions</th>
   </tr>
   </thead>
@@ -21,27 +22,34 @@
   <tbody>
   {{#quizList}}
   <tr>
-    <td class="col-1">{{index}}</td>
-    <td class="col-2">{{createdAt}}</td>
+    <td class="">{{index}}</td>
+    <td class="">{{createdAt}}</td>
     <td class="col-2">{{superuserName}}</td>
     <td>
       {{quizName}}
       <br>
       <small>{{#description}}{{description}}{{/description}}</small>
     </td>
+    <td class="col-1"><b>{{status}}</b></td>
     <td class="col-3">
       <div class="row">
         <!--				Answer btn			-->
         <div class="d-flex justify-content-center col-6">
-          {{^score}}
-            {{>fragments/answer-quiz}}
-          {{/score}}
-          {{#score}}
+          {{#isExpired}}
             {{>fragments/review-quiz}}
-          {{/score}}
+          {{/isExpired}}
+
+          {{^isExpired}}
+            {{^score}}
+              {{>fragments/answer-quiz}}
+            {{/score}}
+            {{#score}}
+              {{>fragments/review-quiz}}
+            {{/score}}
+          {{/isExpired}}
         </div>
         <div class="d-flex justify-content-center col-6">
-          <span><b>Score: {{#score}}{{score}}%{{/score}}{{^score}}-{{/score}}</b></span>
+          <span><b>{{#score}}Score: {{score}}%{{/score}}{{^score}}Not submitted{{/score}}</b></span>
         </div>
       </div>
     </td>

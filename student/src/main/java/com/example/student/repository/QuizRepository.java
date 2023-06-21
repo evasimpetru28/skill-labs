@@ -17,7 +17,8 @@ public interface QuizRepository extends JpaRepository<Quiz, String> {
 			       s2.id         as superuserId,
 			       s2.name       as superuserName,
 			       a.student_id  as studentId,
-			       a.score       as score
+			       a.score       as score,
+			       q.status 	 as status
 			from assignment a
 			         join quiz q on a.quiz_id = q.id
 			         join student s on a.student_id = s.id

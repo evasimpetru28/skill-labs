@@ -32,11 +32,17 @@ public class QuizService {
 					quizModel.setQuizId(quizInterface.getQuizId());
 					quizModel.setCreatedAt(quizInterface.getCreatedAt().substring(0,16));
 					quizModel.setQuizName(quizInterface.getQuizName());
-					quizModel.setDescription(quizInterface.getDescription());
+					quizModel.setDescription(
+							(quizInterface.getDescription() != null && quizInterface.getDescription().length() > 55)
+									? quizInterface.getDescription().substring(0, 55) + "..."
+									: quizInterface.getDescription()
+					);
 					quizModel.setSuperuserId(quizInterface.getSuperuserId());
 					quizModel.setSuperuserName(quizInterface.getSuperuserName());
 					quizModel.setStudentId(quizInterface.getStudentId());
 					quizModel.setScore(quizInterface.getScore());
+					quizModel.setStatus("EXPIRED".equals(quizInterface.getStatus()) ? "EXPIRED" : "ACTIVE");
+					quizModel.setIsExpired("EXPIRED".equals(quizInterface.getStatus()));
 
 					return quizModel;
 				})
