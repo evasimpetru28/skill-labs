@@ -25,7 +25,9 @@
 	<div class="container-fluid container-custom pt-4 table-responsive-lg col-9" style="padding-bottom: 40px;">
 		{{>fragments/quiz-form}}
 	</div>
-	{{>fragments/submit}}
+	{{^reviewMode}}
+		{{>fragments/submit}}
+	{{/reviewMode}}
 </main>
 <!--Main layout-->
 

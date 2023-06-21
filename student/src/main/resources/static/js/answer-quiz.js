@@ -1,19 +1,14 @@
-function addOrDeleteResponse(elem, optionId, questionId, studentId, responseId) {
-    console.log(elem.checked)
-    console.log(questionId)
-    console.log(studentId)
-
+function addOrDeleteResponse(elem, quizId, optionId, questionId, studentId, responseId) {
     if (elem.checked) {
+        let url =  "http://localhost:8081/add-response/" + optionId + "/" + questionId + "/" + studentId;
         $.ajax({
             type: "POST",
-            url: "/add-response/" + optionId + "/" + questionId + "/" + studentId,
+            url: url,
             dataType: "html",
             contentType: 'application/json',
             mimeType: 'application/json',
-            timeout: 100000,
             success: function () {
-                console.log("add")
-                location.reload(true);
+                console.log("SUCCESS");
             },
             error: function (e) {
                 console.log("ERROR: ", e);
@@ -21,21 +16,21 @@ function addOrDeleteResponse(elem, optionId, questionId, studentId, responseId) 
         });
 
     } else {
-        console.log("----  "+responseId)
+        let url = "http://localhost:8081/delete-response/" + responseId;
         $.ajax({
             type: "POST",
-            url: "/delete-response/" + responseId,
+            url: url,
             dataType: "html",
             contentType: 'application/json',
             mimeType: 'application/json',
             timeout: 100000,
             success: function () {
-                console.log("delete")
-                location.reload(true);
+                console.log("SUCCESS")
             },
             error: function (e) {
                 console.log("ERROR: ", e);
             }
         });
+
     }
 }

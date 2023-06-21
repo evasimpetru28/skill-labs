@@ -88,7 +88,6 @@ function deleteEvaluation(callingElement, studentId){
         mimeType: 'application/json',
         timeout : 100000,
         success : function() {
-
             location.reload();
         },
         error : function(e) {

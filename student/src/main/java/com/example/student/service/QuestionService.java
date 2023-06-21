@@ -27,6 +27,10 @@ public class QuestionService {
 	final QuestionRepository questionRepository;
 	final ResponseService responseService;
 
+	public Question getQuestionById(String questionId) {
+		return questionRepository.getReferenceById(questionId);
+	}
+
 	public Map<QuestionModel, List<OptionModel>> getQuestionMap(String quizId, String studentId) {
 		var questions = getAllQuestionsByQuizId(quizId);
 		var index = new AtomicInteger(1);
@@ -50,7 +54,8 @@ public class QuestionService {
 											indexOption.getAndIncrement(),
 											option.getOptionText(),
 											option.getQuestionId(),
-											getResponseIfExists(studentId, option)
+											getResponseIfExists(studentId, option),
+											option.getIsCorrect()
 									))
 									.toList();
 						},
@@ -65,6 +70,14 @@ public class QuestionService {
 
 	public List<Question> getAllQuestionsByQuizId(String quizId) {
 		return questionRepository.findAllByQuizIdOrderByCreatedAt(quizId);
+	}
+
+	public Integer getQuestionNumberForQuiz(String quizId) {
+		return questionRepository.getCountByQuizId(quizId);
+	}
+
+	public List<String> getAllQuestionIdsByQuizId(String quizId) {
+		return questionRepository.findAllQuestionIdsByQuizId(quizId);
 	}
 
 }

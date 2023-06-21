@@ -33,10 +33,15 @@
       <div class="row">
         <!--				Answer btn			-->
         <div class="d-flex justify-content-center col-6">
-          {{>fragments/answer-quiz}}
+          {{^score}}
+            {{>fragments/answer-quiz}}
+          {{/score}}
+          {{#score}}
+            {{>fragments/review-quiz}}
+          {{/score}}
         </div>
         <div class="d-flex justify-content-center col-6">
-          <span><b>Grade: {{#score}}{{score}}%{{/score}}{{^score}}-{{/score}}</b></span>
+          <span><b>Score: {{#score}}{{score}}%{{/score}}{{^score}}-{{/score}}</b></span>
         </div>
       </div>
     </td>
