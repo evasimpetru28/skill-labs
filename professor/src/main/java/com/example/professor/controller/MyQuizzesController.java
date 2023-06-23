@@ -242,6 +242,8 @@ public class MyQuizzesController {
 		model.addAttribute("noQuizzes", studentListSubmitted.isEmpty());
 		model.addAttribute("studentListNotSubmitted", studentListNotSubmitted);
 		model.addAttribute("allSubmitted", studentListNotSubmitted.isEmpty());
+		model.addAttribute("submissionsNumber", studentListSubmitted.size());
+		model.addAttribute("studentsNumber", studentListSubmitted.size() + studentListNotSubmitted.size());
 
 		return "quiz-details";
 	}

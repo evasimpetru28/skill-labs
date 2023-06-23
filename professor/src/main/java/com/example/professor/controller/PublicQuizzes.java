@@ -18,16 +18,13 @@ public class PublicQuizzes {
 	final QuizService quizService;
 	final NavbarService navbarService;
 
-	@GetMapping("/public-quizzes")
-	public String getPublicQuizzesPage(Model model) {
+	@GetMapping("/public-quizzes/{superuserId}")
+	public String getPublicQuizzesPage(Model model, @PathVariable String superuserId) {
 		//TODO: Get logged user id from session
 		navbarService.activateNavbarTab(Page.PUBLIC_QUIZZES, model);
-		var publicQuizzes = quizService.getPublicQuizzes();
+		model.addAttribute("superuserId", superuserId);
 
-		model.addAttribute("quizList", publicQuizzes);
-		model.addAttribute("noQuizzes", publicQuizzes.isEmpty());
-
-		return "my-quizzes";
+		return "public-quizzes";
 	}
 
 }
