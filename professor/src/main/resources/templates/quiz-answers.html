@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Skill Labs - Quiz Answers</title>
+
+  {{>fragments/links}}
+  <link rel="stylesheet" href="/static/style/navigation-style.css">
+  <!-- Page style -->
+  <link rel="stylesheet" href="/static/style/quiz-answers-style.css">
+
+</head>
+<body>
+
+<!--Main Navigation-->
+<header>
+
+  {{>fragments/logout-btn}}
+  {{>fragments/sidebar}}
+
+</header>
+<!--Main Navigation-->
+
+<!--Main layout-->
+<main style="margin-top: 50px;" class="row">
+    <div class="col-1"></div>
+    <div class="container-fluid container-custom pt-4 table-responsive-lg col-9" style="padding-bottom: 40px;">
+
+      <div class="modal-content">
+        {{#quiz}}
+        <div class="row">
+          <div class="mb-3">
+            <div class="d-flex align-items-center row">
+              <div class="col-12">
+                <div class="form-outline">
+                  <p id="title">Title: {{name}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3">
+            <div class="d-flex align-items-center row">
+              <div class="col-12">
+                <div class="form-outline">
+                  <p id="studentName">Student: <b>{{studentName}}</b></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3">
+            <div class="col-12">
+              <div class="form-outline">
+                Description:
+                {{#description}}{{description}}{{/description}}{{^description}}-{{/description}}
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/quiz}}
+      </div>
+
+      {{#questionMap}}
+      {{#entrySet}}
+      <div class="modal-content">
+        <div class="modal-body">
+
+          <div class="row">
+            <div class="mb-3">
+              <div class="d-flex align-items-center row">
+                <div class="col-12">
+                  <div class="form-outline">
+                    <h6>{{#key}}{{index}}. {{question}}{{/key}}</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {{#value}}
+          <div class="row">
+            <div class="mb-3">
+              <div class="d-flex row align-items-center">
+                <div class="col-12">
+                  <div class="d-flex align-items-center form-check checkbox-lg">
+                    <input class="form-check-input" type="checkbox" disabled
+                    id="option{{#key}}{{index}}{{/key}}-{{index}}" {{#responseId}}checked{{/responseId}}>
+                    <label class="{{#isCorrect}}correct{{/isCorrect}} {{^isCorrect}}{{#responseId}}error{{/responseId}}{{/isCorrect}}" for="option{{#key}}{{index}}{{/key}}-{{index}}">{{optionText}}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{/value}}
+        </div>
+      </div>
+      {{/entrySet}}
+      {{/questionMap}}
+
+    </div>
+  <div class="col-2"></div>
+  </div>
+</main>
+<!--Main layout-->
+
+</body>
+</html>

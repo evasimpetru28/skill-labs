@@ -16,5 +16,6 @@ public class OptionModel {
 	Integer index;
 	String optionText;
 	String questionId;
+	String responseId;
 	Boolean isCorrect;
 }

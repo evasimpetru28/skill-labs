@@ -23,10 +23,33 @@ table {
     }
 }
 
-.subtitle {
-    font-size: 1.75rem;
-    margin-top: 0;
-    margin-bottom: .5rem;
-    font-weight: 500;
-    line-height: 1.2;
+
+i {
+    cursor: pointer;
+}
+
+.fa-trash-can {
+    color: #b42727;
+}
+
+#title {
+    font-size: 40px;
+}
+
+#studentName {
+    font-size: 26px;
+}
+
+body {
+    background-color: #e9e8fa;
+}
+
+.modal-content {
+    background-color: #f1f1f6;
+    padding: 30px 0 30px 40px;
+    margin: 1rem;
+}
+
+.correct {
+    color: darkgreen;
 }

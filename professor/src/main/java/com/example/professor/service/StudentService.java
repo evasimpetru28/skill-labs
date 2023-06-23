@@ -23,4 +23,8 @@ public class StudentService {
 		return studentRepository.findStudentByName(name);
 	}
 
+	public Student getStudentById(String studentId) {
+		return studentRepository.getReferenceById(studentId);
+	}
+
 }

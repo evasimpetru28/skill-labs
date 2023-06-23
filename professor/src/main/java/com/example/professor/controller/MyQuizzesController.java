@@ -4,6 +4,7 @@ import com.example.professor.entity.Option;
 import com.example.professor.entity.Page;
 import com.example.professor.entity.Question;
 import com.example.professor.entity.Quiz;
+import com.example.professor.repository.StudentRepository;
 import com.example.professor.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,7 @@ public class MyQuizzesController {
 	final QuestionService questionService;
 	final ResponseService responseService;
 	final AssignmentService assignmentService;
+	final StudentService studentService;
 
 	@GetMapping("/quizzes/assigned/{superuserId}")
 	public String getAssignedQuizzesPage(Model model, @PathVariable String superuserId) {
@@ -242,6 +244,18 @@ public class MyQuizzesController {
 		model.addAttribute("allSubmitted", studentListNotSubmitted.isEmpty());
 
 		return "quiz-details";
+	}
+
+	@GetMapping("/answers/{quizId}/{studentId}")
+	public String getAnswersPage(Model model, @PathVariable String quizId, @PathVariable String studentId) {
+		navbarService.activateNavbarTab(Page.MY_QUIZZES, model);
+		var quiz = quizService.getQuizById(quizId);
+		model.addAttribute("quiz", quiz);
+		model.addAttribute("studentName", studentService.getStudentById(studentId).getName());
+		model.addAttribute("questionMap", questionService.getQuestionMapForStudent(quizId, studentId));
+		model.addAttribute("superuserId", quiz.getSuperuserId());
+
+		return "quiz-answers";
 	}
 
 }
