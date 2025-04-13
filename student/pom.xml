@@ -7,7 +7,7 @@
 		<groupId>com.example.skilllabs</groupId>
 		<artifactId>parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath />
+		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
 	<groupId>com.example</groupId>

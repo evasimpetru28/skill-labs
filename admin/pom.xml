@@ -7,7 +7,7 @@
 		<groupId>com.example.skilllabs</groupId>
 		<artifactId>parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath />
+		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
 	<groupId>com.example</groupId>
@@ -28,7 +28,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
-			<version>3.0.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
