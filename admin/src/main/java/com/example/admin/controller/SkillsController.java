@@ -2,7 +2,6 @@ package com.example.admin.controller;
 
 import com.example.admin.entity.Page;
 import com.example.admin.entity.Skill;
-import com.example.admin.repository.EvaluationRepository;
 import com.example.admin.service.CategoryService;
 import com.example.admin.service.EvaluationService;
 import com.example.admin.service.NavbarService;

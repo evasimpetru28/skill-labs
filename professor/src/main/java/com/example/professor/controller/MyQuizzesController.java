@@ -4,7 +4,6 @@ import com.example.professor.entity.Option;
 import com.example.professor.entity.Page;
 import com.example.professor.entity.Question;
 import com.example.professor.entity.Quiz;
-import com.example.professor.repository.StudentRepository;
 import com.example.professor.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

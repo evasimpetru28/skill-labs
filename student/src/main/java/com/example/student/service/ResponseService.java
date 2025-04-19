@@ -1,10 +1,8 @@
 package com.example.student.service;
 
-import com.example.student.entity.Question;
 import com.example.student.entity.Response;
 import com.example.student.repository.OptionRepository;
 import com.example.student.repository.ResponseRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
