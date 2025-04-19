@@ -220,21 +220,39 @@
             <div class="col-xl-4 col-md-12 mb-4">
                 <div class="card chart-card">
                     <div class="card-body">
-                        <canvas id="userDistributionChart"></canvas>
+                        <div id="userDistributionContainer">
+                            <canvas id="userDistributionChart"></canvas>
+                            <div id="noUserDistributionMessage" class="text-center d-none">
+                                <i class="fas fa-users fa-3x mb-3 text-muted"></i>
+                                <p class="text-muted">Only one type of user present.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-xl-4 col-md-12 mb-4">
                 <div class="card chart-card">
                     <div class="card-body">
-                        <canvas id="skillsByCategoryChart"></canvas>
+                        <div id="skillsByCategoryContainer">
+                            <canvas id="skillsByCategoryChart"></canvas>
+                            <div id="noSkillsMessage" class="text-center d-none">
+                                <i class="fas fa-folder fa-3x mb-3 text-muted"></i>
+                                <p class="text-muted">No skills available yet.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-xl-4 col-md-12 mb-4">
                 <div class="card chart-card">
                     <div class="card-body">
-                        <canvas id="popularSkillsChart"></canvas>
+                        <div id="popularSkillsContainer">
+                            <canvas id="popularSkillsChart"></canvas>
+                            <div id="noEvaluationsMessage" class="text-center d-none">
+                                <i class="fas fa-chart-bar fa-3x mb-3 text-muted"></i>
+                                <p class="text-muted">No skill evaluations available yet.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

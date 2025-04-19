@@ -25,6 +25,12 @@ public interface EvaluationRepository extends JpaRepository<Evaluation, String> 
 	@Query("SELECT COUNT(DISTINCT e.studentId) FROM Evaluation e")
 	Integer countStudentsWithEvaluations();
 
-	@Query("SELECT CAST(COUNT(e.id) AS double) / COUNT(DISTINCT e.studentId) FROM Evaluation e")
+	@Query("""
+			SELECT CASE 
+				WHEN COUNT(DISTINCT e.studentId) = 0 THEN 0.0 
+				ELSE CAST(COUNT(e.id) AS double) / COUNT(DISTINCT e.studentId) 
+			END 
+			FROM Evaluation e
+			""")
 	Double getAverageEvaluationsPerStudent();
 }
