@@ -34,7 +34,22 @@ public class StudentService {
 	}
 
 	public List<StudentModel> getStudentModelList() {
-		var students = getAllStudents();
+		return convertToModelList(getAllStudents());
+	}
+
+	public List<StudentModel> getStudentModelListByProgram(String program) {
+		return convertToModelList(studentRepository.findAllByProgramOrderByName(program));
+	}
+
+	public List<StudentModel> getStudentModelListByDomain(String domain) {
+		return convertToModelList(studentRepository.findAllByDomainOrderByName(domain));
+	}
+
+	public List<StudentModel> getStudentModelListByYear(Integer year) {
+		return convertToModelList(studentRepository.findAllByYearOrderByName(year));
+	}
+
+	private List<StudentModel> convertToModelList(List<Student> students) {
 		var index = new AtomicInteger(1);
 		return students.stream()
 				.map(student -> new StudentModel(

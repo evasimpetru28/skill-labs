@@ -42,7 +42,14 @@ public class SuperuserService {
 	}
 
 	public List<SuperuserModel> getSuperuserModelList() {
-		var superusers = getAllSuperusers();
+		return convertToModelList(getAllSuperusers());
+	}
+
+	public List<SuperuserModel> getSuperuserModelListByType(String type) {
+		return convertToModelList(superuserRepository.findAllByTypeOrderByName(type));
+	}
+
+	private List<SuperuserModel> convertToModelList(List<Superuser> superusers) {
 		var index = new AtomicInteger(1);
 		return superusers.stream()
 				.map(superuser -> new SuperuserModel(

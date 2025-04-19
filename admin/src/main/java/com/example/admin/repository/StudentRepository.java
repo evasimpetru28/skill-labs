@@ -13,4 +13,8 @@ public interface StudentRepository extends JpaRepository<Student, String> {
 	Optional<Student> existsByEmail(String email);
 	@Query("select s from Student s where lower(s.email) = lower(?1) and s.id <> ?2")
 	Optional<Student> existsByEmailExcept(String email, String id);
+	
+	List<Student> findAllByProgramOrderByName(String program);
+	List<Student> findAllByDomainOrderByName(String domain);
+	List<Student> findAllByYearOrderByName(Integer year);
 }

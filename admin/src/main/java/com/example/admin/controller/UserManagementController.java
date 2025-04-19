@@ -5,6 +5,8 @@ import com.example.admin.entity.Page;
 import com.example.admin.entity.Student;
 import com.example.admin.entity.Superuser;
 import com.example.admin.model.ResetPasswordModel;
+import com.example.admin.model.StudentModel;
+import com.example.admin.model.SuperuserModel;
 import com.example.admin.service.*;
 import com.example.admin.util.Utils;
 import jakarta.annotation.PostConstruct;
@@ -16,6 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -63,9 +67,43 @@ public class UserManagementController {
 	}
 
 	@GetMapping("/users/students")
-	String getStudentsPage(Model model, @RequestParam(required = false) final Boolean duplicate) {
+	String getStudentsPage(Model model, 
+			@RequestParam(required = false) final Boolean duplicate,
+			@RequestParam(required = false) final String program,
+			@RequestParam(required = false) final String domain,
+			@RequestParam(required = false) final Integer year) {
 		navbarService.activateNavbarTab(Page.USER_MANAGEMENT, model);
-		model.addAttribute("userList", studentService.getStudentModelList());
+		
+		List<StudentModel> students;
+		boolean hasFilters = false;
+		
+		if (program != null && !program.isEmpty()) {
+			students = studentService.getStudentModelListByProgram(program);
+			model.addAttribute("isLicenta", "Licenta".equals(program));
+			model.addAttribute("isMaster", "Master".equals(program));
+			model.addAttribute("isDoctorat", "Doctorat".equals(program));
+			hasFilters = true;
+		} else if (domain != null && !domain.isEmpty()) {
+			students = studentService.getStudentModelListByDomain(domain);
+			model.addAttribute("isMatematica", "Matematica".equals(domain));
+			model.addAttribute("isInformaticaIF", "Informatica IF".equals(domain));
+			model.addAttribute("isInformaticaID", "Informatica ID".equals(domain));
+			model.addAttribute("isCTI", "CTI".equals(domain));
+			hasFilters = true;
+		} else if (year != null) {
+			students = studentService.getStudentModelListByYear(year);
+			model.addAttribute("isYear1", year == 1);
+			model.addAttribute("isYear2", year == 2);
+			model.addAttribute("isYear3", year == 3);
+			model.addAttribute("isYear4", year == 4);
+			hasFilters = true;
+		} else {
+			students = studentService.getStudentModelList();
+		}
+		
+		model.addAttribute("userList", students);
+		model.addAttribute("hasUsers", !students.isEmpty());
+		model.addAttribute("hasFilters", hasFilters);
 		model.addAttribute("duplicate", duplicate);
 		model.addAttribute("admins", false);
 		model.addAttribute("students", true);
@@ -76,7 +114,9 @@ public class UserManagementController {
 	@GetMapping("/users/admins")
 	String getAdminsPage(Model model, @RequestParam(required = false) final Boolean duplicate) {
 		navbarService.activateNavbarTab(Page.USER_MANAGEMENT, model);
-		model.addAttribute("userList", adminService.getAdminModelList());
+		var admins = adminService.getAdminModelList();
+		model.addAttribute("userList", admins);
+		model.addAttribute("hasUsers", !admins.isEmpty());
 		model.addAttribute("duplicate", duplicate);
 		model.addAttribute("admins", true);
 		model.addAttribute("students", false);
@@ -85,9 +125,27 @@ public class UserManagementController {
 	}
 
 	@GetMapping("/users/professors-companies")
-	String getSuperusersPage(Model model, @RequestParam(required = false) final Boolean duplicate) {
+	String getSuperusersPage(Model model, 
+			@RequestParam(required = false) final Boolean duplicate,
+			@RequestParam(required = false) final String type) {
 		navbarService.activateNavbarTab(Page.USER_MANAGEMENT, model);
-		model.addAttribute("userList", superuserService.getSuperuserModelList());
+		
+		List<SuperuserModel> superusers;
+		boolean hasFilters = false;
+		
+		if (type != null && !type.isEmpty()) {
+			superusers = superuserService.getSuperuserModelListByType(type);
+			model.addAttribute("isProfessor", "PROFESSOR".equals(type));
+			model.addAttribute("isCompany", "COMPANY".equals(type));
+			model.addAttribute("selectedType", "PROFESSOR".equals(type) ? "professors" : "companies");
+			hasFilters = true;
+		} else {
+			superusers = superuserService.getSuperuserModelList();
+		}
+		
+		model.addAttribute("userList", superusers);
+		model.addAttribute("hasUsers", !superusers.isEmpty());
+		model.addAttribute("hasFilters", hasFilters);
 		model.addAttribute("duplicate", duplicate);
 		model.addAttribute("admins", false);
 		model.addAttribute("students", false);

@@ -364,3 +364,39 @@ function getYearOptions(callingElement) {
     }
 
 }
+
+function filterStudents(filterType) {
+    // Reset other filters
+    if (filterType !== 'program') document.getElementById('programFilter').value = '';
+    if (filterType !== 'domain') document.getElementById('domainFilter').value = '';
+    if (filterType !== 'year') document.getElementById('yearFilter').value = '';
+
+    // Get the selected value
+    let value = document.getElementById(filterType + 'Filter').value;
+    
+    // Redirect with the filter
+    if (value) {
+        window.location.href = '/users/students?' + filterType + '=' + encodeURIComponent(value);
+    } else {
+        window.location.href = '/users/students';
+    }
+}
+
+function resetFilters() {
+    window.location.href = '/users/students';
+}
+
+function filterSuperusers() {
+    let value = document.getElementById('typeFilter').value;
+    
+    // Redirect with the filter
+    if (value) {
+        window.location.href = '/users/professors-companies?type=' + encodeURIComponent(value);
+    } else {
+        window.location.href = '/users/professors-companies';
+    }
+}
+
+function resetSuperuserFilters() {
+    window.location.href = '/users/professors-companies';
+}

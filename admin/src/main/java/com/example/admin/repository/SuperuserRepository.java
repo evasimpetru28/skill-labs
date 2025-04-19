@@ -15,5 +15,5 @@ public interface SuperuserRepository extends JpaRepository<Superuser, String> {
 	Optional<Superuser> existsByEmail(String email);
 	@Query("select s from Superuser s where lower(s.email) = lower(?1) and s.id <> ?2")
 	Optional<Superuser> existsByEmailExcept(String email, String id);
-
+	List<Superuser> findAllByTypeOrderByName(String type);
 }
