@@ -28,7 +28,58 @@
         <h2>Skills</h2>
         <br>
 
-        {{>fragments/add-skill}}
+        <div class="d-flex">
+            {{>fragments/add-skill}}
+            
+            <button type="button" class="btn btn-success ms-2" data-mdb-toggle="modal" data-mdb-target="#importExcel">
+                <i class="fa-solid fa-file-excel fa-fw me-3"></i>Import Excel
+            </button>
+        </div>
+        <br>
+
+        <!-- Modal Import Excel -->
+        <div class="modal fade" id="importExcel" tabindex="-1" role="dialog" aria-labelledby="importExcelTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <form action="/import-skills" method="POST" enctype="multipart/form-data">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="importExcelTitle">Import Skills from Excel</h5>
+                            <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert alert-info">
+                                <p>Please upload an Excel file with the following columns:</p>
+                                <ul>
+                                    <li><strong>Name</strong> (required)</li>
+                                    <li><strong>Category</strong> (required) - must match an existing category name</li>
+                                    <li><strong>Description</strong> (optional)</li>
+                                </ul>
+                                <p>Supported formats:</p>
+                                <ul>
+                                    <li><strong>.xlsx</strong> - Excel 2007 and newer</li>
+                                    <li><strong>.xls</strong> - Excel 97-2003</li>
+                                </ul>
+                                <p>Note:</p>
+                                <ul>
+                                    <li>Duplicate skill names will be skipped</li>
+                                    <li>Skills with non-existent categories will be skipped</li>
+                                </ul>
+                            </div>
+                            <div class="form-outline">
+                                <input type="file" id="excelFile" name="file" class="form-control form-control-lg" 
+                                    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" 
+                                    required />
+                                <small class="form-text text-muted">Only .xlsx and .xls files are accepted</small>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="importButton" disabled>Import</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         <table id="dtBasicExample" class="table table-hover table-striped table-bordered table-sm">
 
@@ -72,11 +123,7 @@
 </main>
 <!--Main layout-->
 
-<script>
-    document.querySelectorAll('.form-outline').forEach((formOutline) => {
-        new mdb.Input(formOutline).init();
-    });
-</script>
+<!-- Load scripts at the end of body -->
 <script type="text/javascript" src="../static/js/skills.js"></script>
 
 </body>

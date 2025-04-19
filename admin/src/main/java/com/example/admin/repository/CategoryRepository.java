@@ -9,8 +9,13 @@ import java.util.Optional;
 
 public interface CategoryRepository extends JpaRepository<Category, String> {
 	List<Category> findAllByOrderByName();
+
+	@Query("select (count(c) > 0) from Category c where lower(c.name) = lower(?1)")
+	boolean existsByNameIgnoreCase(String name);
+
+	@Query("select (count(c) > 0) from Category c where lower(c.name) = lower(?1) and c.id <> ?2")
+	boolean existsByNameIgnoreCase(String name, String id);
+
 	@Query("select c from Category c where lower(c.name) = lower(?1)")
-	Optional<Category> existsByName(String name);
-	@Query("select c from Category c where lower(c.name) = lower(?1) and c.id <> ?2")
-	Optional<Category> existsByNameExcept(String name, String id);
+	Optional<Category> findByNameIgnoreCase(String name);
 }

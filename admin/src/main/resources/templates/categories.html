@@ -18,28 +18,24 @@
 
 <!--Main Navigation-->
 <header>
-
     {{>fragments/logout-btn}}
     {{>fragments/sidebar}}
-
 </header>
 <!--Main Navigation-->
 
 <!--Main layout-->
 <main style="margin-top: 50px;">
     <div class="container-fluid container-custom pt-4 table-responsive-lg">
-
         <h2>Categories</h2>
         <br>
 
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#addCategory">
-            <i class="fa-solid fa-plus fa-fw me-3"></i>Add
-        </button>
-        
-        <button type="button" class="btn btn-success ms-2" data-mdb-toggle="modal" data-mdb-target="#importExcel">
-            <i class="fa-solid fa-file-excel fa-fw me-3"></i>Import Excel
-        </button>
+        <div class="d-flex">
+            {{>fragments/add-category}}
+            
+            <button type="button" class="btn btn-success ms-2" data-mdb-toggle="modal" data-mdb-target="#importExcel">
+                <i class="fa-solid fa-file-excel fa-fw me-3"></i>Import Excel
+            </button>
+        </div>
         <br>
 
         <!-- Modal Import Excel -->
@@ -80,50 +76,8 @@
                 </div>
             </div>
         </div>
-        
-        <!-- Modal Add -->
-        <div class="modal fade" id="addCategory" tabindex="-1" role="dialog" aria-labelledby="addCategoryTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <form action="/add-category" method="POST" name="category">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addCategoryTitle">Add category</h5>
-                        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-
-                        <div class="row">
-                            <div class="mb-3">
-                                <div class="form-outline">
-                                    <input type="text" id="name" name="name" class="form-control form-control-lg" required />
-                                    <label class="form-label" for="name">Name<span class="error">*</span></label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="mb-3">
-                                <div class="form-outline">
-                                    <textarea id="description" rows="4"
-                                              name="description" class="form-control form-control-lg"></textarea>
-                                    <label class="form-label" for="description">Description</label>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Add</button>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div>
 
         <table id="dtBasicExample" class="table table-hover table-striped table-bordered table-sm">
-
             <thead>
             <tr>
                 <th class="th-sm">Nr.</th>
@@ -140,7 +94,6 @@
                 <td class="col-2">{{name}}</td>
                 <td class="remove-description">{{description}}</td>
                 <td class="col-3">
-
                     <div class="row">
                         <div class="d-flex justify-content-end col-6">
 
@@ -230,7 +183,6 @@
             {{/categoryList}}
             </tbody>
         </table>
-
     </div>
     {{#duplicate}}
     <script>alert("Category already exists!")</script>

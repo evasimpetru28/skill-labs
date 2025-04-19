@@ -28,11 +28,11 @@ public class SkillService {
 	}
 
 	public Boolean isDuplicate(String name) {
-		return skillRepository.existsByName(name).isPresent();
+		return skillRepository.existsByNameIgnoreCase(name);
 	}
 
 	public Boolean isDuplicateExcept(String name, String id) {
-		return skillRepository.existsByNameExcept(name, id).isPresent();
+		return skillRepository.existsByNameIgnoreCase(name, id);
 	}
 
 	public List<SkillModel> getSkillModelList() {
@@ -52,6 +52,10 @@ public class SkillService {
 
 	public List<Skill> getAllSkills() {
 		return skillRepository.findAllByOrderByNameAndCategoryName();
+	}
+
+	public Skill getSkillByName(String name) {
+		return skillRepository.findByNameIgnoreCase(name).orElse(null);
 	}
 
 }

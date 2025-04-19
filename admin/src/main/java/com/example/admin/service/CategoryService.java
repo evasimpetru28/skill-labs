@@ -26,11 +26,11 @@ public class CategoryService {
 	}
 
 	public Boolean isDuplicate(String name) {
-		return categoryRepository.existsByName(name).isPresent();
+		return categoryRepository.existsByNameIgnoreCase(name);
 	}
 
 	public Boolean isDuplicateExcept(String name, String id) {
-		return categoryRepository.existsByNameExcept(name, id).isPresent();
+		return categoryRepository.existsByNameIgnoreCase(name, id);
 	}
 
 	public List<CategoryModel> getCategoryModelList() {
@@ -51,6 +51,10 @@ public class CategoryService {
 
 	public Category getCategoryById(String id) {
 		return categoryRepository.getReferenceById(id);
+	}
+
+	public Category getCategoryByName(String name) {
+		return categoryRepository.findByNameIgnoreCase(name).orElse(null);
 	}
 
 }
