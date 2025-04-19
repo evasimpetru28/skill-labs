@@ -49,4 +49,8 @@ public class CategoryService {
 		return categoryRepository.findAllByOrderByName();
 	}
 
+	public Category getCategoryById(String id) {
+		return categoryRepository.getReferenceById(id);
+	}
+
 }

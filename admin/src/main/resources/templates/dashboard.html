@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Skill Labs - Dashboard</title>
@@ -7,57 +7,265 @@
     {{>fragments/links}}
     <link rel="stylesheet" href="../static/style/navigation-style.css">
     <!-- Page style -->
-    <link rel="stylesheet" href="../static/style/pie-chart-style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <link rel="stylesheet" href="../static/style/dashboard-style.css">
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 </head>
 <body>
 
 <!--Main Navigation-->
 <header>
-
     {{>fragments/logout-btn}}
     {{>fragments/sidebar}}
-
 </header>
 <!--Main Navigation-->
 
 <!--Main layout-->
 <main style="margin-top: 50px;">
-    <div class="container-fluid container-custom pt-4 table-responsive-lg">
-
+    <div class="container-fluid container-custom pt-4">
         <h2>Dashboard</h2>
         <br>
 
-        <div>
-            <canvas id="myChart"></canvas>
+        <!-- User Statistics Section -->
+        <div class="section-header">
+            <h4><i class="fas fa-users me-2"></i>User Statistics</h4>
+        </div>
+        <div class="row mb-4">
+            <div class="col-xl-2 col-sm-6 col-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between px-md-1">
+                            <div>
+                                <h3 class="text-primary">{{userStats.totalUsers}}</h3>
+                                <p class="mb-0">Total Users</p>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-users text-primary fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-2 col-sm-6 col-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between px-md-1">
+                            <div>
+                                <h3 class="text-success">{{userStats.studentCount}}</h3>
+                                <p class="mb-0">Students</p>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-user-graduate text-success fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-2 col-sm-6 col-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between px-md-1">
+                            <div>
+                                <h3 class="text-info">{{userStats.professorCount}}</h3>
+                                <p class="mb-0">Professors</p>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-chalkboard-teacher text-info fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-2 col-sm-6 col-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between px-md-1">
+                            <div>
+                                <h3 class="text-warning">{{userStats.companyCount}}</h3>
+                                <p class="mb-0">Companies</p>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-building text-warning fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-2 col-sm-6 col-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between px-md-1">
+                            <div>
+                                <h3 class="text-danger">{{userStats.adminCount}}</h3>
+                                <p class="mb-0">Admins</p>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-user-shield text-danger fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills and Categories Section -->
+        <div class="section-header">
+            <h4><i class="fas fa-chart-bar me-2"></i>Skills & Categories</h4>
+        </div>
+        <div class="row mb-4">
+            <div class="col-xl-3 col-sm-6 col-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between px-md-1">
+                            <div>
+                                <h3 class="text-success">{{skillStats.totalSkills}}</h3>
+                                <p class="mb-0">Total Skills</p>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-chart-bar text-success fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between px-md-1">
+                            <div>
+                                <h3 class="text-warning">{{skillStats.totalCategories}}</h3>
+                                <p class="mb-0">Skill Categories</p>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-folder text-warning fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Evaluation Statistics Section -->
+        <div class="section-header">
+            <h4><i class="fas fa-check-circle me-2"></i>Evaluation Statistics</h4>
+        </div>
+        <div class="row mb-4">
+            <div class="col-xl-3 col-sm-6 col-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between px-md-1">
+                            <div>
+                                <h3 class="text-info">{{evaluationStats.totalEvaluations}}</h3>
+                                <p class="mb-0">Total Evaluations</p>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-check-circle text-info fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between px-md-1">
+                            <div>
+                                <h3 class="text-success">{{evaluationStats.studentsWithEvals}}</h3>
+                                <p class="mb-0">Students with Evaluations</p>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-user-check text-success fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between px-md-1">
+                            <div>
+                                <h3 class="text-warning">{{evaluationStats.studentsWithoutEvals}}</h3>
+                                <p class="mb-0">Students without Evaluations</p>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-user-times text-warning fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between px-md-1">
+                            <div>
+                                <h3 class="text-primary">{{evaluationStats.avgEvaluationsPerStudent}}</h3>
+                                <p class="mb-0">Avg. Evaluations per Student</p>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-chart-line text-primary fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="section-header">
+            <h4><i class="fas fa-chart-pie me-2"></i>Analytics</h4>
+        </div>
+        <div class="row">
+            <div class="col-xl-4 col-md-12 mb-4">
+                <div class="card chart-card">
+                    <div class="card-body">
+                        <canvas id="userDistributionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-12 mb-4">
+                <div class="card chart-card">
+                    <div class="card-body">
+                        <canvas id="skillsByCategoryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-12 mb-4">
+                <div class="card chart-card">
+                    <div class="card-body">
+                        <canvas id="popularSkillsChart"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </main>
 <!--Main layout-->
 
-</body>
+<script type="text/javascript" src="../static/js/dashboard.js"></script>
+<script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        try {
+            console.log('Initializing charts...');
+            
+            // Get the data using Thymeleaf's JSON serialization
+            const userStats = /*[[${userStats}]]*/ {};
+            const skillStats = /*[[${skillStats}]]*/ {};
+            const evaluationStats = /*[[${evaluationStats}]]*/ {};
+            
+            console.log('Data received:', {
+                userStats,
+                skillStats,
+                evaluationStats
+            });
 
-<script>
-    const ctx = document.getElementById('myChart');
-
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: {{{colors}}},
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
+            initializeCharts(userStats, skillStats, evaluationStats);
+            console.log('Charts initialized successfully');
+        } catch (error) {
+            console.error('Error initializing charts:', error);
         }
     });
 </script>
+</body>
 </html>
