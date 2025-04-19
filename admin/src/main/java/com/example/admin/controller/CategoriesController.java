@@ -5,9 +5,15 @@ import com.example.admin.entity.Page;
 import com.example.admin.service.CategoryService;
 import com.example.admin.service.NavbarService;
 import lombok.RequiredArgsConstructor;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -50,6 +56,47 @@ public class CategoriesController {
 		} else {
 			categoryService.saveCategory(category);
 		}
+		return "redirect:/categories";
+	}
+
+	@PostMapping("/import-categories")
+	public String importCategories(@RequestParam("file") MultipartFile file) {
+		try {
+			Workbook workbook = WorkbookFactory.create(file.getInputStream());
+			Sheet sheet = workbook.getSheetAt(0);
+
+			List<Category> categories = new ArrayList<>();
+			boolean isFirstRow = true;
+
+			for (Row row : sheet) {
+				if (isFirstRow) {
+					isFirstRow = false;
+					continue;
+				}
+
+				Cell nameCell = row.getCell(0);
+				Cell descriptionCell = row.getCell(1);
+
+				if (nameCell != null) {
+					String name = nameCell.getStringCellValue().trim();
+					String description = descriptionCell != null ? descriptionCell.getStringCellValue().trim() : "";
+
+					if (!name.isEmpty() && !categoryService.isDuplicate(name)) {
+						Category category = new Category();
+						category.setName(name);
+						category.setDescription(description);
+						categories.add(category);
+					}
+				}
+			}
+
+			workbook.close();
+			categories.forEach(categoryService::saveCategory);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		return "redirect:/categories";
 	}
 }
