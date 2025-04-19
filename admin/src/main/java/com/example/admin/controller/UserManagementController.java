@@ -191,7 +191,7 @@ public class UserManagementController {
 	}
 
 	@PostMapping("/add-superuser")
-	public String addSuperuser(@ModelAttribute("admin") Superuser superuser) {
+	public String addSuperuser(@ModelAttribute("superuser") Superuser superuser) {
 		if (superuserService.isDuplicate(superuser.getEmail())) {
 			return "redirect:/users/professors-companies?duplicate=true";
 		} else {
