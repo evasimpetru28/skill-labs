@@ -9,7 +9,7 @@
     <!-- Page style -->
     <link rel="stylesheet" href="../static/style/categories-style.css">
     <!-- DataTables CSS -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css">
     <!-- DataTables JS -->
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
 
@@ -96,86 +96,11 @@
                 <td class="col-3">
                     <div class="row">
                         <div class="d-flex justify-content-end col-6">
-
-                            <button type="button" class="btn btn-primary icon-spacing" data-mdb-toggle="modal" data-mdb-target="#edit{{index}}">
-                                <i class="fa-regular fa-pen-to-square"></i>
-                                <span class="remove-action-name">Edit</span>
-                            </button>
-
-                            <!-- Modal Edit -->
-                            <div class="modal fade" id="edit{{index}}" tabindex="-1" role="dialog" aria-labelledby="editCategoryTitle{{index}}" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <form action="/edit-category/{{id}}" method="POST" name="category">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="editCategoryTitle{{index}}">Edit category {{name}}</h5>
-                                                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-
-                                                <div class="row">
-                                                    <div class="mb-3">
-                                                        <div class="form-outline">
-                                                            <input type="text" value="{{name}}" id="name{{index}}" name="name" class="form-control form-control-lg" required />
-                                                            <label class="form-label" for="name{{index}}">Name<span class="error">*</span></label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="mb-3">
-                                                        <div class="form-outline">
-                                                            <textarea id="description{{index}}" rows="4"
-                                                                      name="description" class="form-control form-control-lg">{{description}}</textarea>
-                                                            <label class="form-label" for="description{{index}}">Description</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary">Edit</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
+                            {{>fragments/edit-category}}
                         </div>
 
                         <div class="d-flex justify-content-start col-6">
-
-                            <button type="button" class="btn btn-primary icon-spacing" data-mdb-toggle="modal" data-mdb-target="#delete{{index}}">
-                                <i class="fa-regular fa-trash-can"></i>
-                                <span class="remove-action-name">Delete</span>
-                            </button>
-
-                            <!-- Modal Delete -->
-                            <div class="modal fade" id="delete{{index}}" tabindex="-1" role="dialog" aria-labelledby="deleteCategoryTitle{{index}}" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <form action="/delete-category/{{id}}" method="POST">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="deleteCategoryTitle{{index}}">Delete category {{name}}</h5>
-                                                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Are you sure you want to permanently delete this category?
-                                                <br>
-                                                <p class="error">This will delete all related skills, evaluations and quizzez.</p>
-                                            </div>
-
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary">Delete</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
+                            {{>fragments/delete-category}}
                         </div>
                     </div>
                 </td>
