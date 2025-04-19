@@ -1,0 +1,42 @@
+<button type="button" class="btn btn-success ms-2" data-mdb-toggle="modal" data-mdb-target="#importExcel">
+    <i class="fa-solid fa-file-excel fa-fw me-3"></i>Import Excel
+</button>
+
+<!-- Modal Import Excel -->
+<div class="modal fade" id="importExcel" tabindex="-1" role="dialog" aria-labelledby="importExcelTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form action="/import-categories" method="POST" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importExcelTitle">Import Categories from Excel</h5>
+                    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info">
+                        <p>Please upload an Excel file with the following columns:</p>
+                        <ul>
+                            <li><strong>Name</strong> (required)</li>
+                            <li><strong>Description</strong> (optional)</li>
+                        </ul>
+                        <p>Supported formats:</p>
+                        <ul>
+                            <li><strong>.xlsx</strong> - Excel 2007 and newer</li>
+                            <li><strong>.xls</strong> - Excel 97-2003</li>
+                        </ul>
+                        <p>Note: Duplicate category names will be skipped.</p>
+                    </div>
+                    <div class="form-outline">
+                        <input type="file" id="excelFile" name="file" class="form-control form-control-lg" 
+                            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" 
+                            required />
+                        <small class="form-text text-muted">Only .xlsx and .xls files are accepted</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="importButton" disabled>Import</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> 
