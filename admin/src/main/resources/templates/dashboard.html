@@ -36,7 +36,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between px-md-1">
                             <div>
-                                <h3 class="text-primary">{{userStats.totalUsers}}</h3>
+                                <h3 class="text-primary" id="totalUsers">0</h3>
                                 <p class="mb-0">Total Users</p>
                             </div>
                             <div class="align-self-center">
@@ -51,7 +51,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between px-md-1">
                             <div>
-                                <h3 class="text-success">{{userStats.studentCount}}</h3>
+                                <h3 class="text-success" id="studentCount">0</h3>
                                 <p class="mb-0">Students</p>
                             </div>
                             <div class="align-self-center">
@@ -66,7 +66,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between px-md-1">
                             <div>
-                                <h3 class="text-info">{{userStats.professorCount}}</h3>
+                                <h3 class="text-info" id="professorCount">0</h3>
                                 <p class="mb-0">Professors</p>
                             </div>
                             <div class="align-self-center">
@@ -81,7 +81,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between px-md-1">
                             <div>
-                                <h3 class="text-warning">{{userStats.companyCount}}</h3>
+                                <h3 class="text-warning" id="companyCount">0</h3>
                                 <p class="mb-0">Companies</p>
                             </div>
                             <div class="align-self-center">
@@ -96,7 +96,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between px-md-1">
                             <div>
-                                <h3 class="text-danger">{{userStats.adminCount}}</h3>
+                                <h3 class="text-danger" id="adminCount">0</h3>
                                 <p class="mb-0">Admins</p>
                             </div>
                             <div class="align-self-center">
@@ -118,7 +118,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between px-md-1">
                             <div>
-                                <h3 class="text-success">{{skillStats.totalSkills}}</h3>
+                                <h3 class="text-success" id="totalSkills">0</h3>
                                 <p class="mb-0">Total Skills</p>
                             </div>
                             <div class="align-self-center">
@@ -133,7 +133,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between px-md-1">
                             <div>
-                                <h3 class="text-warning">{{skillStats.totalCategories}}</h3>
+                                <h3 class="text-warning" id="totalCategories">0</h3>
                                 <p class="mb-0">Skill Categories</p>
                             </div>
                             <div class="align-self-center">
@@ -155,7 +155,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between px-md-1">
                             <div>
-                                <h3 class="text-info">{{evaluationStats.totalEvaluations}}</h3>
+                                <h3 class="text-info" id="totalEvaluations">0</h3>
                                 <p class="mb-0">Total Evaluations</p>
                             </div>
                             <div class="align-self-center">
@@ -170,7 +170,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between px-md-1">
                             <div>
-                                <h3 class="text-success">{{evaluationStats.studentsWithEvals}}</h3>
+                                <h3 class="text-success" id="studentsWithEvals">0</h3>
                                 <p class="mb-0">Students with Evaluations</p>
                             </div>
                             <div class="align-self-center">
@@ -185,7 +185,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between px-md-1">
                             <div>
-                                <h3 class="text-warning">{{evaluationStats.studentsWithoutEvals}}</h3>
+                                <h3 class="text-warning" id="studentsWithoutEvals">0</h3>
                                 <p class="mb-0">Students without Evaluations</p>
                             </div>
                             <div class="align-self-center">
@@ -200,7 +200,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between px-md-1">
                             <div>
-                                <h3 class="text-primary">{{evaluationStats.avgEvaluationsPerStudent}}</h3>
+                                <h3 class="text-primary" id="avgEvaluationsPerStudent">0</h3>
                                 <p class="mb-0">Avg. Evaluations per Student</p>
                             </div>
                             <div class="align-self-center">
@@ -244,24 +244,43 @@
 <!--Main layout-->
 
 <script type="text/javascript" src="../static/js/dashboard.js"></script>
-<script th:inline="javascript">
+<script>
     document.addEventListener('DOMContentLoaded', function() {
         try {
-            console.log('Initializing charts...');
+            console.log('Fetching dashboard data...');
             
-            // Get the data using Thymeleaf's JSON serialization
-            const userStats = /*[[${userStats}]]*/ {};
-            const skillStats = /*[[${skillStats}]]*/ {};
-            const evaluationStats = /*[[${evaluationStats}]]*/ {};
-            
-            console.log('Data received:', {
-                userStats,
-                skillStats,
-                evaluationStats
-            });
-
-            initializeCharts(userStats, skillStats, evaluationStats);
-            console.log('Charts initialized successfully');
+            fetch('/api/dashboard/stats')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Data received:', data);
+                    
+                    // Update statistics
+                    const { userStats, skillStats, evaluationStats } = data;
+                    
+                    // Update user statistics
+                    document.getElementById('totalUsers').textContent = userStats.totalUsers || 0;
+                    document.getElementById('studentCount').textContent = userStats.studentCount || 0;
+                    document.getElementById('professorCount').textContent = userStats.professorCount || 0;
+                    document.getElementById('companyCount').textContent = userStats.companyCount || 0;
+                    document.getElementById('adminCount').textContent = userStats.adminCount || 0;
+                    
+                    // Update skill statistics
+                    document.getElementById('totalSkills').textContent = skillStats.totalSkills || 0;
+                    document.getElementById('totalCategories').textContent = skillStats.totalCategories || 0;
+                    
+                    // Update evaluation statistics
+                    document.getElementById('totalEvaluations').textContent = evaluationStats.totalEvaluations || 0;
+                    document.getElementById('studentsWithEvals').textContent = evaluationStats.studentsWithEvals || 0;
+                    document.getElementById('studentsWithoutEvals').textContent = evaluationStats.studentsWithoutEvals || 0;
+                    document.getElementById('avgEvaluationsPerStudent').textContent = evaluationStats.avgEvaluationsPerStudent || 0;
+                    
+                    // Initialize charts
+                    initializeCharts(userStats, skillStats, evaluationStats);
+                    console.log('Charts initialized successfully');
+                })
+                .catch(error => {
+                    console.error('Error fetching dashboard data:', error);
+                });
         } catch (error) {
             console.error('Error initializing charts:', error);
         }

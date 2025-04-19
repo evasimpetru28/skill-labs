@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,7 +29,12 @@ public class DashboardController {
 	@GetMapping("/dashboard")
 	String getDashboardPage(Model model) {
 		navbarService.activateNavbarTab(Page.DASHBOARD, model);
+		return "dashboard";
+	}
 
+	@GetMapping("/api/dashboard/stats")
+	@ResponseBody
+	Map<String, Object> getDashboardStats() {
 		// Get all entities
 		var students = studentService.getAllStudents();
 		var superusers = superuserService.getAllSuperusers();
@@ -36,6 +42,8 @@ public class DashboardController {
 		var categories = categoryService.getAllCategories();
 		var evaluations = evaluationService.getAllEvaluations();
 		var admins = adminService.getAllAdmins();
+
+		Map<String, Object> stats = new HashMap<>();
 
 		// Calculate user statistics
 		var professorCount = superusers.stream().filter(s -> "PROFESSOR".equals(s.getType())).count();
@@ -75,11 +83,11 @@ public class DashboardController {
 		evaluationStats.put("popularSkillNames", mostEvaluatedSkills.stream().map(PopularSkillModel::getName).collect(Collectors.toList()));
 		evaluationStats.put("popularSkillCounts", mostEvaluatedSkills.stream().map(PopularSkillModel::getCount).collect(Collectors.toList()));
 
-		// Add all stats to model
-		model.addAttribute("userStats", userStats);
-		model.addAttribute("skillStats", skillStats);
-		model.addAttribute("evaluationStats", evaluationStats);
+		// Add all stats to response
+		stats.put("userStats", userStats);
+		stats.put("skillStats", skillStats);
+		stats.put("evaluationStats", evaluationStats);
 
-		return "dashboard";
+		return stats;
 	}
 }
