@@ -1,0 +1,71 @@
+<button type="button" class="btn btn-success ms-2" data-mdb-toggle="modal" data-mdb-target="#importExcel">
+    <i class="fa-solid fa-file-excel fa-fw me-3"></i>Import Excel
+</button>
+
+<!-- Modal Import Excel -->
+<div class="modal fade" id="importExcel" tabindex="-1" role="dialog" aria-labelledby="importExcelTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form action="/import-users" method="POST" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importExcelTitle">
+                        {{#admins}}Import Admins from Excel{{/admins}}
+                        {{#students}}Import Students from Excel{{/students}}
+                        {{#superusers}}Import Professors & Companies from Excel{{/superusers}}
+                    </h5>
+                    <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info">
+                        <p>Please upload an Excel file with the following columns:</p>
+                        <ul>
+                            {{#admins}}
+                            <li><strong>Name</strong> (required)</li>
+                            <li><strong>Email</strong> (required)</li>
+                            <li><strong>Phone</strong> (optional)</li>
+                            {{/admins}}
+                            
+                            {{#students}}
+                            <li><strong>Name</strong> (required)</li>
+                            <li><strong>Email</strong> (required)</li>
+                            <li><strong>Phone</strong> (optional)</li>
+                            <li><strong>Program</strong> (required) - must be one of: Licenta, Master, Doctorat</li>
+                            <li><strong>Domain</strong> (required) - must be one of: Matematica, Informatica IF, Informatica ID, CTI</li>
+                            <li><strong>Year</strong> (required) - must be a number between 1-4</li>
+                            {{/students}}
+                            
+                            {{#superusers}}
+                            <li><strong>Name</strong> (required)</li>
+                            <li><strong>Email</strong> (required)</li>
+                            <li><strong>Phone</strong> (optional)</li>
+                            <li><strong>Type</strong> (required) - must be either PROFESSOR or COMPANY</li>
+                            {{/superusers}}
+                        </ul>
+                        <p>Supported formats:</p>
+                        <ul>
+                            <li><strong>.xlsx</strong> - Excel 2007 and newer</li>
+                            <li><strong>.xls</strong> - Excel 97-2003</li>
+                        </ul>
+                        <p>Note:</p>
+                        <ul>
+                            <li>Duplicate emails will be skipped</li>
+                            <li>Invalid data in required fields will cause the row to be skipped</li>
+                            <li>Users with invalid email addresses will be skipped</li>
+                        </ul>
+                    </div>
+                    <div class="form-outline">
+                        <input type="file" id="excelFile" name="file" class="form-control form-control-lg" 
+                            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" 
+                            required />
+                        <small class="form-text text-muted">Only .xlsx and .xls files are accepted</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="importButton" disabled>Import</button>
+                </div>
+                <input type="hidden" name="userType" value="{{#admins}}ADMIN{{/admins}}{{#students}}STUDENT{{/students}}{{#superusers}}SUPERUSER{{/superusers}}" />
+            </form>
+        </div>
+    </div>
+</div> 

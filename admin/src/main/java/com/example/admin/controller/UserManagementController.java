@@ -12,13 +12,20 @@ import com.example.admin.util.Utils;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -345,5 +352,166 @@ public class UserManagementController {
 	@GetMapping("/confirm-reset")
 	public String getConfirmResetPage() {
 		return "confirm-reset";
+	}
+
+	@PostMapping("/import-users")
+	public String importUsers(@RequestParam("file") MultipartFile file, @RequestParam("userType") String userType) {
+		try {
+			Workbook workbook = WorkbookFactory.create(file.getInputStream());
+			Sheet sheet = workbook.getSheetAt(0);
+
+			boolean isFirstRow = true;
+
+			for (Row row : sheet) {
+				if (isFirstRow) {
+					isFirstRow = false;
+					continue;
+				}
+
+				try {
+					String name = getStringCellValue(row.getCell(0));
+					String email = getStringCellValue(row.getCell(1));
+					String phone = getStringCellValue(row.getCell(2));
+
+					// Skip if name or email is empty
+					if (name.isEmpty() || email.isEmpty()) {
+						continue;
+					}
+
+					switch (userType) {
+						case "ADMIN" -> processAdminRow(name, email, phone);
+						case "STUDENT" -> processStudentRow(name, email, phone, row);
+						case "SUPERUSER" -> processSuperuserRow(name, email, phone, row);
+					}
+				} catch (Exception e) {
+					// Log error and continue with next row
+					log.error("Error processing row: " + e.getMessage());
+				}
+			}
+
+			workbook.close();
+
+		} catch (IOException e) {
+			log.error("Error reading Excel file: " + e.getMessage());
+		}
+
+		return switch (userType) {
+			case "ADMIN" -> "redirect:/users/admins";
+			case "STUDENT" -> "redirect:/users/students";
+			case "SUPERUSER" -> "redirect:/users/professors-companies";
+			default -> "redirect:/users";
+		};
+	}
+
+	private void processAdminRow(String name, String email, String phone) {
+		if (!adminService.isDuplicate(email)) {
+			try {
+				Admin admin = new Admin();
+				admin.setName(name);
+				admin.setEmail(email);
+				admin.setPhone(phone != null ? phone : "");
+				
+				String password = Utils.getShortUUID();
+				String resetCode = Utils.getShortUUID();
+				admin.setResetCode(resetCode);
+				admin.setPassword(passwordEncoder.encode(password));
+
+				adminService.saveAdmin(admin);
+				smtpMailSender.sendMailResetPassword("ADMIN", name, email, password, resetCode);
+			} catch (Exception e) {
+				log.error("Error sending email to admin {}: {}", email, e.getMessage());
+			}
+		}
+	}
+
+	private void processStudentRow(String name, String email, String phone, Row row) {
+		String program = getStringCellValue(row.getCell(3));
+		String domain = getStringCellValue(row.getCell(4));
+		String yearStr = getStringCellValue(row.getCell(5));
+
+		// Validate program
+		if (!List.of("Licenta", "Master", "Doctorat").contains(program)) {
+			return;
+		}
+
+		// Validate domain
+		if (!List.of("Matematica", "Informatica IF", "Informatica ID", "CTI").contains(domain)) {
+			return;
+		}
+
+		// Validate year
+		int year;
+		try {
+			year = Integer.parseInt(yearStr);
+			if (year < 1 || year > 4) {
+				return;
+			}
+		} catch (NumberFormatException e) {
+			return;
+		}
+
+		if (!studentService.isDuplicate(email)) {
+			try {
+				Student student = new Student();
+				student.setName(name);
+				student.setEmail(email);
+				student.setPhone(phone);
+				student.setProgram(program);
+				student.setDomain(domain);
+				student.setYear(year);
+
+				String password = Utils.getShortUUID();
+				String resetCode = Utils.getShortUUID();
+				student.setResetCode(resetCode);
+				student.setPassword(passwordEncoder.encode(password));
+
+				studentService.saveStudent(student);
+				smtpMailSender.sendMailResetPassword("STUDENT", name, email, password, resetCode);
+			} catch (Exception e) {
+				log.error("Error sending email to student {}: {}", email, e.getMessage());
+			}
+		}
+	}
+
+	private void processSuperuserRow(String name, String email, String phone, Row row) {
+		String type = getStringCellValue(row.getCell(3));
+		if (!List.of("PROFESSOR", "COMPANY").contains(type)) {
+			return;
+		}
+
+		if (!superuserService.isDuplicate(email)) {
+			try {
+				Superuser superuser = new Superuser();
+				superuser.setName(name);
+				superuser.setEmail(email);
+				superuser.setPhone(phone);
+				superuser.setType(type);
+
+				String password = Utils.getShortUUID();
+				String resetCode = Utils.getShortUUID();
+				superuser.setResetCode(resetCode);
+				superuser.setPassword(passwordEncoder.encode(password));
+
+				superuserService.saveSuperuser(superuser);
+				smtpMailSender.sendMailResetPassword("SUPERUSER", name, email, password, resetCode);
+			} catch (Exception e) {
+				log.error("Error sending email to superuser {}: {}", email, e.getMessage());
+			}
+		}
+	}
+
+	private String getStringCellValue(Cell cell) {
+		if (cell == null) {
+			return "";
+		}
+		try {
+			return cell.getStringCellValue().trim();
+		} catch (IllegalStateException e) {
+			try {
+				return String.valueOf((int) cell.getNumericCellValue());
+			} catch (IllegalStateException ex) {
+				return "";
+			}
+		}
 	}
 }

@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="../static/style/navigation-style.css">
     <!-- Page style -->
     <link rel="stylesheet" href="../static/style/user-management-style.css">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css">
+    <!-- DataTables JS -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
 
 </head>
 <body onload="domainSelectOptions()">
@@ -28,16 +32,20 @@
         <h2>User Management</h2>
         <br>
 
-        {{#admins}}
-            {{>fragments/add-admin}}
-        {{/admins}}
-        {{#students}}
-            {{>fragments/add-student}}
-        {{/students}}
-        {{#superusers}}
-            {{>fragments/add-superuser}}
-        {{/superusers}}
-
+        <div class="d-flex">
+            {{#admins}}
+                {{>fragments/add-admin}}
+                {{>fragments/import-users-excel}}
+            {{/admins}}
+            {{#students}}
+                {{>fragments/add-student}}
+                {{>fragments/import-users-excel}}
+            {{/students}}
+            {{#superusers}}
+                {{>fragments/add-superuser}}
+                {{>fragments/import-users-excel}}
+            {{/superusers}}
+        </div>
         <br>
 
         <div class="row">
