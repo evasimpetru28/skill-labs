@@ -1,14 +1,4 @@
-// Wait for document and MDB to be fully loaded
-document.addEventListener('DOMContentLoaded', function () {
-    // Initialize MDB inputs
-    setTimeout(() => {
-        document.querySelectorAll('.form-outline').forEach((formOutline) => {
-            if (mdb) {
-                new mdb.Input(formOutline).init();
-            }
-        });
-    }, 100);
-
+$(document).ready(function () {
     // Initialize DataTable
     if ($.fn.DataTable) {
         $('#dtBasicExample').DataTable();
