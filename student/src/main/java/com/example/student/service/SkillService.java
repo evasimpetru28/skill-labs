@@ -1,6 +1,5 @@
 package com.example.student.service;
 
-import com.example.student.entity.Evaluation;
 import com.example.student.entity.Skill;
 import com.example.student.entity.Category;
 import com.example.student.model.CategoryInfo;
