@@ -3,6 +3,8 @@ package com.example.student.service;
 import com.example.student.entity.Quiz;
 import com.example.student.model.QuizModel;
 import com.example.student.repository.QuizRepository;
+import com.example.student.util.Utils;
+
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +32,7 @@ public class QuizService {
 					quizModel.setIndex(index.getAndIncrement());
 					quizModel.setAssignmentId(quizInterface.getAssignmentId());
 					quizModel.setQuizId(quizInterface.getQuizId());
-					quizModel.setCreatedAt(quizInterface.getCreatedAt().substring(0,16));
+					quizModel.setCreatedAt(Utils.localDateTimeToString(quizInterface.getCreatedAt()));
 					quizModel.setQuizName(quizInterface.getQuizName());
 					quizModel.setDescription(
 							(quizInterface.getDescription() != null && quizInterface.getDescription().length() > 55)
@@ -43,7 +45,8 @@ public class QuizService {
 					quizModel.setScore(quizInterface.getScore());
 					quizModel.setStatus("EXPIRED".equals(quizInterface.getStatus()) ? "EXPIRED" : "ACTIVE");
 					quizModel.setIsExpired("EXPIRED".equals(quizInterface.getStatus()));
-
+					quizModel.setCanReview(quizInterface.getScore() != null);
+					quizModel.setCanAnswer(quizInterface.getScore() == null && !quizModel.getIsExpired());
 					return quizModel;
 				})
 				.toList();

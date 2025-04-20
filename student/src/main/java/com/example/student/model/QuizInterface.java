@@ -1,9 +1,11 @@
 package com.example.student.model;
 
+import java.time.LocalDateTime;
+
 public interface QuizInterface {
 	String getAssignmentId();
 	String getQuizId();
-	String getCreatedAt();
+	LocalDateTime getCreatedAt();
 	String getQuizName();
 	String getDescription();
 	String getSuperuserId();

@@ -23,4 +23,6 @@ public class QuizModel {
 	Integer score;
 	String status;
 	Boolean isExpired;
+	Boolean canReview;
+	Boolean canAnswer;
 }

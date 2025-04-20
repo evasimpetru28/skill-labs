@@ -6,6 +6,10 @@ table {
     margin-top: 20px;
 }
 
+tbody td {
+    height: 40px;
+}
+
 .no-quizzes-text {
     height: 300px;
 }

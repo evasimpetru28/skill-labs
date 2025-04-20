@@ -148,7 +148,6 @@ public class MyQuizzesController {
 
 	@PostMapping("/make-expired/{quizId}/{superuserId}")
 	public String makeExpiredQuiz(@PathVariable String quizId, @PathVariable String superuserId) {
-		System.out.println("------------EXPIRED--------------");
 		var quiz = quizService.getQuizById(quizId);
 		quiz.setStatus("EXPIRED");
 		quizService.saveQuiz(quiz);

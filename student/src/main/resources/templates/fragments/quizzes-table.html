@@ -3,10 +3,11 @@
   <thead>
   <tr>
     <th class="th-sm">Nr.</th>
-    <th class="th-sm">Date</th>
+    <th class="th-sm">Created at</th>
     <th class="th-sm">Author</th>
     <th class="th-sm">Name</th>
     <th class="th-sm">Status</th>
+    <th class="th-sm">Score</th>
     <th class="th-sm">Actions</th>
   </tr>
   </thead>
@@ -19,29 +20,28 @@
     <td class="col-2">{{superuserName}}</td>
     <td>
       {{quizName}}
-      <br>
-      <small>{{#description}}{{description}}{{/description}}</small>
+      {{#description}}
+        <br>
+        <small>
+          {{description}}
+        </small>
+      {{/description}}
     </td>
-    <td class="col-1"><b>{{status}}</b></td>
-    <td class="col-3">
+    <td class="col-1" {{#isExpired}}style="color: red;"{{/isExpired}} {{^isExpired}}style="color: green;"{{/isExpired}}><b>{{status}}</b></td>
+    <td class="col-1">
+      {{#score}}<b>{{score}}%</b>{{/score}}
+      {{^score}}Not submitted{{/score}}
+    </td>
+    <td class="col-2">
       <div class="row">
         <!--				Answer btn			-->
-        <div class="d-flex justify-content-center col-6">
-          {{#isExpired}}
-            {{>fragments/review-quiz}}
-          {{/isExpired}}
-
-          {{^isExpired}}
-            {{^score}}
+        <div class="d-flex justify-content-center ">
+            {{#canAnswer}}
               {{>fragments/answer-quiz}}
-            {{/score}}
-            {{#score}}
+            {{/canAnswer}}
+            {{#canReview}}
               {{>fragments/review-quiz}}
-            {{/score}}
-          {{/isExpired}}
-        </div>
-        <div class="d-flex justify-content-center col-6">
-          <span><b>{{#score}}Score: {{score}}%{{/score}}{{^score}}Not submitted{{/score}}</b></span>
+            {{/canReview}}
         </div>
       </div>
     </td>
