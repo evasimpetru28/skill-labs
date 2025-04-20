@@ -4,6 +4,8 @@ import com.example.professor.entity.Quiz;
 import com.example.professor.model.QuizModel;
 import com.example.professor.repository.QuizRepository;
 import com.example.professor.repository.SuperuserRepository;
+import com.example.professor.util.Utils;
+
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +42,8 @@ public class QuizService {
 						(quiz.getDescription() != null && quiz.getDescription().length() > 110)
 								? quiz.getDescription().substring(0, 110) + "..."
 								: quiz.getDescription(),
-								"PUBLIC".equals(quiz.getStatus())
+								"PUBLIC".equals(quiz.getStatus()),
+								Utils.localDateTimeToString(quiz.getCreatedAt())
 				))
 				.toList();
 	}
@@ -58,7 +61,8 @@ public class QuizService {
 						(quiz.getDescription() != null && quiz.getDescription().length() > 110)
 								? quiz.getDescription().substring(0, 110) + "..."
 								: quiz.getDescription(),
-								"PUBLIC".equals(quiz.getStatus())
+								"PUBLIC".equals(quiz.getStatus()),
+								Utils.localDateTimeToString(quiz.getCreatedAt())
 				))
 				.toList();
 	}
@@ -76,7 +80,8 @@ public class QuizService {
 						(quiz.getDescription() != null && quiz.getDescription().length() > 110)
 								? quiz.getDescription().substring(0, 110) + "..."
 								: quiz.getDescription(),
-								"PUBLIC".equals(quiz.getStatus())
+								"PUBLIC".equals(quiz.getStatus()),
+								Utils.localDateTimeToString(quiz.getCreatedAt())
 				))
 				.toList();
 	}
@@ -98,7 +103,8 @@ public class QuizService {
 						(quiz.getDescription() != null && quiz.getDescription().length() > 110)
 								? quiz.getDescription().substring(0, 110) + "..."
 								: quiz.getDescription(),
-								"PUBLIC".equals(quiz.getStatus())
+								"PUBLIC".equals(quiz.getStatus()),
+								Utils.localDateTimeToString(quiz.getCreatedAt())
 				))
 				.toList();
 	}

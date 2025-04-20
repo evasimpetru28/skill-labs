@@ -14,6 +14,7 @@
 	<tr>
 		<th class="th-sm">Nr.</th>
 		<th class="th-sm">Name</th>
+		<th class="th-sm">Created at</th>
 		<th class="th-sm">Actions</th>
 	</tr>
 	</thead>
@@ -25,7 +26,7 @@
 		<td>
 			<div class="row">
 				<div class="col-10">
-					{{name}}
+					<strong>{{name}}</strong>
 					<br>
 					<small>{{#description}}{{description}}{{/description}}</small>
 			</div>
@@ -39,6 +40,7 @@
 			</div>
 			</div>
 		</td>
+		<td class="col-2">{{createdAt}}</td>
 		<td class="col-5">
 			<div class="row">
 

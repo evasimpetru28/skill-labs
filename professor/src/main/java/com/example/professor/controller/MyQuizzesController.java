@@ -78,7 +78,7 @@ public class MyQuizzesController {
 		var quiz = new Quiz();
 		quiz.setSuperuserId(superuserId);
 		quiz.setName("Untitled");
-		quiz.setStatus("PUBLIC");
+		quiz.setStatus("PRIVATE");
 		quiz.setIsReady(false);
 		quizService.saveQuiz(quiz);
 

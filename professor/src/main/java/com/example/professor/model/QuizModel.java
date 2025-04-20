@@ -19,4 +19,5 @@ public class QuizModel {
 	String name;
 	String description;
 	boolean isPublic;
+	String createdAt;
 }
