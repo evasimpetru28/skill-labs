@@ -6,6 +6,10 @@ table {
     margin-top: 20px;
 }
 
+.no-quizzes-text {
+    height: 300px;
+}
+
 @media (max-width: 1475px) {
     .remove-action-name {
         display: none;

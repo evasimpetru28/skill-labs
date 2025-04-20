@@ -27,6 +27,12 @@
 	  <h2>Assignments</h2>
 	  <br>
 
+    {{#noQuizzes}}
+    <div class="no-quizzes-text d-flex align-items-center justify-content-center">
+      <h4>You have no quizzes assigned.</h4>
+    </div>
+    {{/noQuizzes}}
+
 	  {{>fragments/quizzes-table}}
   </div>
 </main>
