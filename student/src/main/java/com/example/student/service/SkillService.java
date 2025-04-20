@@ -11,6 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.LinkedHashMap;
 
 @Service
 @Transactional
@@ -37,7 +40,7 @@ public class SkillService {
 		return skillRepository.existsByNameExcept(name, id).isPresent();
 	}
 
-	public List<SkillEvaluationModel> getAllSkillsAndEvaluationsForStudent(String studentId) {
+	public Map<String, List<SkillEvaluationModel>> getAllSkillsAndEvaluationsForStudent(String studentId) {
 		var skills = skillRepository.findAlSkillsAndCategories();
 		var index = new AtomicInteger(1);
 		return skills.stream()
@@ -59,7 +62,11 @@ public class SkillService {
 					}
 					return skillModel;
 				})
-				.toList();
+				.collect(Collectors.groupingBy(
+					SkillEvaluationModel::getCategory,
+					LinkedHashMap::new,
+					Collectors.toList()
+				));
 	}
 
 	public List<SkillEvaluationModel> getEvaluationsForStudent(String studentId) {

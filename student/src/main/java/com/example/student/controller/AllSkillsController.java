@@ -29,7 +29,7 @@ public class AllSkillsController {
 	public String getAllSkillsPage(Model model, @PathVariable String studentId) {
 		navbarService.activateNavbarTab(Page.ALL_SKILLS, model);
 		model.addAttribute("studentId", studentId);
-		model.addAttribute("skillList", skillService.getAllSkillsAndEvaluationsForStudent(studentId));
+		model.addAttribute("skillsByCategory", skillService.getAllSkillsAndEvaluationsForStudent(studentId));
 		return "all-skills";
 	}
 

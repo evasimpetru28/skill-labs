@@ -30,3 +30,15 @@ table {
 .icon-pointer:hover {
     cursor: pointer;
 }
+
+.category-section {
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.category-title {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #7779f0;
+}
