@@ -160,10 +160,10 @@ $("textarea").each(function () {
     this.style.height = (this.scrollHeight) + "px";
 });
 
-function changeQuizStatus(id, status) {
+function changeQuizStatus(callingElem, id) {
     $.ajax({
         type: "POST",
-        url: "/change-quiz-status/" + id + "/" + status,
+        url: "/change-quiz-status/" + id + "/" + callingElem.value,
         dataType: "html",
         contentType: 'application/json',
         mimeType: 'application/json',

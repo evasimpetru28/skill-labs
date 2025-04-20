@@ -53,3 +53,24 @@ body {
     cursor: pointer;
 }
 
+.input-container {
+    position: relative;
+}
+.input-container label {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: opacity 0.2s;
+    pointer-events: none;
+    color: #757575;
+}
+.input-container input:focus + label,
+.input-container input:not(:placeholder-shown) + label,
+.input-container textarea:focus + label,
+.input-container textarea:not(:placeholder-shown) + label {
+    opacity: 0;
+}
+.error {
+    color: red;
+}

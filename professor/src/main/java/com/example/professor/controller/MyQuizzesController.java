@@ -108,6 +108,7 @@ public class MyQuizzesController {
 		model.addAttribute("superuserId", quiz.getSuperuserId());
 		model.addAttribute("quizId", quizId);
 		model.addAttribute("quiz", quiz);
+		model.addAttribute("isPublic", "PUBLIC".equals(quiz.getStatus()));
 		model.addAttribute("questionMap", questionService.getQuestionMap(quizId));
 		return "create-quiz";
 	}
