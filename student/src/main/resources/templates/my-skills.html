@@ -33,11 +33,17 @@
 		</div>
 		{{/noEvaluations}}
 
-		{{#skillsByCategory.entrySet}}
+		{{#categories}}
 		<div class="mb-4">
-			<h3 class="category-title mb-3">{{getKey}}</h3>
+			<div class="d-flex align-items-center mb-3">
+				<h3 class="category-title mb-0">{{category.name}}</h3>
+				{{#category}}
+					{{>fragments/show-category-description}}
+				{{/category}}
+			</div>
+			<div class="category-title-separator"></div>
 			<div class="row">
-				{{#getValue}}
+				{{#skills}}
 				<div class="card col-xl-3 col-lg-4 col-md-5 col-sm-6 col-12 col" style="width: 29rem; margin: 1rem 0.5rem;">
 					<div class="card-body">
 						<div class="row">
@@ -46,7 +52,7 @@
 							</div>
 							<div class="col-1">
 								{{#hasDescription}}
-									{{>fragments/show-description}}
+									{{>fragments/show-skill-description}}
 								{{/hasDescription}}
 							</div>
 						</div>
@@ -76,10 +82,10 @@
 					</ul>
 					<div class="card-body"></div>
 				</div>
-				{{/getValue}}
+				{{/skills}}
 			</div>
 		</div>
-		{{/skillsByCategory.entrySet}}
+		{{/categories}}
 	</div>
 </main>
 <!--Main layout-->

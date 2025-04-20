@@ -28,8 +28,9 @@ public class AllSkillsController {
 	@GetMapping("/all-skills/{studentId}")
 	public String getAllSkillsPage(Model model, @PathVariable String studentId) {
 		navbarService.activateNavbarTab(Page.ALL_SKILLS, model);
+		var skillsByCategory = skillService.getAllSkillsAndEvaluationsForStudent(studentId);
 		model.addAttribute("studentId", studentId);
-		model.addAttribute("skillsByCategory", skillService.getAllSkillsAndEvaluationsForStudent(studentId));
+		model.addAttribute("skillsByCategory", skillsByCategory);
 		return "all-skills";
 	}
 

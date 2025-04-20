@@ -1,0 +1,19 @@
+{{#hasDescription}}
+<!-- Button trigger modal -->
+<a href="" data-mdb-toggle="modal" data-mdb-target="#showCategory{{index}}"><i class="fa-solid fa-circle-info ms-2"></i></a>
+
+<!-- Modal -->
+<div class="modal fade" id="showCategory{{index}}" tabindex="-1" role="dialog" aria-labelledby="showCategoryDescription{{index}}" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="showCategoryDescription{{index}}">Category: {{name}}</h5>
+          <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {{description}}
+        </div>
+    </div>
+  </div>
+</div>
+{{/hasDescription}} 
