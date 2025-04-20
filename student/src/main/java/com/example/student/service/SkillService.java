@@ -69,7 +69,7 @@ public class SkillService {
 				));
 	}
 
-	public List<SkillEvaluationModel> getEvaluationsForStudent(String studentId) {
+	public Map<String, List<SkillEvaluationModel>> getEvaluationsForStudentByCategory(String studentId) {
 		var evaluations = evaluationRepository.findAllEvaluationsByStudentId(studentId);
 		var index = new AtomicInteger(1);
 		return evaluations.stream()
@@ -88,6 +88,10 @@ public class SkillService {
 
 					return skillModel;
 				})
-				.toList();
+				.collect(Collectors.groupingBy(
+					SkillEvaluationModel::getCategory,
+					LinkedHashMap::new,
+					Collectors.toList()
+				));
 	}
 }

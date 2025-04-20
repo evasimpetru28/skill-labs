@@ -20,9 +20,9 @@ public class MySkillsController {
 	@GetMapping("/my-skills/{studentId}")
 	public String getMySkillsPage(Model model, @PathVariable String studentId) {
 		navbarService.activateNavbarTab(Page.MY_SKILLS, model);
-		var evaluationsForStudent = skillService.getEvaluationsForStudent(studentId);
+		var evaluationsForStudent = skillService.getEvaluationsForStudentByCategory(studentId);
 		model.addAttribute("studentId", studentId);
-		model.addAttribute("evaluationsList", evaluationsForStudent);
+		model.addAttribute("skillsByCategory", evaluationsForStudent);
 		model.addAttribute("noEvaluations", evaluationsForStudent.isEmpty());
 
 		return "my-skills";

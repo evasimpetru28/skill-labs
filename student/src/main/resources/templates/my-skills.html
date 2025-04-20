@@ -24,61 +24,62 @@
 <!--Main layout-->
 <main style="margin-top: 50px;">
 	<div class="container-fluid container-custom pt-4 table-responsive-lg">
-
 		<h2>My Skills</h2>
 		<br>
 
-		<div class="row">
+		{{#noEvaluations}}
+		<div class="no-eval-text d-flex align-items-center justify-content-center">
+			<h4>You have no evaluations yet. Go to <a href="/all-skills/{{studentId}}" class="link"><u>All Skills</u></a> to evaluate skills.</h4>
+		</div>
+		{{/noEvaluations}}
 
-			{{#noEvaluations}}
-			<div class="no-eval-text d-flex align-items-center justify-content-center">
-				<h4>You have no evaluations yet. Go to <a href="/all-skills/{{studentId}}" class="link"><u>All Skills</u></a> to evaluate skills.</h4>
-			</div>
-			{{/noEvaluations}}
-
-			{{#evaluationsList}}
-			<div class="card col-xl-3 col-lg-4 col-md-5 col-sm-6 col-12 col" style="width: 29rem; margin: 1rem 0.5rem;">
-				<div class="card-body">
-					<div class="row">
-						<div class="col-11">
-							<h5 class="card-title">{{name}}</h5>
-						</div>
-						<div class="col-1">
-							{{#hasDescription}}
-								{{>fragments/show-description}}
-							{{/hasDescription}}
+		{{#skillsByCategory.entrySet}}
+		<div class="mb-4">
+			<h3 class="category-title mb-3">{{getKey}}</h3>
+			<div class="row">
+				{{#getValue}}
+				<div class="card col-xl-3 col-lg-4 col-md-5 col-sm-6 col-12 col" style="width: 29rem; margin: 1rem 0.5rem;">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-11">
+								<h5 class="card-title">{{name}}</h5>
+							</div>
+							<div class="col-1">
+								{{#hasDescription}}
+									{{>fragments/show-description}}
+								{{/hasDescription}}
+							</div>
 						</div>
 					</div>
-					<h6 class="card-title">{{category}}</h6>
+					<ul class="list-group list-group-light list-group-small">
+						<li class="list-group-item px-4">
+							<div class="row">
+								<div class="col-3">Interest</div>
+								<div class="col-8 stars-div" id="{{name}}-int-{{interest}}"></div>
+								<div class="col-1 trash-can-div" id="{{name}}-int-trash-can" onclick="deleteEvaluation(this, '{{studentId}}')"></div>
+							</div>
+						</li>
+						<li class="list-group-item px-4">
+							<div class="row">
+								<div class="col-3">Knowledge</div>
+								<div class="col-8 stars-div" id="{{name}}-kno-{{knowledge}}"></div>
+								<div class="col-1 trash-can-div" id="{{name}}-kno-trash-can" onclick="deleteEvaluation(this, '{{studentId}}')"></div>
+							</div>
+						</li>
+						<li class="list-group-item px-4">
+							<div class="row">
+								<div class="col-3">Experience</div>
+								<div class="col-8 stars-div" id="{{name}}-exp-{{experience}}"></div>
+								<div class="col-1 trash-can-div" id="{{name}}-exp-trash-can" onclick="deleteEvaluation(this, '{{studentId}}')"></div>
+							</div>
+						</li>
+					</ul>
+					<div class="card-body"></div>
 				</div>
-				<ul class="list-group list-group-light list-group-small">
-					<li class="list-group-item px-4">
-						<div class="row">
-							<div class="col-3">Interest</div>
-							<div class="col-8 stars-div" id="{{name}}-int-{{interest}}"></div>
-							<div class="col-1 trash-can-div" id="{{name}}-int-trash-can" onclick="deleteEvaluation(this, '{{studentId}}')"></div>
-						</div>
-					</li>
-					<li class="list-group-item px-4">
-						<div class="row">
-							<div class="col-3">Knowledge</div>
-							<div class="col-8 stars-div" id="{{name}}-kno-{{knowledge}}"></div>
-							<div class="col-1 trash-can-div" id="{{name}}-kno-trash-can" onclick="deleteEvaluation(this, '{{studentId}}')"></div>
-						</div>
-					</li>
-					<li class="list-group-item px-4">
-						<div class="row">
-							<div class="col-3">Experience</div>
-							<div class="col-8 stars-div" id="{{name}}-exp-{{experience}}"></div>
-							<div class="col-1 trash-can-div" id="{{name}}-exp-trash-can" onclick="deleteEvaluation(this, '{{studentId}}')"></div>
-						</div>
-					</li>
-				</ul>
-				<div class="card-body"></div>
+				{{/getValue}}
 			</div>
-			{{/evaluationsList}}
 		</div>
-
+		{{/skillsByCategory.entrySet}}
 	</div>
 </main>
 <!--Main layout-->
