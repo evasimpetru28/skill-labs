@@ -18,4 +18,5 @@ public class QuizModel {
 	String superuserName;
 	String name;
 	String description;
+	boolean isPublic;
 }

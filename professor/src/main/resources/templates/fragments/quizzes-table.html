@@ -23,9 +23,21 @@
 	<tr>
 		<td class="col-1">{{index}}</td>
 		<td>
-			{{name}}
-			<br>
-			<small>{{#description}}{{description}}{{/description}}</small>
+			<div class="row">
+				<div class="col-10">
+					{{name}}
+					<br>
+					<small>{{#description}}{{description}}{{/description}}</small>
+			</div>
+			<div class="col-2">
+				{{#isPublic}}
+					<span class="badge bg-success">Public</span>
+				{{/isPublic}}
+				{{^isPublic}}
+					<span class="badge bg-secondary">Private</span>
+				{{/isPublic}}
+			</div>
+			</div>
 		</td>
 		<td class="col-5">
 			<div class="row">

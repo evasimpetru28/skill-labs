@@ -39,7 +39,8 @@ public class QuizService {
 						quiz.getName(),
 						(quiz.getDescription() != null && quiz.getDescription().length() > 110)
 								? quiz.getDescription().substring(0, 110) + "..."
-								: quiz.getDescription()
+								: quiz.getDescription(),
+								"PUBLIC".equals(quiz.getStatus())
 				))
 				.toList();
 	}
@@ -56,7 +57,8 @@ public class QuizService {
 						quiz.getName(),
 						(quiz.getDescription() != null && quiz.getDescription().length() > 110)
 								? quiz.getDescription().substring(0, 110) + "..."
-								: quiz.getDescription()
+								: quiz.getDescription(),
+								"PUBLIC".equals(quiz.getStatus())
 				))
 				.toList();
 	}
@@ -73,7 +75,8 @@ public class QuizService {
 						quiz.getName(),
 						(quiz.getDescription() != null && quiz.getDescription().length() > 110)
 								? quiz.getDescription().substring(0, 110) + "..."
-								: quiz.getDescription()
+								: quiz.getDescription(),
+								"PUBLIC".equals(quiz.getStatus())
 				))
 				.toList();
 	}
@@ -94,7 +97,8 @@ public class QuizService {
 						quiz.getName(),
 						(quiz.getDescription() != null && quiz.getDescription().length() > 110)
 								? quiz.getDescription().substring(0, 110) + "..."
-								: quiz.getDescription()
+								: quiz.getDescription(),
+								"PUBLIC".equals(quiz.getStatus())
 				))
 				.toList();
 	}
