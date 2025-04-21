@@ -13,6 +13,13 @@ public interface ResponseRepository extends JpaRepository<Response, String> {
 	Optional<String> findByStudentIdAndOptionId(String studentId, String optionId);
 	@Query(value = "select r.question_id from response r where r.student_id = ?1\n and r.question_id in ?2 group by r.question_id ", nativeQuery = true)
 	List<String> getAnsweredQuestionsByStudentIdAndQuestionIdInList(String studentId, List<String> questionIdList);
-	@Query(value = "select r.optionId from Response r where r.studentId = ?1 and r.questionId = ?2 ")
+	@Query(value = """
+		select r.optionId
+		from Response r
+		join Option o on o.id = r.optionId
+		where r.studentId = ?1
+		and r.questionId = ?2
+		order by o.createdAt 
+		""")
 	List<String> getSelectedOptionsByStudentIdAndQuestionId(String studentId, String questionId);
 }

@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface OptionRepository extends JpaRepository<Option, String> {
 	List<Option> findAllByQuestionIdOrderByCreatedAt(String questionId);
-	@Query("select o.id from Option o where o.isCorrect = true and o.questionId = ?1 ")
+	@Query("select o.id from Option o where o.isCorrect = true and o.questionId = ?1 order by o.createdAt")
 	List<String> findAllByQuestionIdAndIsCorrectEqualsTrue(String questionId);
 }
