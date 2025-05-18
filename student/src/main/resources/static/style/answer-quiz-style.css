@@ -1,0 +1,50 @@
+@keyframes errorFadeOut {
+    from {
+        width: 100%;
+    }
+    to {
+        width: 0%;
+    }
+}
+
+#answersError {
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    margin-bottom: 8px;
+    color: #c51c2d;
+    background-color: #fff3f3;
+    border: 1px solid #c51c2d;
+    border-radius: 4px;
+    padding: 8px 12px;
+    white-space: nowrap;
+    font-size: 0.875rem;
+    z-index: 1000;
+}
+
+#answersError::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff3f3;
+    z-index: -2;
+}
+
+#answersError::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    background: #ffcdd2;
+    z-index: -1;
+}
+
+#answersError.animate::after {
+    animation: errorFadeOut 3s linear forwards;
+} 
