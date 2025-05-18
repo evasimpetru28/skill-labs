@@ -88,15 +88,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-function selectSkill(skill) {
+function selectSkill(skillId, skillLabel) {
     const selectedSkill = document.getElementById('selectedSkill');
-    selectedSkill.textContent = skill;
+    selectedSkill.textContent = skillLabel;
     selectedSkill.classList.remove('no-skill');
     
     // Update hidden input value
     const hiddenInput = document.getElementById('selectedSkillInput');
     if (hiddenInput) {
-        hiddenInput.value = skill;
+        hiddenInput.value = skillId;
     }
     
     // Hide error message if it's visible
@@ -109,7 +109,7 @@ function selectSkill(skill) {
     const quizId = document.querySelector('form#nextForm').getAttribute('action').split('/').pop();
     
     // Send the selected skill to the backend
-    updateQuizSkill(skill, quizId);
+    updateQuizSkill(skillId, quizId);
     
     document.getElementById('skillDropdown').classList.remove('show');
     // Clear search input

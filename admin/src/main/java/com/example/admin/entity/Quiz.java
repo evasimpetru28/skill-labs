@@ -29,6 +29,7 @@ public class Quiz {
 	String description;
 	String status;
 	Boolean isReady;
+	String skillId;
 	@CreationTimestamp
 	@Column(name= "created_at", nullable = false, updatable = false)
 	LocalDateTime createdAt;

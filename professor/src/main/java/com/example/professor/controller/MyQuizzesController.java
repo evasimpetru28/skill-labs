@@ -4,6 +4,7 @@ import com.example.professor.entity.Option;
 import com.example.professor.entity.Page;
 import com.example.professor.entity.Question;
 import com.example.professor.entity.Quiz;
+import com.example.professor.repository.SkillRepository;
 import com.example.professor.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,7 @@ public class MyQuizzesController {
 	final NavbarService navbarService;
 	final OptionService optionService;
 	final StudentService studentService;
+	final SkillRepository skillRepository;
 	final QuestionService questionService;
 	final ResponseService responseService;
 	final AssignmentService assignmentService;
@@ -104,13 +106,17 @@ public class MyQuizzesController {
 	public String getCreateQuizPage(Model model, @PathVariable String quizId) {
 		//TODO: Get logged user id from session
 		var quiz = quizService.getQuizById(quizId);
+		if (quiz.getSkillId() == null) {
+			model.addAttribute("skills", skillRepository.findAllSkillAndCategorySelectOptions());
+		} else {
+			model.addAttribute("skills", skillRepository.findAllSkillAndCategorySelectOptionsAndSelected(quiz.getSkillId()));
+		}
 		navbarService.activateNavbarTab(Page.MY_QUIZZES, model);
 		model.addAttribute("superuserId", quiz.getSuperuserId());
 		model.addAttribute("quizId", quizId);
 		model.addAttribute("quiz", quiz);
 		model.addAttribute("isPublic", "PUBLIC".equals(quiz.getStatus()));
 		model.addAttribute("questionMap", questionService.getQuestionMap(quizId));
-//		model.addAttribute("skills", );
 		return "create-quiz";
 	}
 

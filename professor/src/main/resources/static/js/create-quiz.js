@@ -153,10 +153,10 @@ function updateQuizDescr(callingElem, quizId) {
     });
 }
 
-function updateQuizSkill(skill, quizId) {
+function updateQuizSkill(skillId, quizId) {
     $.ajax({
         type: "POST",
-        url: "/update-quiz-skill/" + quizId + "/" + encodeURIComponent(skill),
+        url: "/update-quiz-skill/" + quizId + "/" + encodeURIComponent(skillId),
         dataType: "html",
         contentType: 'application/json',
         mimeType: 'application/json',

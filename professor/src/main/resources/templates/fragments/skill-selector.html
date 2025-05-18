@@ -6,12 +6,8 @@
             <i class="fas fa-search search-icon"></i>
             <input type="text" placeholder="Search.." id="skillInput" onkeyup="filterFunction()">
         </div>
-        <p onclick="selectSkill('Convolutional networks - AI & Machine learning')">Convolutional networks - AI & Machine learning</p>
-        <p onclick="selectSkill('Base -')">Base - </p>
-        <p onclick="selectSkill('Blog -')">Blog - </p>
-        <p onclick="selectSkill('Contact')">Contact fwsdfwefwq feuijg ihsd DD odpsjsd FASA EASDXC</p>
-        <p onclick="selectSkill('Custom')">Custom</p>
-        <p onclick="selectSkill('Support')">Support</p>
-        <p onclick="selectSkill('Tools')">Tools</p>
+        {{#skills}}
+            <p onclick="selectSkill('{{value}}', '{{label}}')">{{label}}</p>
+        {{/skills}}
     </div>
 </div>

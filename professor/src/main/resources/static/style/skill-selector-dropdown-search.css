@@ -40,11 +40,30 @@
     top: 100%;
     left: 0;
     background-color: #f6f6f6;
-    min-width: 230px;
-    max-width: 1000px;
-    overflow: auto;
+    width: 600px;
+    max-height: 300px;
+    overflow-y: auto;
     border: 1px solid #ddd;
     z-index: 1;
+}
+
+/* Custom scrollbar styling */
+.dropdown-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.dropdown-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.dropdown-content::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.dropdown-content::-webkit-scrollbar-thumb:hover {
+    background: #666;
 }
 
 .dropdown-content p {
@@ -55,6 +74,8 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .dropdown p:hover {background-color: #ddd;}
