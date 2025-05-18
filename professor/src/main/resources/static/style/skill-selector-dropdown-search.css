@@ -55,9 +55,10 @@
 .dropdown-content .options-container {
     max-height: 300px;
     overflow-y: auto;
+    scrollbar-color: var(--primary-color) #f1f1f1;
 }
 
-/* Custom scrollbar styling */
+/* Custom scrollbar styling for Webkit (Chrome, Safari, Edge) */
 .dropdown-content .options-container::-webkit-scrollbar {
     width: 8px;
 }
@@ -68,12 +69,14 @@
 }
 
 .dropdown-content .options-container::-webkit-scrollbar-thumb {
-    background: #888;
+    background: var(--primary-color);
     border-radius: 4px;
+    opacity: 0.8;
 }
 
 .dropdown-content .options-container::-webkit-scrollbar-thumb:hover {
-    background: #666;
+    background: var(--primary-color);
+    opacity: 1;
 }
 
 .dropdown-content p {
