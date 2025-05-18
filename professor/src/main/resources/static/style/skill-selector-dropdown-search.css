@@ -1,0 +1,87 @@
+.dropbtn {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+    padding: 8px 12px;
+    font-size: 16px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+    border-color: var(--primary-color);
+    background-color: var(--primary-color);
+}
+
+#skillInput {
+    box-sizing: border-box;
+    font-size: 16px;
+    padding: 14px 20px 12px 45px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    position: relative;
+}
+
+#skillInput:focus {outline: 3px solid #ddd;}
+
+.dropdown {
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    width: 100%;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #f6f6f6;
+    min-width: 230px;
+    overflow: auto;
+    border: 1px solid #ddd;
+    z-index: 1;
+    margin-top: 5px;
+}
+
+.dropdown-content p {
+    color: black;
+    padding: 8px 10px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown p:hover {background-color: #ddd;}
+
+.show {display: block;}
+
+.search-icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    font-size: 16px;
+    pointer-events: none;
+}
+
+.selectedSkill {
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    background: #f9f9f9;
+    color: #333;
+    display: inline-block;
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.selectedSkill.no-skill {
+    color: #999;
+    font-style: italic;
+}

@@ -8,6 +8,8 @@
 	<link rel="stylesheet" href="../static/style/navigation-style.css">
 	<!-- Page style -->
 	<link rel="stylesheet" href="../static/style/create-quiz-style.css">
+	<!-- Skill selector dropdown style -->
+	<link rel="stylesheet" href="../static/style/skill-selector-dropdown-search.css">
 
 </head>
 <body>
@@ -33,12 +35,12 @@
 					<div class="d-flex align-items-center row">
 						<div class="col-11">
 							<div class="input-container">
-								<input type="text" 
-									id="title" 
-									name="name" 
+								<input type="text"
+									id="title"
+									name="name"
 									class="form-control form-control-lg"
-									oninput="updateQuizName(this, '{{id}}')" 
-									value="{{name}}" 
+									oninput="updateQuizName(this, '{{id}}')"
+									value="{{name}}"
 									placeholder=" "
 									required/>
 								<label for="title">Quiz title<span class="error">*</span></label>
@@ -52,9 +54,9 @@
 				<div class="mb-3">
 					<div class="col-11">
 						<div class="input-container">
-							<textarea id="description" 
-								rows="1" 
-								name="description" 
+							<textarea id="description"
+								rows="1"
+								name="description"
 								oninput="updateQuizDescr(this, '{{id}}')"
 								class="form-control form-control-lg"
 								placeholder=" ">{{#description}}{{description}}{{/description}}</textarea>
@@ -65,7 +67,7 @@
 			</div>
 
 			<div class="row">
-				<div class="col-md-12 m3-4 pb-2">
+				<div class="col-md-6 m3-4 pb-2">
 					<div class="form-check form-check-inline">
 						<input class="form-check-input" type="radio" id="public" onclick="changeQuizStatus(this, '{{id}}')" name="status" value="PUBLIC" {{#isPublic}}checked{{/isPublic}}>
 						<label class="form-check-label" for="public">Public</label>
@@ -74,6 +76,9 @@
 						<input class="form-check-input" type="radio" id="private" onclick="changeQuizStatus(this, '{{id}}')" name="status" value="PRIVATE" {{^isPublic}}checked{{/isPublic}}>
 						<label class="form-check-label" for="private">Private</label>
 					</div>
+				</div>
+				<div class="col-md-5 m3-4 pb-2">
+					{{>fragments/skill-selector}}
 				</div>
 			</div>
 			{{/quiz}}
@@ -89,12 +94,12 @@
 						<div class="d-flex align-items-center row">
 							<div class="col-11">
 								<div class="input-container">
-									<input type="text" 
-										id="name" 
-										name="name" 
+									<input type="text"
+										id="name"
+										name="name"
 										class="form-control form-control-lg"
 										oninput="updateQuestion(this, '{{#key}}{{id}}{{/key}}')"
-										value="{{#key}}{{question}}{{/key}}" 
+										value="{{#key}}{{question}}{{/key}}"
 										placeholder=" "
 										required/>
 									<label for="name">Question<span class="error">*</span></label>
@@ -116,11 +121,11 @@
 									<input class="form-check-input" type="checkbox"
 										onclick="updateOptionChecked(this, '{{id}}')"
 										id="option{{#key}}{{index}}{{/key}}-{{index}}" {{#isCorrect}}checked{{/isCorrect}}>
-									<input type="text" 
-										id="input{{index}}" 
-										class="form-control" 
+									<input type="text"
+										id="input{{index}}"
+										class="form-control"
 										value="{{optionText}}"
-										oninput="updateOptionText(this, '{{id}}')" 
+										oninput="updateOptionText(this, '{{id}}')"
 										placeholder="Option text"
 										required/>
 								</div>
@@ -161,5 +166,6 @@
 </body>
 
 <script type="text/javascript" src="../static/js/create-quiz.js"></script>
+<script type="text/javascript" src="../static/js/skill-selector-dropdown-search.js"></script>
 
 </html>

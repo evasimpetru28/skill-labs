@@ -1,0 +1,17 @@
+<div class="dropdown" style="display: flex; align-items: center; gap: 10px;">
+    <button onclick="skillSelectorDropdownSearch()" class="dropbtn">Select Skill</button>
+    <span id="selectedSkill" class="selectedSkill no-skill">No skill selected</span>
+    <div id="skillDropdown" class="dropdown-content">
+        <div style="position: relative;">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" placeholder="Search.." id="skillInput" onkeyup="filterFunction()">
+        </div>
+        <p onclick="selectSkill('Convolutional networks - AI & Machine learning')">Convolutional networks - AI & Machine learning</p>
+        <p onclick="selectSkill('Base -')">Base - </p>
+        <p onclick="selectSkill('Blog -')">Blog - </p>
+        <p onclick="selectSkill('Contact')">Contact</p>
+        <p onclick="selectSkill('Custom')">Custom</p>
+        <p onclick="selectSkill('Support')">Support</p>
+        <p onclick="selectSkill('Tools')">Tools</p>
+    </div>
+</div>
