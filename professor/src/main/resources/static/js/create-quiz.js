@@ -153,6 +153,23 @@ function updateQuizDescr(callingElem, quizId) {
     });
 }
 
+function updateQuizSkill(skill, quizId) {
+    $.ajax({
+        type: "POST",
+        url: "/update-quiz-skill/" + quizId + "/" + encodeURIComponent(skill),
+        dataType: "html",
+        contentType: 'application/json',
+        mimeType: 'application/json',
+        timeout: 100000,
+        success: function() {
+            console.log("Skill updated successfully");
+        },
+        error: function(e) {
+            console.log("ERROR: ", e);
+        }
+    });
+}
+
 $("textarea").each(function () {
     this.setAttribute("style", "height:" + (this.scrollHeight) + "px;overflow-y:hidden;");
 }).on("input", function () {

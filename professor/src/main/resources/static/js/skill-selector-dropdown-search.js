@@ -104,6 +104,12 @@ function selectSkill(skill) {
     if (skillError) {
         skillError.style.display = 'none';
     }
+
+    // Get the quiz ID from the URL or a data attribute
+    const quizId = document.querySelector('form#nextForm').getAttribute('action').split('/').pop();
+    
+    // Send the selected skill to the backend
+    updateQuizSkill(skill, quizId);
     
     document.getElementById('skillDropdown').classList.remove('show');
     // Clear search input

@@ -21,10 +21,10 @@ public class MyQuizzesController {
 	final QuizService quizService;
 	final NavbarService navbarService;
 	final OptionService optionService;
+	final StudentService studentService;
 	final QuestionService questionService;
 	final ResponseService responseService;
 	final AssignmentService assignmentService;
-	final StudentService studentService;
 
 	@GetMapping("/quizzes/assigned/{superuserId}")
 	public String getAssignedQuizzesPage(Model model, @PathVariable String superuserId) {
@@ -110,6 +110,7 @@ public class MyQuizzesController {
 		model.addAttribute("quiz", quiz);
 		model.addAttribute("isPublic", "PUBLIC".equals(quiz.getStatus()));
 		model.addAttribute("questionMap", questionService.getQuestionMap(quizId));
+//		model.addAttribute("skills", );
 		return "create-quiz";
 	}
 
@@ -257,6 +258,13 @@ public class MyQuizzesController {
 		model.addAttribute("superuserId", quiz.getSuperuserId());
 
 		return "quiz-answers";
+	}
+
+	@PostMapping("/update-quiz-skill/{quizId}/{skillId}")
+	public void updateQuizSkill(@PathVariable String quizId, @PathVariable String skillId) {
+		var quiz = quizService.getQuizById(quizId);
+		quiz.setSkillId(skillId);
+		quizService.saveQuiz(quiz);
 	}
 
 }
