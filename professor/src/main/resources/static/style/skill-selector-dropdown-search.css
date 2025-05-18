@@ -41,28 +41,38 @@
     left: 0;
     background-color: #f6f6f6;
     width: 600px;
-    max-height: 300px;
-    overflow-y: auto;
     border: 1px solid #ddd;
     z-index: 1;
 }
 
+.dropdown-content > div:first-child {
+    position: relative;
+    width: 100%;
+    background-color: #f6f6f6;
+    border-bottom: 1px solid #ddd;
+}
+
+.dropdown-content .options-container {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
 /* Custom scrollbar styling */
-.dropdown-content::-webkit-scrollbar {
+.dropdown-content .options-container::-webkit-scrollbar {
     width: 8px;
 }
 
-.dropdown-content::-webkit-scrollbar-track {
+.dropdown-content .options-container::-webkit-scrollbar-track {
     background: #f1f1f1;
     border-radius: 4px;
 }
 
-.dropdown-content::-webkit-scrollbar-thumb {
+.dropdown-content .options-container::-webkit-scrollbar-thumb {
     background: #888;
     border-radius: 4px;
 }
 
-.dropdown-content::-webkit-scrollbar-thumb:hover {
+.dropdown-content .options-container::-webkit-scrollbar-thumb:hover {
     background: #666;
 }
 
@@ -109,11 +119,6 @@
 .selectedSkill.no-skill {
     color: #999;
     font-style: italic;
-}
-
-.dropdown-content > div:first-child {
-    position: relative;
-    width: 100%;
 }
 
 @keyframes errorFadeOut {
