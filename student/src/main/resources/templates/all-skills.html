@@ -38,7 +38,7 @@
             <div class="category-title-separator"></div>
             <div class="row">
                 {{#getValue}}
-                <div class="card col-xl-3 col-lg-4 col-md-5 col-sm-6 col-12 col" style="width: 29rem; margin: 1rem 0.5rem;">
+                <div class="card col-xl-3 col-lg-4 col-md-5 col-sm-6 col-12 col" style="width: 440px; margin: 1rem 0.5rem;">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-11">
@@ -53,24 +53,24 @@
                     </div>
                     <ul class="list-group list-group-light list-group-small">
                         <li class="list-group-item px-4">
-                            <div class="row">
-                                <div class="col-3">Interest</div>
-                                <div class="col-8 stars-div" id="{{name}}-int{{#interest}}-{{interest}}{{/interest}}"></div>
-                                <div class="col-1 trash-can-div" id="{{name}}-int-trash-can" onclick="deleteEvaluation(this, '{{studentId}}')"></div>
+                            <div class="row align-items-center justify-content-between">
+                                <div class="col-auto" style="width: 110px">Interest</div>
+                                <div class="col stars-div" id="{{name}}-int{{#interest}}-{{interest}}{{/interest}}"></div>
+                                <div class="col-auto trash-can-div" id="{{name}}-int-trash-can" onclick="deleteEvaluation(this, '{{studentId}}')"></div>
                             </div>
                         </li>
                         <li class="list-group-item px-4">
-                            <div class="row">
-                                <div class="col-3">Knowledge</div>
-                                <div class="col-8 stars-div" id="{{name}}-kno{{#knowledge}}-{{knowledge}}{{/knowledge}}"></div>
-                                <div class="col-1 trash-can-div" id="{{name}}-kno-trash-can" onclick="deleteEvaluation(this, '{{studentId}}')"></div>
+                            <div class="row align-items-center justify-content-between">
+                                <div class="col-auto" style="width: 110px">Knowledge</div>
+                                <div class="col stars-div" id="{{name}}-kno{{#knowledge}}-{{knowledge}}{{/knowledge}}"></div>
+                                <div class="col-auto trash-can-div" id="{{name}}-kno-trash-can" onclick="deleteEvaluation(this, '{{studentId}}')"></div>
                             </div>
                         </li>
                         <li class="list-group-item px-4">
-                            <div class="row">
-                                <div class="col-3">Experience</div>
-                                <div class="col-8 stars-div" id="{{name}}-exp{{#experience}}-{{experience}}{{/experience}}"></div>
-                                <div class="col-1 trash-can-div" id="{{name}}-exp-trash-can" onclick="deleteEvaluation(this, '{{studentId}}')"></div>
+                            <div class="row align-items-center justify-content-between">
+                                <div class="col-auto" style="width: 110px">Experience</div>
+                                <div class="col stars-div" id="{{name}}-exp{{#experience}}-{{experience}}{{/experience}}"></div>
+                                <div class="col-auto trash-can-div" id="{{name}}-exp-trash-can" onclick="deleteEvaluation(this, '{{studentId}}')"></div>
                             </div>
                         </li>
                     </ul>

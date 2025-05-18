@@ -44,3 +44,8 @@ table {
     margin-right: 10px;
     flex-grow: 1;
 }
+
+.row > * {
+    padding-left: 8px;
+    padding-right: 8px;
+}
