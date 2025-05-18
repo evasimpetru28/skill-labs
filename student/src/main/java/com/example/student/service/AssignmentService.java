@@ -20,4 +20,8 @@ public class AssignmentService {
 	public Assignment getAssignmentByStudentAndQuiz(String studentId, String quizId) {
 		return assignmentRepository.findByStudentIdAndQuizId(studentId, quizId);
 	}
+
+	public Integer getAssignmentScoreAverageBySkillForStudent(String studentId, String skillId) {
+		return assignmentRepository.getSkillScoreAverage(studentId, skillId);
+	}
 }

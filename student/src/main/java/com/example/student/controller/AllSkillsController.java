@@ -22,7 +22,6 @@ public class AllSkillsController {
 
 	final NavbarService navbarService;
 	final SkillService skillService;
-	final CategoryService categoryService;
 	final EvaluationService evaluationService;
 
 	@GetMapping("/all-skills/{studentId}")

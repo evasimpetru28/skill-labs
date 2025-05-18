@@ -21,4 +21,5 @@ public class SkillEvaluationModel {
 	Integer interest;
 	Integer knowledge;
 	Integer experience;
+	Integer score;
 }

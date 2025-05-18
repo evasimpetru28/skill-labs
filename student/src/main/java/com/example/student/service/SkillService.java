@@ -3,6 +3,7 @@ package com.example.student.service;
 import com.example.student.entity.Skill;
 import com.example.student.entity.Category;
 import com.example.student.model.CategoryInfo;
+import com.example.student.model.SkillEvaluationInterface;
 import com.example.student.model.SkillEvaluationModel;
 import com.example.student.repository.CategoryRepository;
 import com.example.student.repository.EvaluationRepository;
@@ -27,6 +28,7 @@ public class SkillService {
 	final SkillRepository skillRepository;
 	final CategoryRepository categoryRepository;
 	final EvaluationRepository evaluationRepository;
+	private final AssignmentService assignmentService;
 
 	public void saveSkill(Skill skill) {
 		skillRepository.saveAndFlush(skill);
@@ -48,10 +50,7 @@ public class SkillService {
 		var skills = skillRepository.findAlSkillsAndCategories();
 		var evaluationsMap = evaluationRepository.findAllEvaluationsByStudentId(studentId)
 				.stream()
-				.collect(Collectors.toMap(
-					eval -> eval.getId(),
-					eval -> eval
-				));
+				.collect(Collectors.toMap(SkillEvaluationInterface::getId, eval -> eval));
 		var categoriesMap = categoryRepository.findAll()
 				.stream()
 				.collect(Collectors.toMap(
@@ -71,6 +70,7 @@ public class SkillService {
 					skillModel.setHasDescription(!"".equals(skill.getDescription()));
 					skillModel.setCategory(skill.getCategory());
 					skillModel.setHasEvaluation(false);
+					skillModel.setScore(assignmentService.getAssignmentScoreAverageBySkillForStudent(studentId, skill.getId()));
 
 					var evaluation = evaluationsMap.get(skill.getId());
 					if (evaluation != null) {
@@ -106,10 +106,7 @@ public class SkillService {
 	public Map<CategoryInfo, List<SkillEvaluationModel>> getEvaluationsForStudentByCategory(String studentId) {
 		var evaluations = evaluationRepository.findAllEvaluationsByStudentId(studentId)
 				.stream()
-				.collect(Collectors.toMap(
-					eval -> eval.getId(),
-					eval -> eval
-				));
+				.collect(Collectors.toMap(SkillEvaluationInterface::getId, eval -> eval));
 		var categoriesMap = categoryRepository.findAll()
 				.stream()
 				.collect(Collectors.toMap(
@@ -135,6 +132,7 @@ public class SkillService {
 					skillModel.setInterest(skill.getValue().getInterest());
 					skillModel.setKnowledge(skill.getValue().getKnowledge());
 					skillModel.setExperience(skill.getValue().getExperience());
+					skillModel.setScore(assignmentService.getAssignmentScoreAverageBySkillForStudent(studentId, skill.getValue().getId()));
 
 					return skillModel;
 				})
