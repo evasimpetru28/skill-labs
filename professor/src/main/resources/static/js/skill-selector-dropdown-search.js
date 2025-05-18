@@ -34,12 +34,77 @@ document.addEventListener('DOMContentLoaded', function() {
     if (selectedSkill.textContent === 'No skill selected') {
         selectedSkill.classList.add('no-skill');
     }
+
+    // Add form submission handler
+    const form = document.getElementById('nextForm');
+    if (form) {
+        let errorTimeout;
+        const skillError = document.getElementById('skillError');
+
+        function startErrorTimer() {
+            // Clear any existing timeout
+            if (errorTimeout) {
+                clearTimeout(errorTimeout);
+            }
+            
+            // Remove and re-add animation class to restart it
+            skillError.classList.remove('animate');
+            // Force a reflow to ensure animation restarts
+            void skillError.offsetWidth;
+            skillError.classList.add('animate');
+            
+            // Start the 3-second timer
+            errorTimeout = setTimeout(() => {
+                skillError.style.display = 'none';
+                skillError.classList.remove('animate');
+            }, 3000);
+        }
+
+        // Add hover listeners to the error message
+        if (skillError) {
+            skillError.addEventListener('mouseenter', () => {
+                // Clear the timeout and remove animation when hovering
+                if (errorTimeout) {
+                    clearTimeout(errorTimeout);
+                }
+                skillError.classList.remove('animate');
+            });
+
+            skillError.addEventListener('mouseleave', () => {
+                // Restart the animation and timer when mouse leaves
+                startErrorTimer();
+            });
+        }
+
+        form.addEventListener('submit', function(e) {
+            const selectedSkill = document.getElementById('selectedSkill');
+            
+            if (selectedSkill.textContent === 'No skill selected') {
+                e.preventDefault(); // Prevent form submission
+                skillError.style.display = 'block'; // Show error message
+                startErrorTimer();
+            }
+        });
+    }
 });
 
 function selectSkill(skill) {
     const selectedSkill = document.getElementById('selectedSkill');
     selectedSkill.textContent = skill;
-    selectedSkill.classList.remove('no-skill');  // Remove the no-skill class when a skill is selected
+    selectedSkill.classList.remove('no-skill');
+    
+    // Update hidden input value
+    const hiddenInput = document.getElementById('selectedSkillInput');
+    if (hiddenInput) {
+        hiddenInput.value = skill;
+    }
+    
+    // Hide error message if it's visible
+    const skillError = document.getElementById('skillError');
+    if (skillError) {
+        skillError.style.display = 'none';
+    }
+    
     document.getElementById('skillDropdown').classList.remove('show');
     // Clear search input
     const searchInput = document.getElementById('skillInput');

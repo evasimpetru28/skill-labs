@@ -1,8 +1,15 @@
 <!-- Next btn -->
 <div class="col-2 d-flex justify-content-end">
 	<div style="position: fixed; padding-right: 100px; bottom: 0; padding-bottom: 50px;">
-		<form action="/next/{{quizId}}" method="post">
-			<button type="submit" class="btn btn-primary">Next</button>
+		<form id="nextForm" action="/next/{{quizId}}" method="post">
+			<input type="hidden" id="selectedSkillInput" name="selectedSkill" value="">
+			<div style="position: relative; min-height: 50px;">
+				<div id="skillError" class="text-danger" style="display: none; position: absolute; bottom: 100%; right: 0; margin-bottom: 8px; background-color: #fff3f3; border: 1px solid #ffcdd2; border-radius: 4px; padding: 8px 12px; white-space: nowrap; font-size: 0.875rem;">
+					<i class="fas fa-exclamation-circle me-1"></i>
+					Please select a skill before proceeding
+				</div>
+				<button type="submit" class="btn btn-primary">Next</button>
+			</div>
 		</form>
 	</div>
 </div>
