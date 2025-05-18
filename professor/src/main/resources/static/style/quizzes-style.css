@@ -26,3 +26,40 @@ table {
 .no-quizzes-text {
     height: 300px;
 }
+
+.index {
+    width: 50px;
+}
+
+.skillLabel {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 350px;
+    width: 100%;
+}
+
+.createdAt {
+    width: 140px;
+}
+
+.actions-container {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-start;
+    width: fit-content;
+}
+
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+/* Force table cell to collapse to content width */
+table td:last-child {
+    width: 1px;
+    white-space: nowrap;
+}

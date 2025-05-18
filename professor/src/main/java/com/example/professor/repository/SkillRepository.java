@@ -11,7 +11,7 @@ import java.util.List;
 public interface SkillRepository extends JpaRepository<Skill, String> {
 
 	@Query("""
-	SELECT new com.example.professor.model.SelectOption(s.name || ' (' || c.name || ')', s.id, false)
+	SELECT new com.example.professor.model.SelectOption(s.name || ' (' || c.name || ')', s.id, FALSE)
 	FROM Skill s
 	JOIN  Category c on c.id = s.categoryId
 	""")
@@ -19,7 +19,7 @@ public interface SkillRepository extends JpaRepository<Skill, String> {
 
 	@Query("""
 	SELECT new com.example.professor.model.SelectOption(s.name || ' (' || c.name || ')', s.id,
-		(CASE WHEN s.id = :selectedSkillId THEN 1 ELSE 0 END))
+		(CASE WHEN s.id = :selectedSkillId THEN TRUE ELSE FALSE END))
 	FROM Skill s
 	JOIN  Category c on c.id = s.categoryId
 	""")

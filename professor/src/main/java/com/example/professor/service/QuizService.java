@@ -2,7 +2,9 @@ package com.example.professor.service;
 
 import com.example.professor.entity.Quiz;
 import com.example.professor.model.QuizModel;
+import com.example.professor.repository.CategoryRepository;
 import com.example.professor.repository.QuizRepository;
+import com.example.professor.repository.SkillRepository;
 import com.example.professor.repository.SuperuserRepository;
 import com.example.professor.util.Utils;
 
@@ -19,6 +21,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class QuizService {
 
 	final QuizRepository quizRepository;
+	final SkillRepository skillRepository;
+	final CategoryRepository categoryRepository;
 	final SuperuserRepository superuserRepository;
 
 	public void saveQuiz(Quiz quiz) {
@@ -34,18 +38,28 @@ public class QuizService {
 		return quizRepository.getAllBySuperuserIdNotReady(superuserId)
 				.stream()
 				.map(quiz -> new QuizModel(
-						quiz.getId(),
-						index.getAndIncrement(),
-						quiz.getSuperuserId(),
-						superuserRepository.getReferenceById(quiz.getSuperuserId()).getName(),
-						quiz.getName(),
-						(quiz.getDescription() != null && quiz.getDescription().length() > 110)
-								? quiz.getDescription().substring(0, 110) + "..."
-								: quiz.getDescription(),
-								"PUBLIC".equals(quiz.getStatus()),
-								Utils.localDateTimeToString(quiz.getCreatedAt())
+							quiz.getId(),
+							index.getAndIncrement(),
+							quiz.getSuperuserId(),
+							superuserRepository.getReferenceById(quiz.getSuperuserId()).getName(),
+							quiz.getName(),
+							(quiz.getDescription() != null && quiz.getDescription().length() > 110)
+									? quiz.getDescription().substring(0, 110) + "..."
+									: quiz.getDescription(),
+							"PUBLIC".equals(quiz.getStatus()),
+							Utils.localDateTimeToString(quiz.getCreatedAt()),
+							getSkillLabel(quiz.getSkillId())
 				))
 				.toList();
+	}
+
+	public String getSkillLabel(String skillId) {
+		if (skillId == null) {
+			return null;
+		}
+		var skill = skillRepository.getReferenceById(skillId);
+		var category = categoryRepository.getReferenceById(skill.getCategoryId());
+		return skill.getName() + " (" + category.getName() + ")";
 	}
 
 	public List<QuizModel> getAssignedQuizzesBySuperuserId(String superuserId) {
@@ -62,7 +76,8 @@ public class QuizService {
 								? quiz.getDescription().substring(0, 110) + "..."
 								: quiz.getDescription(),
 								"PUBLIC".equals(quiz.getStatus()),
-								Utils.localDateTimeToString(quiz.getCreatedAt())
+								Utils.localDateTimeToString(quiz.getCreatedAt()),
+						getSkillLabel(quiz.getSkillId())
 				))
 				.toList();
 	}
@@ -81,7 +96,8 @@ public class QuizService {
 								? quiz.getDescription().substring(0, 110) + "..."
 								: quiz.getDescription(),
 								"PUBLIC".equals(quiz.getStatus()),
-								Utils.localDateTimeToString(quiz.getCreatedAt())
+								Utils.localDateTimeToString(quiz.getCreatedAt()),
+						getSkillLabel(quiz.getSkillId())
 				))
 				.toList();
 	}
@@ -104,7 +120,8 @@ public class QuizService {
 								? quiz.getDescription().substring(0, 110) + "..."
 								: quiz.getDescription(),
 								"PUBLIC".equals(quiz.getStatus()),
-								Utils.localDateTimeToString(quiz.getCreatedAt())
+								Utils.localDateTimeToString(quiz.getCreatedAt()),
+						getSkillLabel(quiz.getSkillId())
 				))
 				.toList();
 	}

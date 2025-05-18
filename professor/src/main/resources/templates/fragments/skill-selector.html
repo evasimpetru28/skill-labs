@@ -1,6 +1,9 @@
 <div class="dropdown">
     <button onclick="skillSelectorDropdownSearch()" class="dropbtn">Select skill</button>
-    <span id="selectedSkill" class="selectedSkill no-skill">No skill selected</span>
+    <span id="selectedSkill" class="selectedSkill {{^skillLabel}}no-skill{{/skillLabel}}">
+        {{#skillLabel}}{{skillLabel}}{{/skillLabel}}
+        {{^skillLabel}}No skill selected{{/skillLabel}}
+    </span>
     <div id="skillDropdown" class="dropdown-content">
         <div>
             <i class="fas fa-search search-icon"></i>

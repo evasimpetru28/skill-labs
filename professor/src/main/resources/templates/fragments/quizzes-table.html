@@ -14,6 +14,7 @@
 	<tr>
 		<th class="th-sm">Nr.</th>
 		<th class="th-sm">Name</th>
+		<th class="th-sm">Skill</th>
 		<th class="th-sm">Created at</th>
 		<th class="th-sm">Actions</th>
 	</tr>
@@ -22,61 +23,62 @@
 	<tbody>
 	{{#quizList}}
 	<tr>
-		<td class="col-1">{{index}}</td>
+		<td class="index">{{index}}</td>
 		<td>
 			<div class="row">
 				<div class="col-10">
 					<strong>{{name}}</strong>
 					<br>
 					<small>{{#description}}{{description}}{{/description}}</small>
-			</div>
-			<div class="col-2">
-				{{#isPublic}}
-					<span class="badge bg-success">Public</span>
-				{{/isPublic}}
-				{{^isPublic}}
-					<span class="badge bg-secondary">Private</span>
-				{{/isPublic}}
-			</div>
+				</div>
+				<div class="col-2">
+					{{#isPublic}}
+						<span class="badge bg-success">Public</span>
+					{{/isPublic}}
+					{{^isPublic}}
+						<span class="badge bg-secondary">Private</span>
+					{{/isPublic}}
+				</div>
 			</div>
 		</td>
-		<td class="col-2">{{createdAt}}</td>
-		<td class="col-5">
-			<div class="row">
-
-<!--				Details btn			-->
+		<td style="width: 100px;">
+			<span class="skillLabel">
+				{{#skillLabel}}{{skillLabel}}{{/skillLabel}}{{^skillLabel}}-{{/skillLabel}}
+			</span>
+		</td>
+		<td class="createdAt">{{createdAt}}</td>
+		<td>
+			<div class="actions-container">
 				{{#assigned}}
-				<div class="d-flex justify-content-center col-3">
+				<div class="action-btn">
 					{{>fragments/details}}
 				</div>
 				{{/assigned}}
 				{{#expired}}
-				<div class="d-flex justify-content-center col-6">
+				<div class="action-btn">
 					{{>fragments/details}}
 				</div>
 				{{/expired}}
-<!--				Edit btn			-->
 				{{#drafted}}
-				<div class="d-flex justify-content-center col-6">
+				<div class="action-btn">
 					{{>fragments/edit-drafted}}
 				</div>
 				{{/drafted}}
 				{{#assigned}}
-				<div class="d-flex justify-content-center col-3">
+				<div class="action-btn">
 					{{>fragments/edit-assigned}}
 				</div>
 				{{/assigned}}
-<!--				Delete btn			-->
 				{{#assigned}}
-				<div class="d-flex justify-content-center col-3">
+				<div class="action-btn">
 					{{>fragments/expire-quiz}}
 				</div>
-				<div class="d-flex justify-content-center col-3">
+				<div class="action-btn">
 					{{>fragments/delete-quiz}}
 				</div>
 				{{/assigned}}
 				{{^assigned}}
-				<div class="d-flex justify-content-center col-6">
+				<div class="action-btn">
 					{{>fragments/delete-quiz}}
 				</div>
 				{{/assigned}}

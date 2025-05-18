@@ -108,8 +108,10 @@ public class MyQuizzesController {
 		var quiz = quizService.getQuizById(quizId);
 		if (quiz.getSkillId() == null) {
 			model.addAttribute("skills", skillRepository.findAllSkillAndCategorySelectOptions());
+			model.addAttribute("skillLabel", null);
 		} else {
 			model.addAttribute("skills", skillRepository.findAllSkillAndCategorySelectOptionsAndSelected(quiz.getSkillId()));
+			model.addAttribute("skillLabel", quizService.getSkillLabel(quiz.getSkillId()));
 		}
 		navbarService.activateNavbarTab(Page.MY_QUIZZES, model);
 		model.addAttribute("superuserId", quiz.getSuperuserId());

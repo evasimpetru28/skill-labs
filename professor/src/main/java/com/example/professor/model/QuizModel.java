@@ -20,4 +20,5 @@ public class QuizModel {
 	String description;
 	boolean isPublic;
 	String createdAt;
+	String skillLabel;
 }

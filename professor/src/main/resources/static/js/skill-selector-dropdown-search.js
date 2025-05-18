@@ -31,55 +31,58 @@ function filterFunction() {
 // Initialize the no-skill class when the page loads
 document.addEventListener('DOMContentLoaded', function() {
     const selectedSkill = document.getElementById('selectedSkill');
-    if (selectedSkill.textContent === 'No skill selected') {
+    const form = document.getElementById('nextForm');
+    const skillError = document.getElementById('skillError');
+    let errorTimeout;
+
+    if (selectedSkill && selectedSkill.textContent === 'No skill selected') {
         selectedSkill.classList.add('no-skill');
     }
 
-    // Add form submission handler
-    const form = document.getElementById('nextForm');
-    if (form) {
-        let errorTimeout;
-        const skillError = document.getElementById('skillError');
+    function startErrorTimer() {
+        if (!skillError) return;
+        
+        // Clear any existing timeout
+        if (errorTimeout) {
+            clearTimeout(errorTimeout);
+        }
+        
+        // Remove and re-add animation class to restart it
+        skillError.classList.remove('animate');
+        // Force a reflow to ensure animation restarts
+        void skillError.offsetWidth;
+        skillError.classList.add('animate');
+        
+        // Start the 3-second timer
+        errorTimeout = setTimeout(() => {
+            skillError.style.display = 'none';
+            skillError.classList.remove('animate');
+        }, 3000);
+    }
 
-        function startErrorTimer() {
-            // Clear any existing timeout
+    // Add hover listeners to the error message
+    if (skillError) {
+        skillError.addEventListener('mouseenter', () => {
+            // Clear the timeout and remove animation when hovering
             if (errorTimeout) {
                 clearTimeout(errorTimeout);
             }
-            
-            // Remove and re-add animation class to restart it
             skillError.classList.remove('animate');
-            // Force a reflow to ensure animation restarts
-            void skillError.offsetWidth;
-            skillError.classList.add('animate');
-            
-            // Start the 3-second timer
-            errorTimeout = setTimeout(() => {
-                skillError.style.display = 'none';
-                skillError.classList.remove('animate');
-            }, 3000);
-        }
+        });
 
-        // Add hover listeners to the error message
-        if (skillError) {
-            skillError.addEventListener('mouseenter', () => {
-                // Clear the timeout and remove animation when hovering
-                if (errorTimeout) {
-                    clearTimeout(errorTimeout);
-                }
-                skillError.classList.remove('animate');
-            });
+        skillError.addEventListener('mouseleave', () => {
+            // Restart the animation and timer when mouse leaves
+            startErrorTimer();
+        });
+    }
 
-            skillError.addEventListener('mouseleave', () => {
-                // Restart the animation and timer when mouse leaves
-                startErrorTimer();
-            });
-        }
-
+    // Add form submission handler
+    if (form) {
         form.addEventListener('submit', function(e) {
-            const selectedSkill = document.getElementById('selectedSkill');
-            
-            if (selectedSkill.textContent === 'No skill selected') {
+            const selectedSkill = document.getElementById('selectedSkill');           
+            const skillError = document.getElementById('skillError');
+
+            if (selectedSkill && selectedSkill.textContent.trim() === 'No skill selected' && skillError) {
                 e.preventDefault(); // Prevent form submission
                 skillError.style.display = 'block'; // Show error message
                 startErrorTimer();

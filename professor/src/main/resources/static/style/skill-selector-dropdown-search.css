@@ -134,9 +134,19 @@
 }
 
 #skillError {
-    position: relative;
-    overflow: hidden;
-    background: transparent !important;
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    margin-bottom: 8px;
+    color: #c51c2d;
+    background-color: #fff3f3;
+    border: 1px solid #c51c2d;
+    border-radius: 4px;
+    padding: 8px 12px;
+    white-space: nowrap;
+    font-size: 0.875rem;
+    z-index: 1000;
 }
 
 #skillError::before {
