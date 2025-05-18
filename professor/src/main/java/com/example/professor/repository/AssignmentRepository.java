@@ -14,8 +14,6 @@ public interface AssignmentRepository extends JpaRepository<Assignment, String> 
 	Assignment findAssignmentByStudentIdAndQuizId(String studentId, String quizId);
 	@Query("select a from Assignment a where a.quizId = ?1 and a.score is not null ")
 	List<Assignment> findAllByQuizIdAndHasScore(String quizId);
-	@Query("select a from Assignment a where a.quizId = ?1 and a.score is null ")
-	List<Assignment> findAllByQuizIdAndWithoutScore(String quizId);
 	List<Assignment> findAllByQuizId(String quizId);
 
 }

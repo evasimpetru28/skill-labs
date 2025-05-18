@@ -1,4 +1,3 @@
-{{^allSubmitted}}
 <div class="subtitle">
   <i class="fa-solid fa-angle-right"></i>
   <span>Assigned students</span>
@@ -16,7 +15,7 @@
   </thead>
 
   <tbody>
-  {{#studentListNotSubmitted}}
+  {{#studentList}}
   <tr>
     <td class="">{{index}}</td>
     <td class="">{{studentName}}</td>
@@ -25,7 +24,6 @@
     <td class="">{{studentProgram}}</td>
     <td class="">{{studentDomain}}</td>
   </tr>
-  {{/studentListNotSubmitted}}
+  {{/studentList}}
   </tbody>
 </table>
-{{/allSubmitted}}

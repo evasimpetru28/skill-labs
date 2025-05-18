@@ -44,9 +44,9 @@ public class AssignmentService {
 				})
 				.toList();
 	}
-	public List<StudentModel> getStudentInfoByQuizNotSubmitted(String quizId) {
+	public List<StudentModel> getStudentInfoByQuiz(String quizId) {
 		var index = new AtomicInteger(1);
-		return assignmentRepository.findAllByQuizIdAndWithoutScore(quizId)
+		return assignmentRepository.findAllByQuizId(quizId)
 				.stream().map(assignment -> {
 					var student = studentRepository.getReferenceById(assignment.getStudentId());
 					var studentModel = new StudentModel();

@@ -242,16 +242,15 @@ public class MyQuizzesController {
 		//TODO: Get logged user id from session
 		navbarService.activateNavbarTab(Page.MY_QUIZZES, model);
 		var studentListSubmitted = assignmentService.getStudentInfoByQuizSubmitted(quizId);
-		var studentListNotSubmitted = assignmentService.getStudentInfoByQuizNotSubmitted(quizId);
+		var studentList = assignmentService.getStudentInfoByQuiz(quizId);
 
 		model.addAttribute("quiz", quizService.getQuizById(quizId));
 		model.addAttribute("superuserId", superuserId);
 		model.addAttribute("studentListSubmitted", studentListSubmitted);
 		model.addAttribute("noQuizzes", studentListSubmitted.isEmpty());
-		model.addAttribute("studentListNotSubmitted", studentListNotSubmitted);
-		model.addAttribute("allSubmitted", studentListNotSubmitted.isEmpty());
+		model.addAttribute("studentList", studentList);
 		model.addAttribute("submissionsNumber", studentListSubmitted.size());
-		model.addAttribute("studentsNumber", studentListSubmitted.size() + studentListNotSubmitted.size());
+		model.addAttribute("studentsNumber", studentList.size());
 
 		return "quiz-details";
 	}
@@ -261,6 +260,7 @@ public class MyQuizzesController {
 		navbarService.activateNavbarTab(Page.MY_QUIZZES, model);
 		var quiz = quizService.getQuizById(quizId);
 		model.addAttribute("quiz", quiz);
+		model.addAttribute("score", assignmentService.getAssignmentByStudentAndQuiz(studentId, quizId).getScore());
 		model.addAttribute("studentName", studentService.getStudentById(studentId).getName());
 		model.addAttribute("questionMap", questionService.getQuestionMapForStudent(quizId, studentId));
 		model.addAttribute("superuserId", quiz.getSuperuserId());
