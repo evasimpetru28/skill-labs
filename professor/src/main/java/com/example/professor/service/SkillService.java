@@ -4,6 +4,7 @@ import com.example.professor.entity.Assignment;
 import com.example.professor.entity.Evaluation;
 import com.example.professor.entity.Quiz;
 import com.example.professor.entity.Student;
+import com.example.professor.model.SkillChartDataDTO;
 import com.example.professor.model.SkillDetailsDto;
 import com.example.professor.model.SkillStatisticsDTO;
 import com.example.professor.repository.*;
@@ -108,6 +109,24 @@ public class SkillService {
 		double intermediatePercentage = totalEvaluations > 0 ? (intermediateCount / totalEvaluations) * 100 : 0;
 		double advancedPercentage = totalEvaluations > 0 ? (advancedCount / totalEvaluations) * 100 : 0;
 
+		return SkillStatisticsDTO.builder()
+				.totalStudents(totalStudents)
+				.evaluationCount(evaluationCount)
+				.quizCount(quizCount)
+				.averageScore(averageScore)
+				.beginnerCount(beginnerCount)
+				.intermediateCount(intermediateCount)
+				.advancedCount(advancedCount)
+				.beginnerPercentage(beginnerPercentage)
+				.intermediatePercentage(intermediatePercentage)
+				.advancedPercentage(advancedPercentage)
+				.build();
+	}
+
+	public SkillChartDataDTO getSkillChartData(String skillId) {
+		// Get all evaluations for this skill
+		List<Evaluation> evaluations = evaluationRepository.findBySkillId(skillId);
+
 		// Get evaluation trends (last 6 months)
 		List<String> evaluationMonths = new ArrayList<>();
 		List<Integer> evaluationCounts = new ArrayList<>();
@@ -128,6 +147,7 @@ public class SkillService {
 		}
 
 		// Get quiz performance data
+		List<Quiz> quizzes = quizRepository.findBySkillId(skillId);
 		List<String> quizNames = quizzes.stream()
 				.map(Quiz::getName)
 				.collect(Collectors.toList());
@@ -141,17 +161,7 @@ public class SkillService {
 				)
 				.toList();
 
-		return SkillStatisticsDTO.builder()
-				.totalStudents(totalStudents)
-				.evaluationCount(evaluationCount)
-				.quizCount(quizCount)
-				.averageScore(averageScore)
-				.beginnerCount(beginnerCount)
-				.intermediateCount(intermediateCount)
-				.advancedCount(advancedCount)
-				.beginnerPercentage(beginnerPercentage)
-				.intermediatePercentage(intermediatePercentage)
-				.advancedPercentage(advancedPercentage)
+		return SkillChartDataDTO.builder()
 				.evaluationMonths(evaluationMonths)
 				.evaluationCounts(evaluationCounts)
 				.quizNames(quizNames)

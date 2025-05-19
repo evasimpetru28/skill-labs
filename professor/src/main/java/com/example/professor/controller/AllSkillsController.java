@@ -6,14 +6,16 @@ import com.example.professor.service.SkillService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.professor.entity.Page;
 import com.example.professor.model.CategoryWithSkills;
+import com.example.professor.model.SkillChartDataDTO;
 import com.example.professor.service.CategoryService;
 import com.example.professor.service.NavbarService;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @RequiredArgsConstructor
 @Controller
@@ -61,5 +63,11 @@ public class AllSkillsController {
 		model.addAttribute("skill", skillService.getSkillInformation(skillId));
 		model.addAttribute("superuserId", superuserId);
 		return "skill-details-quizzes";
+	}
+
+	@GetMapping("/api/skill-details/{skillId}/stats")
+	@ResponseBody
+	public SkillChartDataDTO getSkillChartData(@PathVariable String skillId) {
+		return skillService.getSkillChartData(skillId);
 	}
 }
