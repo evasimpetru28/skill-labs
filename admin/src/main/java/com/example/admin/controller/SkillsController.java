@@ -89,7 +89,7 @@ public class SkillsController {
 
 					// Skip if skill exists or category doesn't exist
 					var category = categoryService.getCategoryByName(categoryName.toLowerCase());
-					if (!name.isEmpty() && !skillService.isDuplicate(name) && category != null) {
+					if (!name.isEmpty() && !skillService.isDuplicate(name) && category != null && description.length() <= 255) {
 						Skill skill = new Skill();
 						skill.setName(name);
 						skill.setCategoryId(category.getId());

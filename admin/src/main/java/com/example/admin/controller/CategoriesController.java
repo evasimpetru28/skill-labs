@@ -81,7 +81,7 @@ public class CategoriesController {
 					String name = nameCell.getStringCellValue().trim();
 					String description = descriptionCell != null ? descriptionCell.getStringCellValue().trim() : "";
 
-					if (!name.isEmpty() && !categoryService.isDuplicate(name)) {
+					if (!name.isEmpty() && !categoryService.isDuplicate(name) && description.length() <= 255) {
 						Category category = new Category();
 						category.setName(name);
 						category.setDescription(description);

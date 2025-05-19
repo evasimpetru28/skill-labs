@@ -1,7 +1,6 @@
 package com.example.student.controller;
 
 import com.example.student.entity.Page;
-import com.example.student.service.CategoryService;
 import com.example.student.service.EvaluationService;
 import com.example.student.service.NavbarService;
 import com.example.student.service.SkillService;
@@ -33,26 +32,26 @@ public class AllSkillsController {
 		return "all-skills";
 	}
 
-	@PostMapping("/delete-evaluation/{skillName}/{criteria}/{studentId}")
-	public ResponseEntity<String> deleteEvaluation(@PathVariable String skillName, @PathVariable String criteria, @PathVariable String studentId) {
+	@PostMapping("/delete-evaluation/{skillId}/{criteria}/{studentId}")
+	public ResponseEntity<String> deleteEvaluation(@PathVariable String skillId, @PathVariable String criteria, @PathVariable String studentId) {
 		//TODO: Get logged user id from session
 		try {
-			evaluationService.removeEvaluationCriteriaForSkillAndStudent(skillName, studentId, criteria);
+			evaluationService.removeEvaluationCriteriaForSkillAndStudent(skillId, studentId, criteria);
 			return ResponseEntity.ok().build();
 		} catch (Exception e) {
-			log.error("Error deleting the evaluation for student with id {} and skill with name {}: ", studentId, skillName);
+			log.error("Error deleting the evaluation for student with id {} and skill with name {}: {}", studentId, skillId, e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
 
-	@PostMapping("/reevaluate/{skillName}/{criteria}/{starsNumber}/{studentId}")
-	public ResponseEntity<String> reevaluation(@PathVariable String skillName, @PathVariable String criteria, @PathVariable Integer starsNumber, @PathVariable String studentId) {
+	@PostMapping("/reevaluate/{skillId}/{criteria}/{starsNumber}/{studentId}")
+	public ResponseEntity<String> reevaluation(@PathVariable String skillId, @PathVariable String criteria, @PathVariable Integer starsNumber, @PathVariable String studentId) {
 		//TODO: Get logged user id from session
 		try {
-			evaluationService.reevaluateCriteriaForSkillAndStudent(skillName, criteria, starsNumber, studentId);
+			evaluationService.reevaluateCriteriaForSkillAndStudent(skillId, criteria, starsNumber, studentId);
 			return ResponseEntity.ok().build();
 		} catch (Exception e) {
-			log.error("Error reevaluating the skill {} for student with id {}", skillName, studentId);
+			log.error("Error reevaluating the skill {} for student with id {}", skillId, studentId);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}

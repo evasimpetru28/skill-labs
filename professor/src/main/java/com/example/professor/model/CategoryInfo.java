@@ -1,4 +1,4 @@
-package com.example.student.model;
+package com.example.professor.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoryInfo {
-    private Integer index;
     private String id;
     private String name;
     private String description;

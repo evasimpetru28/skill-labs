@@ -1,6 +1,5 @@
 package com.example.student.service;
 
-import com.example.student.entity.Skill;
 import com.example.student.entity.Category;
 import com.example.student.model.CategoryInfo;
 import com.example.student.model.SkillEvaluationInterface;
@@ -12,13 +11,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.LinkedHashMap;
-import java.util.HashMap;
-import java.util.TreeMap;
 
 @Service
 @Transactional
@@ -29,22 +24,6 @@ public class SkillService {
 	final CategoryRepository categoryRepository;
 	final EvaluationRepository evaluationRepository;
 	private final AssignmentService assignmentService;
-
-	public void saveSkill(Skill skill) {
-		skillRepository.saveAndFlush(skill);
-	}
-
-	public void deleteSkill(String skillId) {
-		skillRepository.deleteById(skillId);
-	}
-
-	public Boolean isDuplicate(String name) {
-		return skillRepository.existsByName(name).isPresent();
-	}
-
-	public Boolean isDuplicateExcept(String name, String id) {
-		return skillRepository.existsByNameExcept(name, id).isPresent();
-	}
 
 	public Map<CategoryInfo, List<SkillEvaluationModel>> getAllSkillsAndEvaluationsForStudent(String studentId) {
 		var skills = skillRepository.findAlSkillsAndCategories();
@@ -93,9 +72,10 @@ public class SkillService {
 						
 						return new CategoryInfo(
 							categoryIndex,
+							category.getId(),
 							categoryName,
-							category != null ? category.getDescription() : "",
-							category != null && !"".equals(category.getDescription())
+								category.getDescription(),
+								!"".equals(category.getDescription())
 						);
 					},
 					LinkedHashMap::new,
@@ -148,9 +128,10 @@ public class SkillService {
 						
 						return new CategoryInfo(
 							categoryIndex,
+							category.getId(),
 							categoryName,
-							category != null ? category.getDescription() : "",
-							category != null && !"".equals(category.getDescription())
+								category.getDescription(),
+								!"".equals(category.getDescription())
 						);
 					},
 					() -> new TreeMap<>((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName())),

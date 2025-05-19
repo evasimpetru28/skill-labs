@@ -15,8 +15,8 @@ public class EvaluationService {
 	final EvaluationRepository evaluationRepository;
 	final SkillRepository skillRepository;
 
-	public void removeEvaluationCriteriaForSkillAndStudent(String skillName, String studentId, String criteria) {
-		var skill = skillRepository.findByName(skillName);
+	public void removeEvaluationCriteriaForSkillAndStudent(String skillId, String studentId, String criteria) {
+		var skill = skillRepository.getReferenceById(skillId);
 		var evaluation = evaluationRepository.findBySkillIdAndStudentId(skill.getId(), studentId);
 
 		if (evaluation.isPresent()) {
@@ -39,8 +39,8 @@ public class EvaluationService {
 		}
 	}
 
-	public void reevaluateCriteriaForSkillAndStudent(String skillName, String criteria, Integer starsNumber, String studentId) {
-		var skill = skillRepository.findByName(skillName);
+	public void reevaluateCriteriaForSkillAndStudent(String skillId, String criteria, Integer starsNumber, String studentId) {
+		var skill = skillRepository.getReferenceById(skillId);
 		var evaluation = evaluationRepository.findBySkillIdAndStudentId(skill.getId(), studentId);
 
 		if (evaluation.isPresent()) {

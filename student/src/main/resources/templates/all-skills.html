@@ -45,7 +45,7 @@
                                 <h5 class="card-title">{{name}}</h5>
                             </div>
                             <div style="text-align: end" class="col-2">
-                                {{#score}}{{score}}%{{/score}}
+                                <h5><strong>{{#score}}{{score}}%{{/score}}</strong></h5>
                             </div>
                             {{#hasDescription}}
                                 <div class="col-1">
@@ -58,22 +58,22 @@
                         <li class="list-group-item px-4">
                             <div class="row align-items-center justify-content-between">
                                 <div class="col-auto" style="width: 110px">Interest</div>
-                                <div class="col stars-div" id="{{name}}-int{{#interest}}-{{interest}}{{/interest}}"></div>
-                                <div class="col-auto trash-can-div" id="{{name}}-int-trash-can" onclick="deleteEvaluation(this, '{{studentId}}')"></div>
+                                <div class="col stars-div" id="{{id}}-int{{#interest}}-{{interest}}{{/interest}}"></div>
+                                <div class="col-auto trash-can-div" id="{{id}}-int-trash-can" onclick="deleteEvaluation(this, '{{studentId}}')"></div>
                             </div>
                         </li>
                         <li class="list-group-item px-4">
                             <div class="row align-items-center justify-content-between">
                                 <div class="col-auto" style="width: 110px">Knowledge</div>
-                                <div class="col stars-div" id="{{name}}-kno{{#knowledge}}-{{knowledge}}{{/knowledge}}"></div>
-                                <div class="col-auto trash-can-div" id="{{name}}-kno-trash-can" onclick="deleteEvaluation(this, '{{studentId}}')"></div>
+                                <div class="col stars-div" id="{{id}}-kno{{#knowledge}}-{{knowledge}}{{/knowledge}}"></div>
+                                <div class="col-auto trash-can-div" id="{{id}}-kno-trash-can" onclick="deleteEvaluation(this, '{{studentId}}')"></div>
                             </div>
                         </li>
                         <li class="list-group-item px-4">
                             <div class="row align-items-center justify-content-between">
                                 <div class="col-auto" style="width: 110px">Experience</div>
-                                <div class="col stars-div" id="{{name}}-exp{{#experience}}-{{experience}}{{/experience}}"></div>
-                                <div class="col-auto trash-can-div" id="{{name}}-exp-trash-can" onclick="deleteEvaluation(this, '{{studentId}}')"></div>
+                                <div class="col stars-div" id="{{id}}-exp{{#experience}}-{{experience}}{{/experience}}"></div>
+                                <div class="col-auto trash-can-div" id="{{id}}-exp-trash-can" onclick="deleteEvaluation(this, '{{studentId}}')"></div>
                             </div>
                         </li>
                     </ul>
