@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Skill Labs - Skill Details</title>
+
+	{{>fragments/links}}
+	<link rel="stylesheet" href="/static/style/navigation-style.css">
+	<link rel="stylesheet" href="/static/style/skill-details-style.css">
+
+	<!-- DataTables CSS -->
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css">
+	<!-- DataTables JS -->
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+	<!-- Chart.js -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+<!--Main Navigation-->
+<header>
+	{{>fragments/logout-btn}}
+	{{>fragments/sidebar}}
+</header>
+<!--Main Navigation-->
+
+<!--Main layout-->
+<main style="margin-top: 50px;">
+	<div class="container-fluid container-custom pt-4 table-responsive-lg">
+		{{#skill}}
+			<h2>{{name}} ({{categoryName}})</h2>
+			<br>
+			{{#description}}<h5>{{description}}</h5>{{/description}}
+
+			<div class="skill-details-nav">
+				<form action="/skill-details/{{id}}/overview/{{superuserId}}" method="GET">
+					<button type="submit"
+							class="btn btn-primary">
+						Overview
+					</button>
+				</form>
+				<form action="/skill-details/{{id}}/students-self-evaluations/{{superuserId}}" method="GET">
+					<button type="submit"
+							class="btn btn-secondary">
+						Students self-evaluations
+					</button>
+				</form>
+				<form action="/skill-details/{{id}}/quizzes/{{superuserId}}" method="GET">
+					<button type="submit"
+							class="btn btn-secondary">
+						Quizzes
+					</button>
+				</form>
+			</div>
+			<br>
+
+			{{#statistics}}
+			<!-- Statistics Cards -->
+			<div class="stats-container">
+				<div class="stat-card">
+					<div class="stat-title">Self Evaluations</div>
+					<div class="stat-value">{{evaluationCount}}</div>
+					<div class="stat-description">Students who self-evaluated</div>
+				</div>
+				<div class="stat-card">
+					<div class="stat-title">Total Students</div>
+					<div class="stat-value">{{totalStudents}}</div>
+					<div class="stat-description">Students who attempted quizzes</div>
+				</div>
+				<div class="stat-card">
+					<div class="stat-title">Quizzes</div>
+					<div class="stat-value">{{quizCount}}</div>
+					<div class="stat-description">Available quizzes</div>
+				</div>
+				<div class="stat-card">
+					<div class="stat-title">Average Score</div>
+					<div class="stat-value">{{averageScore}}%</div>
+					<div class="stat-description">Across all quizzes</div>
+				</div>
+			</div>
+
+			<!-- Progress Bars -->
+			<div class="progress-container">
+				<h4>Skill Mastery Distribution</h4>
+				<div class="progress-title">
+					<span>Beginner</span>
+					<span>{{beginnerCount}} students</span>
+				</div>
+				<div class="progress-bar">
+					<div class="progress-bar-fill" style="width: {{beginnerPercentage}}%"></div>
+				</div>
+
+				<div class="progress-title">
+					<span>Intermediate</span>
+					<span>{{intermediateCount}} students</span>
+				</div>
+				<div class="progress-bar">
+					<div class="progress-bar-fill" style="width: {{intermediatePercentage}}%"></div>
+				</div>
+
+				<div class="progress-title">
+					<span>Advanced</span>
+					<span>{{advancedCount}} students</span>
+				</div>
+				<div class="progress-bar">
+					<div class="progress-bar-fill" style="width: {{advancedPercentage}}%"></div>
+				</div>
+			</div>
+
+			<!-- Charts -->
+			<div class="charts-container">
+				<div class="chart-card">
+					<div class="chart-title">Evaluation Trends</div>
+					<canvas id="evaluationTrendsChart"></canvas>
+				</div>
+				<div class="chart-card">
+					<div class="chart-title">Quiz Performance</div>
+					<canvas id="quizPerformanceChart"></canvas>
+				</div>
+			</div>
+
+			<script>
+				// Evaluation Trends Chart
+				const evaluationCtx = document.getElementById('evaluationTrendsChart').getContext('2d');
+				new Chart(evaluationCtx, {
+					type: 'line',
+					data: {
+						labels: {{{evaluationMonths}}},
+						datasets: [{
+							label: 'Number of Evaluations',
+							data: {{{evaluationCounts}}},
+							borderColor: '#0d6efd',
+							tension: 0.4,
+							fill: false
+						}]
+					},
+					options: {
+						responsive: true,
+						plugins: {
+							legend: {
+								position: 'top',
+							}
+						}
+					}
+				});
+
+				// Quiz Performance Chart
+				const quizCtx = document.getElementById('quizPerformanceChart').getContext('2d');
+				new Chart(quizCtx, {
+					type: 'bar',
+					data: {
+						labels: {{{quizNames}}},
+						datasets: [{
+							label: 'Average Score',
+							data: {{{quizScores}}},
+							backgroundColor: '#0d6efd',
+						}]
+					},
+					options: {
+						responsive: true,
+						plugins: {
+							legend: {
+								position: 'top',
+							}
+						},
+						scales: {
+							y: {
+								beginAtZero: true,
+								max: 100
+							}
+						}
+					}
+				});
+			</script>
+			{{/statistics}}
+		{{/skill}}
+	</div>
+</main>
+<!--Main layout-->
+
+</body>
+</html>

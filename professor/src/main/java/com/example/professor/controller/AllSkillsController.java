@@ -2,6 +2,7 @@ package com.example.professor.controller;
 
 import java.util.List;
 
+import com.example.professor.service.SkillService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +19,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class AllSkillsController {
 
+	final SkillService skillService;
 	final NavbarService navbarService;
-    final CategoryService categoryService;
+	final CategoryService categoryService;
 
     @GetMapping("/all-skills/{superuserId}")
 	public String getAllSkillsPage(Model model, @PathVariable String superuserId) {
@@ -31,5 +33,33 @@ public class AllSkillsController {
         model.addAttribute("categories", categories);
         model.addAttribute("superuserId", superuserId);
 		return "all-skills";
+	}
+
+	@GetMapping("/skill-details/{skillId}/overview/{superuserId}")
+	public String getSkillDetailsOverviewPage(Model model, @PathVariable String skillId, @PathVariable String superuserId) {
+		navbarService.activateNavbarTab(Page.ALL_SKILLS, model);
+
+		model.addAttribute("skill", skillService.getSkillInformation(skillId));
+		model.addAttribute("statistics", skillService.getSkillStatistics(skillId));
+		model.addAttribute("superuserId", superuserId);
+		return "skill-details-overview";
+	}
+
+	@GetMapping("/skill-details/{skillId}/students-self-evaluations/{superuserId}")
+	public String getSkillDetailsEvaluationsPage(Model model, @PathVariable String skillId, @PathVariable String superuserId) {
+		navbarService.activateNavbarTab(Page.ALL_SKILLS, model);
+
+		model.addAttribute("skill", skillService.getSkillInformation(skillId));
+		model.addAttribute("superuserId", superuserId);
+		return "skill-details-evaluations";
+	}
+
+	@GetMapping("/skill-details/{skillId}/quizzes/{superuserId}")
+	public String getSkillDetailsQuizzesPage(Model model, @PathVariable String skillId, @PathVariable String superuserId) {
+		navbarService.activateNavbarTab(Page.ALL_SKILLS, model);
+
+		model.addAttribute("skill", skillService.getSkillInformation(skillId));
+		model.addAttribute("superuserId", superuserId);
+		return "skill-details-quizzes";
 	}
 }

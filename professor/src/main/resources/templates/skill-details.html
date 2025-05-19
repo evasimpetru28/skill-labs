@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Skill Labs - Skill Details</title>
+
+	{{>fragments/links}}
+	<link rel="stylesheet" href="/static/style/navigation-style.css">
+
+	<!-- DataTables CSS -->
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css">
+	<!-- DataTables JS -->
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+
+</head>
+<body>
+<!--Main Navigation-->
+<header>
+	{{>fragments/logout-btn}}
+	{{>fragments/sidebar}}
+</header>
+<!--Main Navigation-->
+
+<!--Main layout-->
+<main style="margin-top: 50px;">
+	<div class="container-fluid container-custom pt-4 table-responsive-lg">
+		{{#skill}}
+			<h2>{{name}} - Details</h2>
+			<br>
+
+			<div class="row">
+				<div class="justify-content-start col-1">
+					<form action="/skill-details/{{id}}/overview/{{superuserId}}" method="GET">
+						<button type="submit"
+								class="btn {{#overview}}btn-primary{{/overview}}{{^overview}}btn-secondary{{/overview}}">
+							Overview
+						</button>
+					</form>
+				</div>
+				<div class="justify-content-start col-1">
+					<form action="/skill-details/{{id}}/students-self-evaluations/{{superuserId}}" method="GET">
+						<button type="submit"
+								class="btn {{#evaluations}}btn-primary{{/evaluations}}{{^evaluations}}btn-secondary{{/evaluations}}">
+							Students self-evaluations
+						</button>
+					</form>
+				</div>
+				<div class="justify-content-start col-1">
+					<form action="/skill-details/{{id}}/quizzes/{{superuserId}}" method="GET">
+						<button type="submit"
+								class="btn {{#quizzes}}btn-primary{{/quizzes}}{{^quizzes}}btn-secondary{{/quizzes}}">
+							Quizzes
+						</button>
+					</form>
+				</div>
+			</div>
+			<br>
+			{{#overview}}
+				{{>fragments/skill-overview}}
+			{{/overview}}
+			{{#evaluations}}
+				{{>fragments/skill-evaluations}}
+			{{/evaluations}}
+			{{#quizzes}}
+				{{>fragments/skill-quizzes}}
+			{{/quizzes}}
+		{{/skill}}
+	</div>
+</main>
+<!--Main layout-->
+
+</body>
+</html>

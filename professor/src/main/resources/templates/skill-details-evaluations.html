@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Skill Labs - Skill Details</title>
+
+	{{>fragments/links}}
+	<link rel="stylesheet" href="/static/style/navigation-style.css">
+	<link rel="stylesheet" href="/static/style/skill-details-style.css">
+
+	<!-- DataTables CSS -->
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css">
+	<!-- DataTables JS -->
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+
+</head>
+<body>
+<!--Main Navigation-->
+<header>
+	{{>fragments/logout-btn}}
+	{{>fragments/sidebar}}
+</header>
+<!--Main Navigation-->
+
+<!--Main layout-->
+<main style="margin-top: 50px;">
+	<div class="container-fluid container-custom pt-4 table-responsive-lg">
+		{{#skill}}
+			<h2>{{name}} ({{categoryName}})</h2>
+			<br>
+			{{#description}}<h5>{{description}}</h5>{{/description}}
+
+			<div class="skill-details-nav">
+				<form action="/skill-details/{{id}}/overview/{{superuserId}}" method="GET">
+					<button type="submit"
+							class="btn btn-secondary">
+						Overview
+					</button>
+				</form>
+				<form action="/skill-details/{{id}}/students-self-evaluations/{{superuserId}}" method="GET">
+					<button type="submit"
+							class="btn btn-primary">
+						Students self-evaluations
+					</button>
+				</form>
+				<form action="/skill-details/{{id}}/quizzes/{{superuserId}}" method="GET">
+					<button type="submit"
+							class="btn btn-secondary">
+						Quizzes
+					</button>
+				</form>
+			</div>
+			<br>
+
+		{{/skill}}
+	</div>
+</main>
+<!--Main layout-->
+
+</body>
+</html>

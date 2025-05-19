@@ -3,9 +3,11 @@ package com.example.professor.repository;
 import com.example.professor.entity.Quiz;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface QuizRepository extends JpaRepository<Quiz, String> {
 	@Query(value = """
 			select q
@@ -42,4 +44,6 @@ public interface QuizRepository extends JpaRepository<Quiz, String> {
 			order by q.createdAt desc
 			""")
 	List<Quiz> getAllPublicQuizzes();
+
+	List<Quiz> findBySkillId(String skillId);
 }

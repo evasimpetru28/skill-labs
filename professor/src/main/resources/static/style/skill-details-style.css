@@ -1,0 +1,173 @@
+.skill-details-nav {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.skill-details-nav form {
+    margin: 0;
+}
+
+.skill-details-nav button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    min-width: 200px;
+    text-align: center;
+}
+
+.skill-details-nav button.btn-primary {
+    background: #4285f4;
+    color: white;
+    box-shadow: 0 2px 4px rgba(66, 133, 244, 0.2);
+}
+
+.skill-details-nav button.btn-primary:hover {
+    background: #3367d6;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(66, 133, 244, 0.3);
+}
+
+.skill-details-nav button.btn-secondary {
+    background: #e9ecef;
+    color: #495057;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.skill-details-nav button.btn-secondary:hover {
+    background: #dee2e6;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Active state for buttons */
+.skill-details-nav button.btn-primary:active,
+.skill-details-nav button.btn-secondary:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Statistics Cards */
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card .stat-title {
+    color: #6c757d;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.stat-card .stat-value {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #212529;
+    margin-bottom: 0.5rem;
+}
+
+.stat-card:nth-child(1) .stat-value { color: #00c851; }  /* Success green */
+.stat-card:nth-child(2) .stat-value { color: #4285f4; }  /* Primary blue */
+.stat-card:nth-child(3) .stat-value { color: #ffbb33; }  /* Warning yellow */
+.stat-card:nth-child(4) .stat-value { color: #33b5e5; }  /* Info blue */
+
+.stat-card .stat-description {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+/* Progress Bars */
+.progress-container {
+    margin-top: 2rem;
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.progress-container h4 {
+    color: #212529;
+    margin-bottom: 1.5rem;
+}
+
+.progress-title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    color: #495057;
+}
+
+.progress-bar {
+    height: 8px;
+    border-radius: 4px;
+    background: #e9ecef;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: #4285f4;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+/* Charts Section */
+.charts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.chart-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.chart-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #212529;
+    margin-bottom: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .skill-details-nav {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .skill-details-nav button {
+        width: 100%;
+    }
+
+    .charts-container {
+        grid-template-columns: 1fr;
+    }
+} 
