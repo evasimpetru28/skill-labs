@@ -49,39 +49,71 @@
 		<td class="createdAt">{{createdAt}}</td>
 		<td>
 			<div class="actions-container">
-				{{#assigned}}
-				<div class="action-btn">
-					{{>fragments/details}}
+				<div class="dropdown">
+					<button class="btn btn-sm btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+						<i class="fas fa-ellipsis-v"></i>
+					</button>
+					<ul class="dropdown-menu dropdown-menu-end">
+						{{#assigned}}
+						<li>
+							<a class="dropdown-item" href="/details/{{id}}/{{superuserId}}">
+								<i class="fas fa-info-circle me-2"></i>Details
+							</a>
+						</li>
+						<li>
+							<form action="/edit-assigned/{{id}}" method="POST" class="d-inline">
+								<button type="submit" class="dropdown-item">
+									<i class="fas fa-edit me-2"></i>Edit
+								</button>
+							</form>
+						</li>
+						<li>
+							<form action="/make-expired/{{id}}/{{superuserId}}" method="POST" class="d-inline">
+								<button type="submit" class="dropdown-item text-warning">
+									<i class="fas fa-clock me-2"></i>Expire
+								</button>
+							</form>
+						</li>
+						<li>
+							<form action="/delete-quiz/{{id}}/assigned" method="POST" class="d-inline">
+								<button type="submit" class="dropdown-item text-danger">
+									<i class="fas fa-trash me-2"></i>Delete
+								</button>
+							</form>
+						</li>
+						{{/assigned}}
+						{{#expired}}
+						<li>
+							<a class="dropdown-item" href="/details/{{id}}/{{superuserId}}">
+								<i class="fas fa-info-circle me-2"></i>Details
+							</a>
+						</li>
+						<li>
+							<form action="/delete-quiz/{{id}}/expired" method="POST" class="d-inline">
+								<button type="submit" class="dropdown-item text-danger">
+									<i class="fas fa-trash me-2"></i>Delete
+								</button>
+							</form>
+						</li>
+						{{/expired}}
+						{{#drafted}}
+						<li>
+							<form action="/edit-drafted/{{id}}" method="POST" class="d-inline">
+								<button type="submit" class="dropdown-item">
+									<i class="fas fa-edit me-2"></i>Edit
+								</button>
+							</form>
+						</li>
+						<li>
+							<form action="/delete-quiz/{{id}}/drafted" method="POST" class="d-inline">
+								<button type="submit" class="dropdown-item text-danger">
+									<i class="fas fa-trash me-2"></i>Delete
+								</button>
+							</form>
+						</li>
+						{{/drafted}}
+					</ul>
 				</div>
-				{{/assigned}}
-				{{#expired}}
-				<div class="action-btn">
-					{{>fragments/details}}
-				</div>
-				{{/expired}}
-				{{#drafted}}
-				<div class="action-btn">
-					{{>fragments/edit-drafted}}
-				</div>
-				{{/drafted}}
-				{{#assigned}}
-				<div class="action-btn">
-					{{>fragments/edit-assigned}}
-				</div>
-				{{/assigned}}
-				{{#assigned}}
-				<div class="action-btn">
-					{{>fragments/expire-quiz}}
-				</div>
-				<div class="action-btn">
-					{{>fragments/delete-quiz}}
-				</div>
-				{{/assigned}}
-				{{^assigned}}
-				<div class="action-btn">
-					{{>fragments/delete-quiz}}
-				</div>
-				{{/assigned}}
 			</div>
 		</td>
 	</tr>

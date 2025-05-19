@@ -18,6 +18,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 	<!-- Custom JS -->
 	<script src="/static/js/skill-details-charts.js"></script>
+	<script src="/static/js/skill-favorites.js"></script>
 
 </head>
 <body>
@@ -32,52 +33,30 @@
 <main style="margin-top: 50px;">
 	<div class="container-fluid container-custom pt-4 table-responsive-lg" style="margin-bottom: 3rem;">
 		{{#skill}}
-			<h2>{{name}} ({{categoryName}})</h2>
-			<br>
-			{{#description}}<h5>{{description}}</h5>{{/description}}
-
-			<div class="skill-details-nav">
-				<form action="/skill-details/{{id}}/overview/{{superuserId}}" method="GET">
-					<button type="submit"
-							class="btn btn-primary">
-						Overview
-					</button>
-				</form>
-				<form action="/skill-details/{{id}}/students-self-evaluations/{{superuserId}}" method="GET">
-					<button type="submit"
-							class="btn btn-secondary">
-						Students self-evaluations
-					</button>
-				</form>
-				<form action="/skill-details/{{id}}/quizzes/{{superuserId}}" method="GET">
-					<button type="submit"
-							class="btn btn-secondary">
-						Quizzes
-					</button>
-				</form>
-			</div>
+			{{>fragments/skill-header}}
+			{{>fragments/skill-details-nav}}
 			<br>
 
 			{{#statistics}}
 			<!-- Statistics Cards -->
 			<div class="stats-container">
 				<div class="stat-card">
-					<div class="stat-title">Self Evaluations</div>
+					<div class="stat-title"><i class="fas fa-user-check me-2"></i>Self Evaluations</div>
 					<div class="stat-value">{{evaluationCount}}</div>
 					<div class="stat-description">Students who self-evaluated</div>
 				</div>
 				<div class="stat-card">
-					<div class="stat-title">Total Students</div>
+					<div class="stat-title"><i class="fas fa-users me-2"></i>Total Students</div>
 					<div class="stat-value">{{totalStudents}}</div>
 					<div class="stat-description">Students who attempted quizzes</div>
 				</div>
 				<div class="stat-card">
-					<div class="stat-title">Quizzes</div>
+					<div class="stat-title"><i class="fas fa-tasks me-2"></i>Quizzes</div>
 					<div class="stat-value">{{quizCount}}</div>
 					<div class="stat-description">Available quizzes</div>
 				</div>
 				<div class="stat-card">
-					<div class="stat-title">Average Score</div>
+					<div class="stat-title"><i class="fas fa-percentage me-2"></i>Average Score</div>
 					<div class="stat-value">{{averageScore}}%</div>
 					<div class="stat-description">Across all quizzes</div>
 				</div>
@@ -85,9 +64,9 @@
 
 			<!-- Progress Bars -->
 			<div class="progress-container">
-				<h4>Skill Mastery Distribution</h4>
+				<h4><i class="fas fa-graduation-cap me-2"></i>Skill Mastery Distribution</h4>
 				<div class="progress-title">
-					<span>Beginner</span>
+					<span><i class="fas fa-seedling me-2"></i>Beginner</span>
 					<span>{{beginnerCount}} students</span>
 				</div>
 				<div class="progress-bar">
@@ -95,7 +74,7 @@
 				</div>
 
 				<div class="progress-title">
-					<span>Intermediate</span>
+					<span><i class="fas fa-tree me-2"></i>Intermediate</span>
 					<span>{{intermediateCount}} students</span>
 				</div>
 				<div class="progress-bar">
@@ -103,7 +82,7 @@
 				</div>
 
 				<div class="progress-title">
-					<span>Advanced</span>
+					<span><i class="fas fa-award me-2"></i>Advanced</span>
 					<span>{{advancedCount}} students</span>
 				</div>
 				<div class="progress-bar">
@@ -167,6 +146,31 @@
 	</div>
 </main>
 <!--Main layout-->
+
+<script>
+function toggleFavorite(skillId) {
+    const btn = event.currentTarget;
+    const icon = btn.querySelector('i');
+    
+    // Toggle the active class
+    btn.classList.toggle('active');
+    
+    // Toggle between regular and solid bookmark
+    if (btn.classList.contains('active')) {
+        icon.classList.remove('far');
+        icon.classList.add('fas');
+    } else {
+        icon.classList.remove('fas');
+        icon.classList.add('far');
+    }
+    
+    // Here you can add an API call to save the favorite status
+    // fetch('/api/skills/' + skillId + '/favorite', {
+    //     method: 'POST',
+    //     body: JSON.stringify({ isFavorite: btn.classList.contains('active') })
+    // });
+}
+</script>
 
 </body>
 </html>

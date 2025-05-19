@@ -1,0 +1,20 @@
+<div class="quizzes-nav">
+    <form action="/quizzes/drafted/{{superuserId}}" method="GET">
+        <button type="submit" class="btn {{#drafted}}btn-primary{{/drafted}}{{^drafted}}btn-secondary{{/drafted}}">
+            <i class="fas fa-pen-to-square me-2"></i>
+            Drafted
+        </button>
+    </form>
+    <form action="/quizzes/assigned/{{superuserId}}" method="GET">
+        <button type="submit" class="btn {{#assigned}}btn-primary{{/assigned}}{{^assigned}}btn-secondary{{/assigned}}">
+            <i class="fas fa-paper-plane me-2"></i>
+            Assigned
+        </button>
+    </form>
+    <form action="/quizzes/expired/{{superuserId}}" method="GET">
+        <button type="submit" class="btn {{#expired}}btn-primary{{/expired}}{{^expired}}btn-secondary{{/expired}}">
+            <i class="fas fa-clock me-2"></i>
+            Expired
+        </button>
+    </form>
+</div> 

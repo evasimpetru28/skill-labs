@@ -44,6 +44,7 @@ public class AllSkillsController {
 		model.addAttribute("skill", skillService.getSkillInformation(skillId));
 		model.addAttribute("statistics", skillService.getSkillStatistics(skillId));
 		model.addAttribute("superuserId", superuserId);
+		model.addAttribute("isOverview", true);
 		return "skill-details-overview";
 	}
 
@@ -53,6 +54,7 @@ public class AllSkillsController {
 
 		model.addAttribute("skill", skillService.getSkillInformation(skillId));
 		model.addAttribute("superuserId", superuserId);
+		model.addAttribute("isEvaluations", true);
 		return "skill-details-evaluations";
 	}
 
@@ -62,6 +64,7 @@ public class AllSkillsController {
 
 		model.addAttribute("skill", skillService.getSkillInformation(skillId));
 		model.addAttribute("superuserId", superuserId);
+		model.addAttribute("isQuizzes", true);
 		return "skill-details-quizzes";
 	}
 

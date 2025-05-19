@@ -44,22 +44,187 @@ table {
     width: 140px;
 }
 
+/* Table Styles */
+#dtBasicExample {
+    width: 100%;
+}
+
+#dtBasicExample th:last-child,
+#dtBasicExample td:last-child {
+    width: 60px;
+    min-width: 60px;
+    max-width: 60px;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+/* Actions Dropdown */
 .actions-container {
     display: flex;
-    gap: 8px;
-    align-items: center;
-    justify-content: flex-start;
-    width: fit-content;
+    justify-content: center;
 }
 
-.action-btn {
+.actions-container .dropdown-toggle {
+    padding: 0.25rem;
+    border: none;
+    background: transparent;
+    color: #6c757d;
+    transition: all 0.2s ease;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.actions-container .dropdown-toggle:hover {
+    background: #f8f9fa;
+    color: #495057;
+}
+
+.actions-container .dropdown-toggle:focus {
+    box-shadow: none;
+    background: #f8f9fa;
+}
+
+.actions-container .dropdown-toggle::after {
+    display: none;
+}
+
+.actions-container .dropdown-toggle i {
+    font-size: 0.875rem;
+}
+
+.actions-container .dropdown-menu {
+    min-width: 160px;
+    padding: 0.5rem 0;
+    margin: 0;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.actions-container .dropdown-item {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.actions-container .dropdown-item:hover {
+    background: #f8f9fa;
+}
+
+.actions-container .dropdown-item.text-danger:hover {
+    background: #fff5f5;
+}
+
+.actions-container .dropdown-item.text-warning:hover {
+    background: #fff8e6;
+}
+
+.actions-container .dropdown-item i {
+    width: 1rem;
+    text-align: center;
+}
+
+/* Quizzes Navigation */
+.quizzes-nav {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: linear-gradient(145deg, #ffffff, #f8f9fa);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.quizzes-nav form {
+    margin: 0;
+    flex: 1;
+}
+
+.quizzes-nav button {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+.quizzes-nav button.btn-primary {
+    background: linear-gradient(145deg, #4285f4, #3367d6);
+    color: white;
+    box-shadow: 0 2px 4px rgba(66, 133, 244, 0.2);
+}
+
+.quizzes-nav button.btn-primary:hover {
+    background: linear-gradient(145deg, #3367d6, #2a56c6);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(66, 133, 244, 0.3);
+}
+
+.quizzes-nav button.btn-secondary {
+    background: linear-gradient(145deg, #ffffff, #f8f9fa);
+    color: #495057;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 1px solid #e9ecef;
+}
+
+.quizzes-nav button.btn-secondary:hover {
+    background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Active state for buttons */
+.quizzes-nav button.btn-primary:active,
+.quizzes-nav button.btn-secondary:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .quizzes-nav {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .quizzes-nav button {
+        width: 100%;
+    }
+}
+
+/* New Quiz Button */
+.new-quiz-btn {
     display: inline-flex;
     align-items: center;
-    white-space: nowrap;
+    padding: 0.75rem 1.25rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    background: linear-gradient(145deg, #4285f4, #3367d6);
+    color: white;
+    box-shadow: 0 2px 4px rgba(66, 133, 244, 0.2);
 }
 
-/* Force table cell to collapse to content width */
-table td:last-child {
-    width: 1px;
-    white-space: nowrap;
+.new-quiz-btn:hover {
+    background: linear-gradient(145deg, #3367d6, #2a56c6);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(66, 133, 244, 0.3);
+    color: white;
+}
+
+.new-quiz-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.new-quiz-btn i {
+    font-size: 0.95rem;
+    margin-right: 0.5rem;
 }

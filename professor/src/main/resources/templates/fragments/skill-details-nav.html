@@ -1,0 +1,20 @@
+<div class="skill-details-nav">
+    <form action="/skill-details/{{id}}/overview/{{superuserId}}" method="GET">
+        <button type="submit" class="btn {{#isOverview}}btn-primary{{/isOverview}}{{^isOverview}}btn-secondary{{/isOverview}}">
+            <i class="fas fa-chart-pie me-2"></i>
+            Overview
+        </button>
+    </form>
+    <form action="/skill-details/{{id}}/students-self-evaluations/{{superuserId}}" method="GET">
+        <button type="submit" class="btn {{#isEvaluations}}btn-primary{{/isEvaluations}}{{^isEvaluations}}btn-secondary{{/isEvaluations}}">
+            <i class="fas fa-user-check me-2"></i>
+            Students self-evaluations
+        </button>
+    </form>
+    <form action="/skill-details/{{id}}/quizzes/{{superuserId}}" method="GET">
+        <button type="submit" class="btn {{#isQuizzes}}btn-primary{{/isQuizzes}}{{^isQuizzes}}btn-secondary{{/isQuizzes}}">
+            <i class="fas fa-tasks me-2"></i>
+            Quizzes
+        </button>
+    </form>
+</div> 
