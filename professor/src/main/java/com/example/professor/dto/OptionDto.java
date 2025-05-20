@@ -1,4 +1,4 @@
-package com.example.professor.model;
+package com.example.professor.dto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class OptionModel {
+public class OptionDto {
 
 	String id;
 	Integer index;

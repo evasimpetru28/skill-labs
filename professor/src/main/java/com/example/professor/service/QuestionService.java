@@ -2,8 +2,8 @@ package com.example.professor.service;
 
 import com.example.professor.entity.Option;
 import com.example.professor.entity.Question;
-import com.example.professor.model.OptionModel;
-import com.example.professor.model.QuestionModel;
+import com.example.professor.dto.OptionDto;
+import com.example.professor.dto.QuestionDto;
 import com.example.professor.repository.OptionRepository;
 import com.example.professor.repository.QuestionRepository;
 import lombok.AllArgsConstructor;
@@ -34,11 +34,11 @@ public class QuestionService {
 		return questionRepository.getReferenceById(questionId);
 	}
 
-	public Map<QuestionModel, List<OptionModel>> getQuestionMap(String quizId) {
+	public Map<QuestionDto, List<OptionDto>> getQuestionMap(String quizId) {
 		var questions = getAllQuestionsByQuizId(quizId);
 		var index = new AtomicInteger(1);
 		return questions.stream()
-				.map(question -> new QuestionModel(
+				.map(question -> new QuestionDto(
 						question.getId(),
 						index.getAndIncrement(),
 						question.getQuestion(),
@@ -52,7 +52,7 @@ public class QuestionService {
 
 							return optionRepository.findAllByQuestionIdOrderByCreatedAt(question.getId())
 									.stream()
-									.map(option -> new OptionModel(
+									.map(option -> new OptionDto(
 											option.getId(),
 											indexOption.getAndIncrement(),
 											option.getOptionText(),
@@ -67,11 +67,11 @@ public class QuestionService {
 				);
 	}
 
-	public Map<QuestionModel, List<OptionModel>> getQuestionMapForStudent(String quizId, String studentId) {
+	public Map<QuestionDto, List<OptionDto>> getQuestionMapForStudent(String quizId, String studentId) {
 		var questions = getAllQuestionsByQuizId(quizId);
 		var index = new AtomicInteger(1);
 		return questions.stream()
-				.map(question -> new QuestionModel(
+				.map(question -> new QuestionDto(
 						question.getId(),
 						index.getAndIncrement(),
 						question.getQuestion(),
@@ -85,7 +85,7 @@ public class QuestionService {
 
 							return optionRepository.findAllByQuestionIdOrderByCreatedAt(question.getId())
 									.stream()
-									.map(option -> new OptionModel(
+									.map(option -> new OptionDto(
 											option.getId(),
 											indexOption.getAndIncrement(),
 											option.getOptionText(),

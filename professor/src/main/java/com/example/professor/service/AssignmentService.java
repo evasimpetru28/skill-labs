@@ -2,7 +2,7 @@ package com.example.professor.service;
 
 import com.example.professor.entity.Assignment;
 import com.example.professor.entity.Student;
-import com.example.professor.model.StudentModel;
+import com.example.professor.dto.StudentDto;
 import com.example.professor.repository.AssignmentRepository;
 import com.example.professor.repository.StudentRepository;
 import lombok.AllArgsConstructor;
@@ -26,12 +26,12 @@ public class AssignmentService {
 		return assignmentRepository.findAssignmentByStudentIdAndQuizId(studentId, quizId);
 	}
 
-	public List<StudentModel> getStudentInfoByQuizSubmitted(String quizId) {
+	public List<StudentDto> getStudentInfoByQuizSubmitted(String quizId) {
 		var index = new AtomicInteger(1);
 		return assignmentRepository.findAllByQuizIdAndHasScore(quizId)
 				.stream().map(assignment -> {
 					var student = studentRepository.getReferenceById(assignment.getStudentId());
-					var studentModel = new StudentModel();
+					var studentModel = new StudentDto();
 					studentModel.setIndex(index.getAndIncrement());
 					studentModel.setStudentId(assignment.getStudentId());
 					studentModel.setStudentName(student.getName());
@@ -44,12 +44,12 @@ public class AssignmentService {
 				})
 				.toList();
 	}
-	public List<StudentModel> getStudentInfoByQuiz(String quizId) {
+	public List<StudentDto> getStudentInfoByQuiz(String quizId) {
 		var index = new AtomicInteger(1);
 		return assignmentRepository.findAllByQuizId(quizId)
 				.stream().map(assignment -> {
 					var student = studentRepository.getReferenceById(assignment.getStudentId());
-					var studentModel = new StudentModel();
+					var studentModel = new StudentDto();
 					studentModel.setIndex(index.getAndIncrement());
 					studentModel.setStudentId(assignment.getStudentId());
 					studentModel.setStudentName(student.getName());

@@ -1,11 +1,11 @@
-package com.example.professor.model;
+package com.example.professor.dto;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class SkillStatisticsDTO {
+public class SkillStatisticsDto {
     private int totalStudents;
     private int evaluationCount;
     private int quizCount;

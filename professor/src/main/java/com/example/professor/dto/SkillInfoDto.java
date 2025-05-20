@@ -1,4 +1,4 @@
-package com.example.professor.model;
+package com.example.professor.dto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class SkillInfo implements Comparable<SkillInfo> {
+public class SkillInfoDto implements Comparable<SkillInfoDto> {
     private String id;
     private String name;
     private String description;
@@ -20,7 +20,7 @@ public class SkillInfo implements Comparable<SkillInfo> {
     private boolean hasDescription;
 
     @Override
-    public int compareTo(SkillInfo other) {
+    public int compareTo(SkillInfoDto other) {
         return this.name.compareToIgnoreCase(other.name);
     }
 }

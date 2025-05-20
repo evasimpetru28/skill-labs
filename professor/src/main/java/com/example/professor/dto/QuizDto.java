@@ -1,4 +1,4 @@
-package com.example.professor.model;
+package com.example.professor.dto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -6,16 +6,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDateTime;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class QuestionModel {
+public class QuizDto {
+
 	String id;
 	Integer index;
-	String question;
-	String quizId;
-	LocalDateTime createdAt;
+	String superuserId;
+	String superuserName;
+	String name;
+	String description;
+	boolean isPublic;
+	String createdAt;
+	String skillLabel;
 }

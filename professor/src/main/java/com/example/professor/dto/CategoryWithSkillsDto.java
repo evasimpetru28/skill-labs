@@ -1,4 +1,4 @@
-package com.example.professor.model;
+package com.example.professor.dto;
 
 import java.util.List;
 
@@ -11,12 +11,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryWithSkills implements Comparable<CategoryWithSkills> {
-    private CategoryInfo category;
-    private List<SkillInfo> skills;
+public class CategoryWithSkillsDto implements Comparable<CategoryWithSkillsDto> {
+    private CategoryInfoDto category;
+    private List<SkillInfoDto> skills;
 
     @Override
-    public int compareTo(CategoryWithSkills other) {
+    public int compareTo(CategoryWithSkillsDto other) {
         return this.category.getName().compareToIgnoreCase(other.category.getName());
     }
 }

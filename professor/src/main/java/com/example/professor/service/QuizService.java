@@ -1,7 +1,7 @@
 package com.example.professor.service;
 
 import com.example.professor.entity.Quiz;
-import com.example.professor.model.QuizModel;
+import com.example.professor.dto.QuizDto;
 import com.example.professor.repository.CategoryRepository;
 import com.example.professor.repository.QuizRepository;
 import com.example.professor.repository.SkillRepository;
@@ -33,11 +33,11 @@ public class QuizService {
 		return quizRepository.getReferenceById(quizId);
 	}
 
-	public List<QuizModel> getDraftedQuizzesBySuperuserId(String superuserId) {
+	public List<QuizDto> getDraftedQuizzesBySuperuserId(String superuserId) {
 		var index = new AtomicInteger(1);
 		return quizRepository.getAllBySuperuserIdNotReady(superuserId)
 				.stream()
-				.map(quiz -> new QuizModel(
+				.map(quiz -> new QuizDto(
 							quiz.getId(),
 							index.getAndIncrement(),
 							quiz.getSuperuserId(),
@@ -62,11 +62,11 @@ public class QuizService {
 		return skill.getName() + " (" + category.getName() + ")";
 	}
 
-	public List<QuizModel> getAssignedQuizzesBySuperuserId(String superuserId) {
+	public List<QuizDto> getAssignedQuizzesBySuperuserId(String superuserId) {
 		var index = new AtomicInteger(1);
 		return quizRepository.getAllBySuperuserIdReady(superuserId)
 				.stream()
-				.map(quiz -> new QuizModel(
+				.map(quiz -> new QuizDto(
 						quiz.getId(),
 						index.getAndIncrement(),
 						quiz.getSuperuserId(),
@@ -82,11 +82,11 @@ public class QuizService {
 				.toList();
 	}
 
-	public List<QuizModel> getExpiredQuizzesBySuperuserId(String superuserId) {
+	public List<QuizDto> getExpiredQuizzesBySuperuserId(String superuserId) {
 		var index = new AtomicInteger(1);
 		return quizRepository.getAllExpiredBySuperuserId(superuserId)
 				.stream()
-				.map(quiz -> new QuizModel(
+				.map(quiz -> new QuizDto(
 						quiz.getId(),
 						index.getAndIncrement(),
 						quiz.getSuperuserId(),
@@ -106,11 +106,11 @@ public class QuizService {
 		quizRepository.deleteById(quizId);
 	}
 
-	public List<QuizModel> getPublicQuizzes() {
+	public List<QuizDto> getPublicQuizzes() {
 		var index = new AtomicInteger(1);
 		return quizRepository.getAllPublicQuizzes()
 				.stream()
-				.map(quiz -> new QuizModel(
+				.map(quiz -> new QuizDto(
 						quiz.getId(),
 						index.getAndIncrement(),
 						quiz.getSuperuserId(),

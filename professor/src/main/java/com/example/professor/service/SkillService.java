@@ -4,9 +4,9 @@ import com.example.professor.entity.Assignment;
 import com.example.professor.entity.Evaluation;
 import com.example.professor.entity.Quiz;
 import com.example.professor.entity.Student;
-import com.example.professor.model.SkillChartDataDTO;
-import com.example.professor.model.SkillDetailsDto;
-import com.example.professor.model.SkillStatisticsDTO;
+import com.example.professor.dto.SkillChartDataDto;
+import com.example.professor.dto.SkillDetailsDto;
+import com.example.professor.dto.SkillStatisticsDto;
 import com.example.professor.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -67,7 +67,7 @@ public class SkillService {
 		}
 	}
 
-	public SkillStatisticsDTO getSkillStatistics(String skillId) {
+	public SkillStatisticsDto getSkillStatistics(String skillId) {
 		// Get all students that answered quizzes for this skill
 		List<Student> enrolledStudents = studentRepository.findStudentsByAnsweredQuizSkillId(skillId);
 		int totalStudents = enrolledStudents.size();
@@ -109,7 +109,7 @@ public class SkillService {
 		double intermediatePercentage = totalEvaluations > 0 ? (intermediateCount / totalEvaluations) * 100 : 0;
 		double advancedPercentage = totalEvaluations > 0 ? (advancedCount / totalEvaluations) * 100 : 0;
 
-		return SkillStatisticsDTO.builder()
+		return SkillStatisticsDto.builder()
 				.totalStudents(totalStudents)
 				.evaluationCount(evaluationCount)
 				.quizCount(quizCount)
@@ -123,7 +123,7 @@ public class SkillService {
 				.build();
 	}
 
-	public SkillChartDataDTO getSkillChartData(String skillId) {
+	public SkillChartDataDto getSkillChartData(String skillId) {
 		// Get all evaluations for this skill
 		List<Evaluation> evaluations = evaluationRepository.findBySkillId(skillId);
 
@@ -161,7 +161,7 @@ public class SkillService {
 				)
 				.toList();
 
-		return SkillChartDataDTO.builder()
+		return SkillChartDataDto.builder()
 				.evaluationMonths(evaluationMonths)
 				.evaluationCounts(evaluationCounts)
 				.quizNames(quizNames)

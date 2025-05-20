@@ -1,4 +1,4 @@
-package com.example.professor.model;
+package com.example.professor.dto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,15 +10,13 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class QuizModel {
-
-	String id;
+public class StudentDto {
 	Integer index;
-	String superuserId;
-	String superuserName;
-	String name;
-	String description;
-	boolean isPublic;
-	String createdAt;
-	String skillLabel;
+	String studentId;
+	String studentName;
+	String studentEmail;
+	Integer studentYear;
+	String studentProgram;
+	String studentDomain;
+	Integer score;
 }

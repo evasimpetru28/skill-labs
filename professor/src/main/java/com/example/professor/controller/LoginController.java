@@ -1,7 +1,7 @@
 package com.example.professor.controller;
 
 import com.example.professor.service.SuperuserService;
-import com.example.professor.model.ResetPasswordModel;
+import com.example.professor.dto.ResetPasswordDto;
 import com.example.professor.util.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,15 +74,15 @@ public class LoginController {
 	}
 
 	@PostMapping("/reset-password/submit/{resetCode}")
-	public String resetPassword(@PathVariable("resetCode") final String resetCode, @ModelAttribute("passwords") ResetPasswordModel resetPasswordModel) {
+	public String resetPassword(@PathVariable("resetCode") final String resetCode, @ModelAttribute("passwords") ResetPasswordDto resetPasswordDto) {
 		var superuser = superuserService.getSuperuserByResetCode(resetCode);
 
-		if (passwordEncoder.matches(resetPasswordModel.getOldPassword(), superuser.getPassword())) {
-			if (resetPasswordModel.getNewPassword().equals(resetPasswordModel.getConfirmPassword())) {
-				if (resetPasswordModel.getOldPassword().equals(resetPasswordModel.getNewPassword())) {
+		if (passwordEncoder.matches(resetPasswordDto.getOldPassword(), superuser.getPassword())) {
+			if (resetPasswordDto.getNewPassword().equals(resetPasswordDto.getConfirmPassword())) {
+				if (resetPasswordDto.getOldPassword().equals(resetPasswordDto.getNewPassword())) {
 					return "redirect:/reset-password/" + resetCode + "?error=err3";
 				} else {
-					superuser.setPassword(passwordEncoder.encode(resetPasswordModel.getNewPassword()));
+					superuser.setPassword(passwordEncoder.encode(resetPasswordDto.getNewPassword()));
 					superuser.setResetCode(Utils.getShortUUID());
 					superuserService.saveSuperUser(superuser);
 					return "redirect:/confirm-reset";

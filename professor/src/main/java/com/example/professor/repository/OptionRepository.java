@@ -9,7 +9,7 @@ import java.util.List;
 public interface OptionRepository extends JpaRepository<Option, String> {
 
 	List<Option> findAllByQuestionIdOrderByCreatedAt(String questionId);
-	@Query(value = "select count(*) from option o where o.question_id = ?1", nativeQuery = true)
+	@Query("select count(*) from Option o where o.questionId = ?1")
 	Integer getOptionNumberByQuestionId(String questionId);
 
 }

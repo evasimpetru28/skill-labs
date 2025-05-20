@@ -1,4 +1,4 @@
-package com.example.professor.model;
+package com.example.professor.dto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,11 +10,8 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class SuperuserModel {
-	String id;
-	Integer index;
-	String name;
-	String email;
-	String phone;
-	String type;
+public class ResetPasswordDto {
+	String oldPassword;
+	String newPassword;
+	String confirmPassword;
 }
