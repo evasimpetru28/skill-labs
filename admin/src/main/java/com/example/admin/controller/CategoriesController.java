@@ -34,33 +34,33 @@ public class CategoriesController {
 		return "categories";
 	}
 
-	@PostMapping("/add-category")
-	public String addCategory(@ModelAttribute("category") Category category) {
+	@PostMapping("/add-category/{adminId}")
+	public String addCategory(@ModelAttribute("category") Category category, @PathVariable String adminId) {
 		if (categoryService.isDuplicate(category.getName())) {
-			return "redirect:/categories?duplicate=true";
+			return "redirect:/categories/" + adminId + "?duplicate=true";
 		} else {
 			categoryService.saveCategory(category);
 		}
 
-		return "redirect:/categories";
+		return "redirect:/categories/" + adminId;
 	}
 
-	@PostMapping("/delete-category/{categoryId}")
-	public String deleteCategory(@PathVariable String categoryId) {
-		// Delete all related, skills, evalations, quizzez
+	@PostMapping("/delete-category/{categoryId}/{adminId}")
+	public String deleteCategory(@PathVariable String categoryId, @PathVariable String adminId) {
+		// TODO: Delete all related, skills, evalations, quizzez
 		categoryService.deleteCategory(categoryId);
-		return "redirect:/categories";
+		return "redirect:/categories/" + adminId;
 	}
 
-	@PostMapping("/edit-category/{id}")
-	public String editCategory(@ModelAttribute("category") Category category, @PathVariable("id") final String id) {
+	@PostMapping("/edit-category/{id}/{adminId}")
+	public String editCategory(@ModelAttribute("category") Category category, @PathVariable("id") final String id, @PathVariable String adminId) {
 		category.setId(id);
 		if (categoryService.isDuplicateExcept(category.getName(), category.getId())) {
-			return "redirect:/categories?duplicate=true";
+			return "redirect:/categories/" + adminId + "?duplicate=true";
 		} else {
 			categoryService.saveCategory(category);
 		}
-		return "redirect:/categories";
+		return "redirect:/categories/" + adminId;
 	}
 
 	@PostMapping("/import-categories/{adminId}")

@@ -166,8 +166,8 @@ public class UserManagementController {
 		return "user-management";
 	}
 
-	@PostMapping("/add-student")
-	public String addStudent(@ModelAttribute("student") Student student) {
+	@PostMapping("/add-student/{adminId}")
+	public String addStudent(@ModelAttribute("student") Student student, @PathVariable String adminId) {
 		var educationInfo = student.getProgram().split(",");
 		student.setProgram(educationInfo[0]);
 		student.setDomain(educationInfo[1]);
@@ -184,11 +184,11 @@ public class UserManagementController {
 			studentService.saveStudent(student);
 			smtpMailSender.sendMailResetPassword("STUDENT", student.getName(), student.getEmail(), password, resetCode);
 		}
-		return "redirect:/users/students";
+		return "redirect:/users/students/" + adminId;
 	}
 
-	@PostMapping("/add-admin")
-	public String addAdmin(@ModelAttribute("admin") Admin admin) {
+	@PostMapping("/add-admin/{adminId}")
+	public String addAdmin(@ModelAttribute("admin") Admin admin, @PathVariable String adminId) {
 		if (adminService.isDuplicate(admin.getEmail())) {
 			return "redirect:/users/admins?duplicate=true";
 		} else {
@@ -200,11 +200,11 @@ public class UserManagementController {
 			adminService.saveAdmin(admin);
 			smtpMailSender.sendMailResetPassword("ADMIN", admin.getName(), admin.getEmail(), password, resetCode);
 		}
-		return "redirect:/users/admins";
+		return "redirect:/users/admins/" + adminId;
 	}
 
-	@PostMapping("/add-superuser")
-	public String addSuperuser(@ModelAttribute("superuser") Superuser superuser) {
+	@PostMapping("/add-superuser/{adminId}")
+	public String addSuperuser(@ModelAttribute("superuser") Superuser superuser, @PathVariable String adminId) {
 		if (superuserService.isDuplicate(superuser.getEmail())) {
 			return "redirect:/users/professors-companies?duplicate=true";
 		} else {
@@ -216,26 +216,26 @@ public class UserManagementController {
 			superuserService.saveSuperuser(superuser);
 			smtpMailSender.sendMailResetPassword("SUPERUSER", superuser.getName(), superuser.getEmail(), password, resetCode);
 		}
-		return "redirect:/users/professors-companies";
+		return "redirect:/users/professors-companies/" + adminId;
 	}
 
-	@PostMapping("/delete-student/{studentId}")
-	public String deleteStudent(@PathVariable String studentId) {
+	@PostMapping("/delete-student/{studentId}/{adminId}")
+	public String deleteStudent(@PathVariable String studentId, @PathVariable String adminId) {
 		evaluationService.deleteAllEvaluationsForStudent(studentId);
 		assignmentService.deleteAllAssignmentsForStudent(studentId);
 		responseService.deleteAllResponsesForStudent(studentId);
 		studentService.deleteStudent(studentId);
-		return "redirect:/users/students";
+		return "redirect:/users/students/" + adminId;
 	}
 
-	@PostMapping("/delete-admin/{adminId}")
-	public String deleteAdmin(@PathVariable String adminId) {
+	@PostMapping("/delete-admin/{adminId}/{loggedAdminId}")
+	public String deleteAdmin(@PathVariable String adminId, @PathVariable String loggedAdminId) {
 		adminService.deleteAdmin(adminId);
-		return "redirect:/users/admins";
+		return "redirect:/users/admins/" + loggedAdminId;
 	}
 
-	@PostMapping("/delete-superuser/{superuserId}")
-	public String deleteSuperuser(@PathVariable String superuserId) {
+	@PostMapping("/delete-superuser/{superuserId}/{adminId}")
+	public String deleteSuperuser(@PathVariable String superuserId, @PathVariable String adminId) {
 		var quizzes = quizService.getAllBySuperuser(superuserId);
 		quizzes.forEach(quiz -> {
 			var questions = questionService.getAllQuestionsByQuizId(quiz.getId());
@@ -256,11 +256,11 @@ public class UserManagementController {
 
 		log.info("Delete superuser with id {}", superuserId);
 		superuserService.deleteSuperuser(superuserId);
-		return "redirect:/users/professors-companies";
+		return "redirect:/users/professors-companies/" + adminId;
 	}
 
-	@PostMapping("/edit-student/{studentId}")
-	public String editStudent(@ModelAttribute("student") Student student, @PathVariable("studentId") final String id) {
+	@PostMapping("/edit-student/{studentId}/{adminId}")
+	public String editStudent(@ModelAttribute("student") Student student, @PathVariable("studentId") final String id, @PathVariable("adminId") String adminId) {
 		var educationInfo = student.getProgram().split(",");
 		student.setProgram(educationInfo[0]);
 		student.setDomain(educationInfo[1]);
@@ -274,11 +274,11 @@ public class UserManagementController {
 			student.setResetCode(oldStudent.getResetCode());
 			studentService.saveStudent(student);
 		}
-		return "redirect:/users/students";
+		return "redirect:/users/students/" + adminId;
 	}
 
-	@PostMapping("/edit-admin/{adminId}")
-	public String editAdmin(@ModelAttribute("admin") Admin admin, @PathVariable("adminId") final String id) {
+	@PostMapping("/edit-admin/{adminId}/{loggedAdminId}")
+	public String editAdmin(@ModelAttribute("admin") Admin admin, @PathVariable("adminId") final String id, @PathVariable String loggedAdminId) {
 		admin.setId(id);
 		if (adminService.isDuplicateExcept(admin.getEmail(), admin.getId())) {
 			return "redirect:/users/admins?duplicate=true";
@@ -288,11 +288,11 @@ public class UserManagementController {
 			admin.setResetCode(oldAdmin.getResetCode());
 			adminService.saveAdmin(admin);
 		}
-		return "redirect:/users/admins";
+		return "redirect:/users/admins/" + loggedAdminId;
 	}
 
-	@PostMapping("/edit-superuser/{superuserId}")
-	public String editSuperuser(@ModelAttribute("superuser") Superuser superuser, @PathVariable("superuserId") final String id) {
+	@PostMapping("/edit-superuser/{superuserId}/{adminId}")
+	public String editSuperuser(@ModelAttribute("superuser") Superuser superuser, @PathVariable("superuserId") final String id, @PathVariable String adminId) {
 		superuser.setId(id);
 		if (superuserService.isDuplicateExcept(superuser.getEmail(), superuser.getId())) {
 			return "redirect:/users/professors-companies?duplicate=true";
@@ -302,7 +302,7 @@ public class UserManagementController {
 			superuser.setResetCode(oldSuperuser.getResetCode());
 			superuserService.saveSuperuser(superuser);
 		}
-		return "redirect:/users/professors-companies";
+		return "redirect:/users/professors-companies/" + adminId;
 	}
 
 	@GetMapping("/reset-password/{resetCode}")

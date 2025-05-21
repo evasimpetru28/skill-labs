@@ -35,32 +35,32 @@ public class SkillsController {
 		return "skills";
 	}
 
-	@PostMapping("/add-skill")
-	public String addSkill(@ModelAttribute("skill") Skill skill) {
+	@PostMapping("/add-skill/{adminId}")
+	public String addSkill(@ModelAttribute("skill") Skill skill, @PathVariable String adminId) {
 		if (skillService.isDuplicate(skill.getName())) {
 			return "redirect:/skills?duplicate=true";
 		} else {
 			skillService.saveSkill(skill);
 		}
-		return "redirect:/skills";
+		return "redirect:/skills/" + adminId;
 	}
 
-	@PostMapping("/delete-skill/{skillId}")
-	public String deleteSkill(@PathVariable final String skillId) {
+	@PostMapping("/delete-skill/{skillId}/{adminId}")
+	public String deleteSkill(@PathVariable final String skillId, @PathVariable String adminId) {
 		evaluationService.deleteAllEvaluationsForSkill(skillId);
 		skillService.deleteSkill(skillId);
-		return "redirect:/skills";
+		return "redirect:/skills/" + adminId;
 	}
 
-	@PostMapping("/edit-skill/{id}")
-	public String editSkill(@ModelAttribute("skill") Skill skill, @PathVariable("id") final String id) {
+	@PostMapping("/edit-skill/{id}/{adminId}")
+	public String editSkill(@ModelAttribute("skill") Skill skill, @PathVariable("id") final String id, @PathVariable String adminId) {
 		skill.setId(id);
 		if (skillService.isDuplicateExcept(skill.getName(), skill.getId())) {
 			return "redirect:/skills?duplicate=true";
 		} else {
 			skillService.saveSkill(skill);
 		}
-		return "redirect:/skills";
+		return "redirect:/skills/" + adminId;
 	}
 
 	@PostMapping("/import-skills/{adminId}")

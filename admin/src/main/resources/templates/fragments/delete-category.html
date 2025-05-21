@@ -8,7 +8,7 @@
 <div class="modal fade" id="delete{{index}}" tabindex="-1" role="dialog" aria-labelledby="deleteCategoryTitle{{index}}" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-      <form action="/delete-category/{{id}}" method="POST">
+      <form action="/delete-category/{{id}}/{{adminId}}" method="POST">
         <div class="modal-header">
           <h5 class="modal-title" id="deleteCategoryTitle{{index}}">Delete category {{name}}</h5>
           <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>

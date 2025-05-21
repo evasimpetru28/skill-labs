@@ -397,7 +397,7 @@ function getYearOptions(callingElement) {
 
 }
 
-function filterStudents(filterType) {
+function filterStudents(filterType, adminId) {
     // Reset other filters
     if (filterType !== 'program') document.getElementById('programFilter').value = '';
     if (filterType !== 'domain') document.getElementById('domainFilter').value = '';
@@ -408,27 +408,27 @@ function filterStudents(filterType) {
     
     // Redirect with the filter
     if (value) {
-        window.location.href = '/users/students?' + filterType + '=' + encodeURIComponent(value);
+        window.location.href = '/users/students/' + adminId + '?' + filterType + '=' + encodeURIComponent(value);
     } else {
-        window.location.href = '/users/students';
+        window.location.href = '/users/students/' + adminId;
     }
 }
 
-function resetFilters() {
-    window.location.href = '/users/students';
+function resetFilters(adminId) {
+    window.location.href = '/users/students/' + adminId;
 }
 
-function filterSuperusers() {
+function filterSuperusers(adminId) {
     let value = document.getElementById('typeFilter').value;
     
     // Redirect with the filter
     if (value) {
-        window.location.href = '/users/professors-companies?type=' + encodeURIComponent(value);
+        window.location.href = '/users/professors-companies/' + adminId + '?type=' + encodeURIComponent(value);
     } else {
-        window.location.href = '/users/professors-companies';
+        window.location.href = '/users/professors-companies/' + adminId;
     }
 }
 
-function resetSuperuserFilters() {
-    window.location.href = '/users/professors-companies';
+function resetSuperuserFilters(adminId) {
+    window.location.href = '/users/professors-companies/' + adminId;
 }

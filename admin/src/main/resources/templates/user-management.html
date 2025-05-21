@@ -74,7 +74,7 @@
         {{#students}}
         <div class="row mb-4">
             <div class="col-md-3">
-                <select id="programFilter" class="form-control" onchange="filterStudents('program')">
+                <select id="programFilter" class="form-control" onchange="filterStudents('program', '{{adminId}}')">
                     <option value="">Filter by Program</option>
                     <option value="Licenta" {{#isLicenta}}selected{{/isLicenta}}>Licenta</option>
                     <option value="Master" {{#isMaster}}selected{{/isMaster}}>Master</option>
@@ -82,7 +82,7 @@
                 </select>
             </div>
             <div class="col-md-3">
-                <select id="domainFilter" class="form-control" onchange="filterStudents('domain')">
+                <select id="domainFilter" class="form-control" onchange="filterStudents('domain', '{{adminId}}')">
                     <option value="">Filter by Domain</option>
                     <option value="Matematica" {{#isMatematica}}selected{{/isMatematica}}>Matematica</option>
                     <option value="Informatica IF" {{#isInformaticaIF}}selected{{/isInformaticaIF}}>Informatica IF</option>
@@ -91,7 +91,7 @@
                 </select>
             </div>
             <div class="col-md-3">
-                <select id="yearFilter" class="form-control" onchange="filterStudents('year')">
+                <select id="yearFilter" class="form-control" onchange="filterStudents('year', '{{adminId}}')">
                     <option value="">Filter by Year</option>
                     <option value="1" {{#isYear1}}selected{{/isYear1}}>Year 1</option>
                     <option value="2" {{#isYear2}}selected{{/isYear2}}>Year 2</option>
@@ -100,7 +100,7 @@
                 </select>
             </div>
             <div class="col-md-3">
-                <button onclick="resetFilters()" class="btn btn-secondary">Reset Filters</button>
+                <button onclick="resetFilters('{{adminId}}')" class="btn btn-secondary">Reset Filters</button>
             </div>
         </div>
         {{/students}}
@@ -108,14 +108,14 @@
         {{#superusers}}
         <div class="row mb-4">
             <div class="col-md-3">
-                <select id="typeFilter" class="form-control" onchange="filterSuperusers()">
+                <select id="typeFilter" class="form-control" onchange="filterSuperusers('{{adminId}}')">
                     <option value="">Filter by Type</option>
                     <option value="PROFESSOR" {{#isProfessor}}selected{{/isProfessor}}>Professor</option>
                     <option value="COMPANY" {{#isCompany}}selected{{/isCompany}}>Company</option>
                 </select>
             </div>
             <div class="col-md-3">
-                <button onclick="resetSuperuserFilters()" class="btn btn-secondary">Reset Filter</button>
+                <button onclick="resetSuperuserFilters('{{adminId}}')" class="btn btn-secondary">Reset Filter</button>
             </div>
         </div>
         {{/superusers}}
