@@ -23,40 +23,35 @@
         <br>
 
         {{#noSkills}}
-        <div class="no-skills-text d-flex align-items-center justify-content-center">
+        <div class="no-bookmarks-text d-flex align-items-center justify-content-center">
             <h4>You haven't bookmarked any skills yet. Go to <a href="/all-skills/{{superuserId}}" class="link"><u>All Skills</u></a> to bookmark your favorite skills</h4>
         </div>
         {{/noSkills}}
 
         {{#bookmarkedSkills}}
-        <div class="category-container">
-            <div class="category-header">
+        <div class="mb-4">
+            <div class="d-flex align-items-center mb-2">
                 <h4>{{category.name}}</h4>
-                {{#category.hasDescription}}
-                <div class="category-description">
-                    {{category.description}}
-                </div>
-                {{/category.hasDescription}}
+                {{#category}}
+                    {{>fragments/show-category-description}}
+                {{/category}}
             </div>
 
-            <div class="skills-container">
+            <div class="category-title-separator"></div>
+            <div class="row">
                 {{#skills}}
-                <div class="skill-card">
-                    <div class="skill-header">
-                        <h5>{{name}}</h5>
-                        <button onclick="toggleFavorite('{{id}}', '{{superuserId}}')" class="favorite-btn {{#isBookmarked}}active{{/isBookmarked}}">
-                            <i class="{{#isBookmarked}}fas{{/isBookmarked}} {{^isBookmarked}}far{{/isBookmarked}} fa-bookmark"></i>
-                        </button>
-                    </div>
-                    {{#hasDescription}}
-                    <div class="skill-description">
-                        {{description}}
-                    </div>
-                    {{/hasDescription}}
-                    <div class="skill-actions">
-                        <a href="/skill-details/{{id}}/overview/{{superuserId}}" class="btn btn-primary">
-                            <i class="fas fa-info-circle me-2"></i>Details
-                        </a>
+                <div class="card col-xl-3 col-lg-4 col-md-5 col-sm-6 col-12 col"
+                     style="width: 320px; margin: 1rem 0.5rem; cursor: pointer;"
+                     onclick="window.location.href='/skill-details/{{id}}/overview/{{superuserId}}'">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="card-title">
+                                {{name}}
+                            </div>
+                            <button class="favorite-btn {{#isBookmarked}}active{{/isBookmarked}}" onclick="event.stopPropagation(); toggleFavorite('{{id}}', '{{superuserId}}')">
+                                <i class="fa-bookmark {{#isBookmarked}}fas{{/isBookmarked}} {{^isBookmarked}}far{{/isBookmarked}}"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 {{/skills}}
