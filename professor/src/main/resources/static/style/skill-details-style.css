@@ -225,4 +225,17 @@
 .favorite-btn.active i {
     color: #7779f0;
     opacity: 1;
+}
+
+.fa-star {
+    transition: color 0.2s ease;
+}
+
+.fa-star:hover {
+    color: #f5d836;
+}
+
+/* Keep the star yellow if it's already filled */
+.fa-solid.fa-star {
+    color: #f5d836;
 } 

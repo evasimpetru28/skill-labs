@@ -2,8 +2,7 @@ package com.example.professor.controller;
 
 import java.util.List;
 
-import com.example.professor.service.SkillService;
-import com.example.professor.service.StudentService;
+import com.example.professor.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.professor.entity.Page;
 import com.example.professor.dto.CategoryWithSkillsDto;
 import com.example.professor.dto.SkillChartDataDto;
-import com.example.professor.service.CategoryService;
-import com.example.professor.service.NavbarService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 @Controller
 public class AllSkillsController {
 
+	final QuizService quizService;
 	final SkillService skillService;
 	final NavbarService navbarService;
 	final StudentService studentService;
@@ -54,8 +52,10 @@ public class AllSkillsController {
 	public String getSkillDetailsEvaluationsPage(Model model, @PathVariable String skillId, @PathVariable String superuserId) {
 		navbarService.activateNavbarTab(Page.ALL_SKILLS, model);
 
+		var evaluations = studentService.getAllStudentsSelfEvaluationBySkillId(skillId);
 		model.addAttribute("skill", skillService.getSkillInformation(skillId));
-		model.addAttribute("evaluations", studentService.getAllStudentsNotAssignedByQuiz(skillId));
+		model.addAttribute("evaluations", evaluations);
+		model.addAttribute("noEvaluations", evaluations.isEmpty());
 		model.addAttribute("superuserId", superuserId);
 		model.addAttribute("isEvaluations", true);
 		return "skill-details-evaluations";
@@ -65,7 +65,10 @@ public class AllSkillsController {
 	public String getSkillDetailsQuizzesPage(Model model, @PathVariable String skillId, @PathVariable String superuserId) {
 		navbarService.activateNavbarTab(Page.ALL_SKILLS, model);
 
+		var quizzes = quizService.getQuizListBySkillId(skillId, superuserId);
 		model.addAttribute("skill", skillService.getSkillInformation(skillId));
+		model.addAttribute("quizzes", quizzes);
+		model.addAttribute("noQuizzes", quizzes.isEmpty());
 		model.addAttribute("superuserId", superuserId);
 		model.addAttribute("isQuizzes", true);
 		return "skill-details-quizzes";

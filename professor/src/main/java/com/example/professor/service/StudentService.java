@@ -1,5 +1,6 @@
 package com.example.professor.service;
 
+import com.example.professor.dto.StudentSelfEvaluationDto;
 import com.example.professor.entity.Student;
 import com.example.professor.repository.StudentRepository;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,8 @@ public class StudentService {
 		return studentRepository.getReferenceById(studentId);
 	}
 
-
+	public List<StudentSelfEvaluationDto> getAllStudentsSelfEvaluationBySkillId(String skillId) {
+		return studentRepository.findStudentSelfEvaluationDtoBySkillId(skillId);
+	}
 
 }

@@ -33,34 +33,78 @@
 			{{>fragments/skill-details-nav}}
 			<br>
 
+			{{#noQuizzes}}
+			<div class="row">
+				<div class="no-quizzes-text d-flex align-items-center justify-content-center">
+					<h4>No quizzes available for this skill yet.</h4>
+				</div>
+			</div>
+			{{/noQuizzes}}
+
+			{{^noQuizzes}}
+			<table id="dtBasicExample" class="table table-hover table-striped table-bordered table-sm">
+				<thead>
+				<tr>
+					<th class="th-sm">Quiz Name</th>
+					<th class="th-sm">Description</th>
+					<th class="th-sm">Created By</th>
+					<th class="th-sm">Created At</th>
+					<th class="th-sm">Status</th>
+					<th class="th-sm">Actions</th>
+				</tr>
+				</thead>
+
+				<tbody>
+				{{#quizzes}}
+				<tr>
+					<td><strong>{{name}}</strong></td>
+					<td>{{#description}}{{description}}{{/description}}</td>
+					<td>{{superuserName}}</td>
+					<td class="text-center">{{createdAt}}</td>
+					<td class="text-center">
+						{{#isPublic}}
+						<span class="badge bg-success">Public</span>
+						{{/isPublic}}
+						{{^isPublic}}
+						<span class="badge bg-warning text-dark">Private</span>
+						{{/isPublic}}
+					</td>
+					<td class="text-center">
+						<a href="/quiz-details/{{id}}/{{superuserId}}" class="btn btn-primary btn-sm">
+							<i class="fas fa-info-circle me-1"></i>Details
+						</a>
+					</td>
+				</tr>
+				{{/quizzes}}
+				</tbody>
+			</table>
+			{{/noQuizzes}}
+
 		{{/skill}}
 	</div>
 </main>
 <!--Main layout-->
 
 <script>
-function toggleFavorite(skillId) {
-    const btn = event.currentTarget;
-    const icon = btn.querySelector('i');
-    
-    // Toggle the active class
-    btn.classList.toggle('active');
-    
-    // Toggle between regular and solid bookmark
-    if (btn.classList.contains('active')) {
-        icon.classList.remove('far');
-        icon.classList.add('fas');
-    } else {
-        icon.classList.remove('fas');
-        icon.classList.add('far');
-    }
-    
-    // Here you can add an API call to save the favorite status
-    // fetch('/api/skills/' + skillId + '/favorite', {
-    //     method: 'POST',
-    //     body: JSON.stringify({ isFavorite: btn.classList.contains('active') })
-    // });
-}
+$(document).ready(function () {
+    $('#dtBasicExample').DataTable({
+        "paging": true,
+        "pageLength": 10,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        "lengthMenu": [5, 10, 25, 50],
+        "language": {
+            "lengthMenu": "Show _MENU_ entries",
+            "info": "Showing _START_ to _END_ of _TOTAL_ quizzes",
+            "infoEmpty": "Showing 0 to 0 of 0 quizzes",
+            "emptyTable": "No quizzes available"
+        }
+    });
+    $('.dataTables_length').addClass('bs-select');
+});
 </script>
 
 </body>

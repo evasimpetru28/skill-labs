@@ -33,6 +33,55 @@
 			{{>fragments/skill-details-nav}}
 			<br>
 
+			{{#noEvaluations}}
+			<div class="row">
+				<div class="no-evaluations-text d-flex align-items-center justify-content-center">
+					<h4>No student evaluations available for this skill yet.</h4>
+				</div>
+			</div>
+			{{/noEvaluations}}
+
+			{{^noEvaluations}}
+			<table id="dtBasicExample" class="table table-hover table-striped table-bordered table-sm">
+				<thead>
+				<tr>
+					<th class="th-sm">Student Name</th>
+					<th class="th-sm">Program</th>
+					<th class="th-sm">Domain</th>
+					<th class="th-sm">Year</th>
+					<th class="th-sm">Contact</th>
+					<th class="th-sm">Interest</th>
+					<th class="th-sm">Knowledge</th>
+					<th class="th-sm">Experience</th>
+				</tr>
+				</thead>
+
+				<tbody>
+				{{#evaluations}}
+				<tr>
+					<td>{{name}}</td>
+					<td>{{program}}</td>
+					<td>{{domain}}</td>
+					<td>{{year}}</td>
+					<td>{{email}}</td>
+					<td class="text-center">
+						<i class="fa-regular fa-star fa-fw me-3"></i>
+						<span><strong>{{interest}}</strong></span>
+					</td>
+					<td class="text-center">
+						<i class="fa-regular fa-star fa-fw me-3"></i>
+						<span><strong>{{knowledge}}</strong></span>
+					</td>
+					<td class="text-center">
+						<i class="fa-regular fa-star fa-fw me-3"></i>
+						<span><strong>{{experience}}</strong></span>
+					</td>
+				</tr>
+				{{/evaluations}}
+				</tbody>
+			</table>
+			{{/noEvaluations}}
+
 		{{/skill}}
 	</div>
 </main>
@@ -61,6 +110,26 @@ function toggleFavorite(skillId) {
     //     body: JSON.stringify({ isFavorite: btn.classList.contains('active') })
     // });
 }
+
+$(document).ready(function () {
+    $('#dtBasicExample').DataTable({
+        "paging": true,
+        "pageLength": 10,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        "lengthMenu": [5, 10, 25, 50],
+        "language": {
+            "lengthMenu": "Show _MENU_ entries",
+            "info": "Showing _START_ to _END_ of _TOTAL_ students",
+            "infoEmpty": "Showing 0 to 0 of 0 students",
+            "emptyTable": "No evaluations available"
+        }
+    });
+    $('.dataTables_length').addClass('bs-select');
+});
 </script>
 
 </body>

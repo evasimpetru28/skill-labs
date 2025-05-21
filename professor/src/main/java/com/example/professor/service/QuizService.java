@@ -126,4 +126,8 @@ public class QuizService {
 				.toList();
 	}
 
+	public List<QuizDto> getQuizListBySkillId(String skillId, String superuserId) {
+		return quizRepository.findQuizDtoBySkillId(skillId, superuserId);
+	}
+
 }

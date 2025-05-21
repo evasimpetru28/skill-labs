@@ -34,9 +34,8 @@ public class LoginController {
 		var superuser = superuserService.getSuperuserByEmail(email);
 		if (superuser != null && passwordEncoder.matches(password, superuser.getPassword())) {
 			return "redirect:/dashboard/" + superuser.getId();
-		} else {
-			return "redirect:/login?error=true";
 		}
+		return "redirect:/login?error=true";
 	}
 
 	@GetMapping("/logout")
