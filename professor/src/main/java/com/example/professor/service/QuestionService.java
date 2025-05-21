@@ -22,9 +22,9 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class QuestionService {
 
+	final ResponseService responseService;
 	final OptionRepository optionRepository;
 	final QuestionRepository questionRepository;
-	final ResponseService responseService;
 
 	public void saveQuestion(Question question) {
 		questionRepository.saveAndFlush(question);
@@ -32,6 +32,19 @@ public class QuestionService {
 
 	public Question getQuestionById(String questionId) {
 		return questionRepository.getReferenceById(questionId);
+	}
+
+	public void addQuestionAndOption(String quizId) {
+		var question = new Question();
+		question.setQuizId(quizId);
+		question.setQuestion("Untitled Question");
+		saveQuestion(question);
+
+		var option = new Option();
+		option.setQuestionId(question.getId());
+		option.setOptionText("Option 1");
+		option.setIsCorrect(false);
+		optionRepository.saveAndFlush(option);
 	}
 
 	public Map<QuestionDto, List<OptionDto>> getQuestionMap(String quizId) {

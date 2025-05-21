@@ -2,6 +2,7 @@ package com.example.professor.controller;
 
 import com.example.professor.entity.Page;
 import com.example.professor.service.NavbarService;
+import com.example.professor.service.QuestionService;
 import com.example.professor.service.QuizService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ public class PublicQuizzes {
 
 	final QuizService quizService;
 	final NavbarService navbarService;
+	final QuestionService questionService;
 
 	@GetMapping("/public-quizzes/{superuserId}")
 	public String getPublicQuizzesPage(Model model, @PathVariable String superuserId) {
@@ -29,6 +31,19 @@ public class PublicQuizzes {
 		model.addAttribute("superuserId", superuserId);
 
 		return "public-quizzes";
+	}
+
+	@GetMapping("/quiz-preview/{quizId}/{superuserId}")
+	public String getQuizPreviewPage(Model model, @PathVariable String quizId, @PathVariable String superuserId) {
+		//TODO: Get logged user id from session
+		navbarService.activateNavbarTab(Page.PUBLIC_QUIZZES, model);
+
+		var quiz = quizService.getQuizDetailsById(quizId);
+		model.addAttribute("quiz", quiz);
+		model.addAttribute("questionMap", questionService.getQuestionMap(quizId));
+		model.addAttribute("superuserId", quiz.getSuperuserId());
+
+		return "quiz-preview";
 	}
 
 }

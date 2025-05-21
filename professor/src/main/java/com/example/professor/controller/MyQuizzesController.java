@@ -84,8 +84,7 @@ public class MyQuizzesController {
 		quiz.setIsReady(false);
 		quiz.setIsExpired(false);
 		quizService.saveQuiz(quiz);
-
-		addQuestionAndOption(quiz.getId());
+		questionService.addQuestionAndOption(quiz.getId());
 		return "redirect:/new-quiz/" + quiz.getId();
 	}
 
@@ -125,21 +124,8 @@ public class MyQuizzesController {
 
 	@PostMapping("/add-question/{quizId}")
 	public String addQuestion(@PathVariable String quizId) {
-		addQuestionAndOption(quizId);
+		questionService.addQuestionAndOption(quizId);
 		return "redirect:/new-quiz/" + quizId;
-	}
-
-	private void addQuestionAndOption(String quizId) {
-		var question = new Question();
-		question.setQuizId(quizId);
-		question.setQuestion("Untitled Question");
-		questionService.saveQuestion(question);
-
-		var option = new Option();
-		option.setQuestionId(question.getId());
-		option.setOptionText("Option 1");
-		option.setIsCorrect(false);
-		optionService.saveOption(option);
 	}
 
 	@PostMapping("/update-question/{questionId}/{questionName}")
@@ -259,7 +245,7 @@ public class MyQuizzesController {
 	@GetMapping("/answers/{quizId}/{studentId}")
 	public String getAnswersPage(Model model, @PathVariable String quizId, @PathVariable String studentId) {
 		navbarService.activateNavbarTab(Page.MY_QUIZZES, model);
-		var quiz = quizService.getQuizById(quizId);
+		var quiz = quizService.getQuizDetailsById(quizId);
 		model.addAttribute("quiz", quiz);
 		model.addAttribute("score", assignmentService.getAssignmentByStudentAndQuiz(studentId, quizId).getScore());
 		model.addAttribute("studentName", studentService.getStudentById(studentId).getName());

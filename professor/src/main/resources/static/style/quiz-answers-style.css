@@ -44,6 +44,10 @@ i {
     font-size: 26px;
 }
 
+#skillLabel {
+    font-size: 20px;
+}
+
 body {
     background-color: #e9e8fa;
 }

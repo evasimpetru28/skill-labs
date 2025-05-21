@@ -50,9 +50,25 @@
 		<td class="createdBy">{{superuserName}}</td>
 		<td class="createdAt">{{createdAt}}</td>
 		<td>
-			<a href="/quiz-details/{{id}}/{{superuserId}}" class="btn btn-primary btn-sm">
-				<i class="fas fa-info-circle me-1"></i>Details
-			</a>
+			<div class="actions-container">
+				<div class="dropdown">
+					<button class="btn btn-sm btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+						<i class="fas fa-ellipsis-v"></i>
+					</button>
+					<ul class="dropdown-menu dropdown-menu-end">
+						<li>
+							<a class="dropdown-item" href="/details/{{id}}/{{superuserId}}">
+								<i class="fas fa-info-circle me-2"></i>Details
+							</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="/quiz-preview/{{id}}/{{superuserId}}">
+								<i class="fas fa-eye me-1"></i>Preview
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
 		</td>
 	</tr>
 	{{/quizList}}
