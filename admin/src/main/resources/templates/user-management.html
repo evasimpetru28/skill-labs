@@ -49,22 +49,22 @@
         <br>
 
         <div class="row">
-            <div class="justify-content-start col-1">
+            <div class="col-auto me-3">
                 <form action="/users/admins" method="GET">
                     <button type="submit" class="btn {{#admins}}btn-primary{{/admins}}{{^admins}}btn-secondary{{/admins}}">
-                        Admins</button>
+                        <i class="fas fa-user-shield fa-fw me-2"></i>Admins</button>
                 </form>
             </div>
-            <div class="justify-content-start col-1">
+            <div class="col-auto me-3">
                 <form action="/users/students" method="GET">
                     <button type="submit" class="btn {{#students}}btn-primary{{/students}}{{^students}}btn-secondary{{/students}}">
-                        Students</button>
+                        <i class="fas fa-user-graduate fa-fw me-2"></i>Students</button>
                 </form>
             </div>
-            <div class="justify-content-start col-2">
+            <div class="col-auto">
                 <form action="/users/professors-companies" method="GET">
                     <button type="submit" class="btn {{#superusers}}btn-primary{{/superusers}}{{^superusers}}btn-secondary{{/superusers}}">
-                        Professors & Companies</button>
+                        <i class="fas fa-user-tie fa-fw me-2"></i>Professors & Companies</button>
                 </form>
             </div>
         </div>
