@@ -26,6 +26,7 @@ public class MyQuizzesController {
 	final SkillRepository skillRepository;
 	final QuestionService questionService;
 	final ResponseService responseService;
+	final SuperuserService superuserService;
 	final AssignmentService assignmentService;
 
 	@GetMapping("/quizzes/assigned/{superuserId}")
@@ -35,6 +36,7 @@ public class MyQuizzesController {
 		var assignedQuizzesBySuperuserId = quizService.getAssignedQuizzesBySuperuserId(superuserId);
 
 		model.addAttribute("superuserId", superuserId);
+		model.addAttribute("name", superuserService.getSuperuserById(superuserId).getName());
 		model.addAttribute("assigned", true);
 		model.addAttribute("expired", false);
 		model.addAttribute("drafted", false);
@@ -51,7 +53,7 @@ public class MyQuizzesController {
 		var expiredQuizzesBySuperuserId = quizService.getExpiredQuizzesBySuperuserId(superuserId);
 
 		model.addAttribute("superuserId", superuserId);
-		model.addAttribute("assigned", false);
+		model.addAttribute("name", superuserService.getSuperuserById(superuserId).getName());		model.addAttribute("assigned", false);
 		model.addAttribute("expired", true);
 		model.addAttribute("drafted", false);
 		model.addAttribute("quizList", expiredQuizzesBySuperuserId);
@@ -66,7 +68,7 @@ public class MyQuizzesController {
 		navbarService.activateNavbarTab(Page.MY_QUIZZES, model);
 		var draftedQuizzesBySuperuserId = quizService.getDraftedQuizzesBySuperuserId(superuserId);
 		model.addAttribute("superuserId", superuserId);
-		model.addAttribute("assigned", false);
+		model.addAttribute("name", superuserService.getSuperuserById(superuserId).getName());		model.addAttribute("assigned", false);
 		model.addAttribute("expired", false);
 		model.addAttribute("drafted", true);
 		model.addAttribute("quizList", draftedQuizzesBySuperuserId);
@@ -115,7 +117,7 @@ public class MyQuizzesController {
 		}
 		navbarService.activateNavbarTab(Page.MY_QUIZZES, model);
 		model.addAttribute("superuserId", quiz.getSuperuserId());
-		model.addAttribute("quizId", quizId);
+		model.addAttribute("name", superuserService.getSuperuserById(quiz.getSuperuserId()).getName());		model.addAttribute("quizId", quizId);
 		model.addAttribute("quiz", quiz);
 		model.addAttribute("isPublic", "PUBLIC".equals(quiz.getStatus()));
 		model.addAttribute("questionMap", questionService.getQuestionMap(quizId));
@@ -233,7 +235,7 @@ public class MyQuizzesController {
 
 		model.addAttribute("quiz", quizService.getQuizDetailsById(quizId));
 		model.addAttribute("superuserId", superuserId);
-		model.addAttribute("studentListSubmitted", studentListSubmitted);
+		model.addAttribute("name", superuserService.getSuperuserById(superuserId).getName());		model.addAttribute("studentListSubmitted", studentListSubmitted);
 		model.addAttribute("noQuizzes", studentListSubmitted.isEmpty());
 		model.addAttribute("studentList", studentList);
 		model.addAttribute("submissionsNumber", studentListSubmitted.size());
@@ -251,7 +253,7 @@ public class MyQuizzesController {
 		model.addAttribute("studentName", studentService.getStudentById(studentId).getName());
 		model.addAttribute("questionMap", questionService.getQuestionMapForStudent(quizId, studentId));
 		model.addAttribute("superuserId", quiz.getSuperuserId());
-
+		model.addAttribute("name", superuserService.getSuperuserById(quiz.getSuperuserId()).getName());
 		return "quiz-answers";
 	}
 

@@ -4,6 +4,7 @@ import com.example.student.entity.Page;
 import com.example.student.model.CategoryWithSkills;
 import com.example.student.service.NavbarService;
 import com.example.student.service.SkillService;
+import com.example.student.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +18,9 @@ import java.util.List;
 @Controller
 public class MySkillsController {
 
-	final NavbarService navbarService;
 	final SkillService skillService;
+	final NavbarService navbarService;
+	final StudentService studentService;
 
 	@GetMapping("/my-skills/{studentId}")
 	public String getMySkillsPage(Model model, @PathVariable String studentId) {
@@ -29,9 +31,9 @@ public class MySkillsController {
 		evaluationsForStudent.forEach((category, skills) -> {
 			categories.add(new CategoryWithSkills(category, skills));
 		});
-		
+
 		model.addAttribute("studentId", studentId);
-		model.addAttribute("categories", categories);
+		model.addAttribute("name", studentService.getStudentById(studentId).getName());		model.addAttribute("categories", categories);
 		model.addAttribute("noEvaluations", evaluationsForStudent.isEmpty());
 
 		return "my-skills";

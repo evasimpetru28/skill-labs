@@ -4,6 +4,7 @@ import com.example.student.entity.Page;
 import com.example.student.service.EvaluationService;
 import com.example.student.service.NavbarService;
 import com.example.student.service.SkillService;
+import com.example.student.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,9 +19,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 @Slf4j
 public class AllSkillsController {
-
-	final NavbarService navbarService;
 	final SkillService skillService;
+	final NavbarService navbarService;
+	final StudentService studentService;
 	final EvaluationService evaluationService;
 
 	@GetMapping("/all-skills/{studentId}")
@@ -28,6 +29,7 @@ public class AllSkillsController {
 		navbarService.activateNavbarTab(Page.ALL_SKILLS, model);
 		var skillsByCategory = skillService.getAllSkillsAndEvaluationsForStudent(studentId);
 		model.addAttribute("studentId", studentId);
+		model.addAttribute("name", studentService.getStudentById(studentId).getName());
 		model.addAttribute("skillsByCategory", skillsByCategory);
 		return "all-skills";
 	}

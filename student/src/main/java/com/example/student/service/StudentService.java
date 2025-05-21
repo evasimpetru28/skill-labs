@@ -25,18 +25,6 @@ public class StudentService {
 		return studentRepository.findByEmail(email);
 	}
 
-	public void deleteStudent(String studentId) {
-		studentRepository.deleteById(studentId);
-	}
-
-	public Boolean isDuplicate(String name) {
-		return studentRepository.existsByName(name).isPresent();
-	}
-
-	public Boolean isDuplicateExcept(String name, String id) {
-		return studentRepository.existsByNameExcept(name, id).isPresent();
-	}
-
 	public Student getStudentByResetCode(String resetCode) {
 		return studentRepository.findByResetCode(resetCode);
 	}

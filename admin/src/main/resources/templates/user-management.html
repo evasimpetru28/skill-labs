@@ -5,9 +5,9 @@
     <title>Skill Labs - User Management</title>
 
     {{>fragments/links}}
-    <link rel="stylesheet" href="../static/style/navigation-style.css">
+    <link rel="stylesheet" href="/static/style/navigation-style.css">
     <!-- Page style -->
-    <link rel="stylesheet" href="../static/style/user-management-style.css">
+    <link rel="stylesheet" href="/static/style/user-management-style.css">
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css">
     <!-- DataTables JS -->
@@ -50,19 +50,19 @@
 
         <div class="row">
             <div class="col-auto me-3">
-                <form action="/users/admins" method="GET">
+                <form action="/users/admins/{{adminId}}" method="GET">
                     <button type="submit" class="btn {{#admins}}btn-primary{{/admins}}{{^admins}}btn-secondary{{/admins}}">
                         <i class="fas fa-user-shield fa-fw me-2"></i>Admins</button>
                 </form>
             </div>
             <div class="col-auto me-3">
-                <form action="/users/students" method="GET">
+                <form action="/users/students/{{adminId}}" method="GET">
                     <button type="submit" class="btn {{#students}}btn-primary{{/students}}{{^students}}btn-secondary{{/students}}">
                         <i class="fas fa-user-graduate fa-fw me-2"></i>Students</button>
                 </form>
             </div>
             <div class="col-auto">
-                <form action="/users/professors-companies" method="GET">
+                <form action="/users/professors-companies/{{adminId}}" method="GET">
                     <button type="submit" class="btn {{#superusers}}btn-primary{{/superusers}}{{^superusers}}btn-secondary{{/superusers}}">
                         <i class="fas fa-user-tie fa-fw me-2"></i>Professors & Companies</button>
                 </form>
@@ -225,7 +225,7 @@
         new mdb.Input(formOutline).init();
     });
 </script>
-<script type="text/javascript" src="../static/js/user-management.js"></script>
+<script type="text/javascript" src="/static/js/user-management.js"></script>
 
 </body>
 </html>

@@ -2,10 +2,7 @@ package com.example.professor.controller;
 
 import com.example.professor.entity.Assignment;
 import com.example.professor.entity.Page;
-import com.example.professor.service.AssignmentService;
-import com.example.professor.service.NavbarService;
-import com.example.professor.service.QuizService;
-import com.example.professor.service.StudentService;
+import com.example.professor.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +17,7 @@ public class AssignmentController {
 	final QuizService quizService;
 	final NavbarService navbarService;
 	final StudentService studentService;
+	final SuperuserService superuserService;
 	final AssignmentService assignmentService;
 
 	@GetMapping("/assign-students/{quizId}")
@@ -30,6 +28,7 @@ public class AssignmentController {
 		model.addAttribute("assignedStudents", assignmentService.getAssignedStudentsOfQuiz(quizId));
 		model.addAttribute("quiz", quiz);
 		model.addAttribute("superuserId", quiz.getSuperuserId());
+		model.addAttribute("name", superuserService.getSuperuserById(quiz.getSuperuserId()).getName());
 
 		return "assign-students";
 	}

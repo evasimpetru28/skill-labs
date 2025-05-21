@@ -16,6 +16,7 @@ public class AssignmentsController {
 
 	final QuizService quizService;
 	final NavbarService navbarService;
+	final StudentService studentService;
 	final QuestionService questionService;
 	final ResponseService responseService;
 	final AssignmentService assignmentService;
@@ -25,7 +26,7 @@ public class AssignmentsController {
 		navbarService.activateNavbarTab(Page.ASSIGNMENTS, model);
 		var quizList = quizService.getQuizzesAssignedForStudent(studentId);
 		model.addAttribute("studentId", studentId);
-		model.addAttribute("quizList", quizList);
+		model.addAttribute("name", studentService.getStudentById(studentId).getName());		model.addAttribute("quizList", quizList);
 		model.addAttribute("noQuizzes", quizList.isEmpty());
 		return "assignments";
 	}
@@ -34,6 +35,7 @@ public class AssignmentsController {
 	public String getAnswerQuizPage(Model model, @PathVariable String quizId, @PathVariable String studentId) {
 		navbarService.activateNavbarTab(Page.ASSIGNMENTS, model);
 		model.addAttribute("studentId", studentId);
+		model.addAttribute("name", studentService.getStudentById(studentId).getName());
 		model.addAttribute("quiz", quizService.getQuizById(quizId));
 		model.addAttribute("score", assignmentService.getAssignmentByStudentAndQuiz(studentId, quizId).getScore());
 		model.addAttribute("questionMap", questionService.getQuestionMap(quizId, studentId));
@@ -82,6 +84,7 @@ public class AssignmentsController {
 	public String getReviewQuizPage(Model model, @PathVariable String quizId, @PathVariable String studentId) {
 		navbarService.activateNavbarTab(Page.ASSIGNMENTS, model);
 		model.addAttribute("studentId", studentId);
+		model.addAttribute("name", studentService.getStudentById(studentId).getName());
 		model.addAttribute("quiz", quizService.getQuizById(quizId));
 		model.addAttribute("score", assignmentService.getAssignmentByStudentAndQuiz(studentId, quizId).getScore());
 		model.addAttribute("questionMap", questionService.getQuestionMap(quizId, studentId));

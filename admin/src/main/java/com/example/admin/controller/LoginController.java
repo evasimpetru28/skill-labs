@@ -33,7 +33,7 @@ public class LoginController {
 	String submitLogin(@RequestParam String email, @RequestParam String password) {
 		var admin = adminService.getAdminByEmail(email);
 		if (admin != null && passwordEncoder.matches(password, admin.getPassword())) {
-			return "redirect:/dashboard";
+			return "redirect:/dashboard/" + admin.getId();
 		} else {
 			return "redirect:/login?error=true";
 		}

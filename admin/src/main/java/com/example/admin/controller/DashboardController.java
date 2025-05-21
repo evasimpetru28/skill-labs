@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
@@ -18,17 +19,19 @@ import java.util.stream.Collectors;
 @Controller
 public class DashboardController {
 
+	final AdminService adminService;
+	final SkillService skillService;
 	final NavbarService navbarService;
 	final StudentService studentService;
-	final SuperuserService superuserService;
-	final SkillService skillService;
 	final CategoryService categoryService;
+	final SuperuserService superuserService;
 	final EvaluationService evaluationService;
-	final AdminService adminService;
 
-	@GetMapping("/dashboard")
-	String getDashboardPage(Model model) {
+	@GetMapping("/dashboard/{adminId}")
+	String getDashboardPage(Model model, @PathVariable String adminId) {
 		navbarService.activateNavbarTab(Page.DASHBOARD, model);
+		model.addAttribute("adminId", adminId);
+		model.addAttribute("name", adminService.getAdminById(adminId).getName());
 		return "dashboard";
 	}
 

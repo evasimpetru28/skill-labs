@@ -24,6 +24,7 @@ public class SkillsController {
 	final NavbarService navbarService;
 	final StudentService studentService;
 	final CategoryService categoryService;
+	final SuperuserService superuserService;
 
     @GetMapping("/all-skills/{superuserId}")
 	public String getAllSkillsPage(Model model, @PathVariable String superuserId) {
@@ -33,7 +34,8 @@ public class SkillsController {
 
         model.addAttribute("noSkills", categories.isEmpty());
         model.addAttribute("categories", categories);
-        model.addAttribute("superuserId", superuserId);
+		model.addAttribute("superuserId", superuserId);
+		model.addAttribute("superuser", superuserService.getSuperuserById(superuserId).getName());
 		return "all-skills";
 	}
 
@@ -45,7 +47,8 @@ public class SkillsController {
 
         model.addAttribute("noSkills", bookmarkedSkills.isEmpty());
         model.addAttribute("bookmarkedSkills", bookmarkedSkills);
-        model.addAttribute("superuserId", superuserId);
+		model.addAttribute("superuserId", superuserId);
+		model.addAttribute("superuser", superuserService.getSuperuserById(superuserId).getName());
         return "bookmarked-skills";
     }
 
@@ -63,6 +66,7 @@ public class SkillsController {
 		model.addAttribute("skill", skillService.getSkillInformation(skillId, superuserId));
 		model.addAttribute("statistics", skillService.getSkillStatistics(skillId));
 		model.addAttribute("superuserId", superuserId);
+		model.addAttribute("superuser", superuserService.getSuperuserById(superuserId).getName());
 		model.addAttribute("isOverview", true);
 		return "skill-details-overview";
 	}
@@ -76,6 +80,7 @@ public class SkillsController {
 		model.addAttribute("evaluations", evaluations);
 		model.addAttribute("noEvaluations", evaluations.isEmpty());
 		model.addAttribute("superuserId", superuserId);
+		model.addAttribute("superuser", superuserService.getSuperuserById(superuserId).getName());
 		model.addAttribute("isEvaluations", true);
 		return "skill-details-evaluations";
 	}
@@ -89,6 +94,7 @@ public class SkillsController {
 		model.addAttribute("quizzes", quizzes);
 		model.addAttribute("noQuizzes", quizzes.isEmpty());
 		model.addAttribute("superuserId", superuserId);
+		model.addAttribute("superuser", superuserService.getSuperuserById(superuserId).getName());
 		model.addAttribute("isQuizzes", true);
 		return "skill-details-quizzes";
 	}

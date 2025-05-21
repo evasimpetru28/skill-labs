@@ -2,6 +2,7 @@ package com.example.admin.controller;
 
 import com.example.admin.entity.Category;
 import com.example.admin.entity.Page;
+import com.example.admin.service.AdminService;
 import com.example.admin.service.CategoryService;
 import com.example.admin.service.NavbarService;
 import lombok.RequiredArgsConstructor;
@@ -19,14 +20,17 @@ import java.util.List;
 @Controller
 public class CategoriesController {
 
+	final AdminService adminService;
 	final NavbarService navbarService;
 	final CategoryService categoryService;
 
-	@GetMapping("/categories")
-	String getCategoriesPage(Model model, @RequestParam(required = false) final Boolean duplicate) {
+	@GetMapping("/categories/{adminId}")
+	String getCategoriesPage(Model model, @PathVariable String adminId, @RequestParam(required = false) final Boolean duplicate) {
 		navbarService.activateNavbarTab(Page.CATEGORIES, model);
 		model.addAttribute("categoryList", categoryService.getCategoryModelList());
 		model.addAttribute("duplicate", duplicate);
+		model.addAttribute("adminId", adminId);
+		model.addAttribute("name", adminService.getAdminById(adminId).getName());
 		return "categories";
 	}
 
@@ -59,8 +63,8 @@ public class CategoriesController {
 		return "redirect:/categories";
 	}
 
-	@PostMapping("/import-categories")
-	public String importCategories(@RequestParam("file") MultipartFile file) {
+	@PostMapping("/import-categories/{adminId}")
+	public String importCategories(@PathVariable String adminId, @RequestParam("file") MultipartFile file) {
 		try {
 			Workbook workbook = WorkbookFactory.create(file.getInputStream());
 			Sheet sheet = workbook.getSheetAt(0);
@@ -97,6 +101,6 @@ public class CategoriesController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/categories";
+		return "redirect:/categories/" + adminId;
 	}
 }

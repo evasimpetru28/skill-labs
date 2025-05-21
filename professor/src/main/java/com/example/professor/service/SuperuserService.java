@@ -21,6 +21,9 @@ public class SuperuserService {
 	public Superuser getSuperuserByEmail(String email) {
 		return superuserRepository.findByEmail(email);
 	}
+	public Superuser getSuperuserById(String id) {
+		return superuserRepository.getReferenceById(id);
+	}
 
 	public Superuser getSuperuserByResetCode(String resetCode) {
 		return superuserRepository.findByResetCode(resetCode);

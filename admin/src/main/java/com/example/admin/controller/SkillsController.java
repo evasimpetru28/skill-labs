@@ -2,10 +2,7 @@ package com.example.admin.controller;
 
 import com.example.admin.entity.Page;
 import com.example.admin.entity.Skill;
-import com.example.admin.service.CategoryService;
-import com.example.admin.service.EvaluationService;
-import com.example.admin.service.NavbarService;
-import com.example.admin.service.SkillService;
+import com.example.admin.service.*;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.stereotype.Controller;
@@ -21,17 +18,20 @@ import java.util.List;
 @Controller
 public class SkillsController {
 
+	final AdminService adminService;
 	final SkillService skillService;
 	final NavbarService navbarService;
 	final CategoryService categoryService;
 	final EvaluationService evaluationService;
 
-	@GetMapping("/skills")
-	String getSkillsPage(Model model, @RequestParam(required = false) final Boolean duplicate) {
+	@GetMapping("/skills/{adminId}")
+	String getSkillsPage(Model model, @PathVariable String adminId, @RequestParam(required = false) final Boolean duplicate) {
 		navbarService.activateNavbarTab(Page.SKILLS, model);
 		model.addAttribute("categoryList", categoryService.getCategoryModelList());
 		model.addAttribute("skillList", skillService.getSkillModelList());
 		model.addAttribute("duplicate", duplicate);
+		model.addAttribute("adminId", adminId);
+		model.addAttribute("name", adminService.getAdminById(adminId).getName());
 		return "skills";
 	}
 
@@ -63,8 +63,8 @@ public class SkillsController {
 		return "redirect:/skills";
 	}
 
-	@PostMapping("/import-skills")
-	public String importSkills(@RequestParam("file") MultipartFile file) {
+	@PostMapping("/import-skills/{adminId}")
+	public String importSkills(@PathVariable String adminId, @RequestParam("file") MultipartFile file) {
 		try {
 			Workbook workbook = WorkbookFactory.create(file.getInputStream());
 			Sheet sheet = workbook.getSheetAt(0);
@@ -106,6 +106,6 @@ public class SkillsController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/skills";
+		return "redirect:/skills/" + adminId;
 	}
 }

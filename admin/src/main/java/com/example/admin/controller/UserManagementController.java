@@ -68,22 +68,22 @@ public class UserManagementController {
 		}
 	}
 
-	@GetMapping("/users")
-	String getUserManagementPage() {
-		return "redirect:/users/admins";
+	@GetMapping("/users/{adminId}")
+	String getUserManagementPage(@PathVariable String adminId) {
+		return "redirect:/users/admins/" + adminId;
 	}
 
-	@GetMapping("/users/students")
-	String getStudentsPage(Model model, 
+	@GetMapping("/users/students/{adminId}")
+	String getStudentsPage(Model model, @PathVariable String adminId,
 			@RequestParam(required = false) final Boolean duplicate,
 			@RequestParam(required = false) final String program,
 			@RequestParam(required = false) final String domain,
 			@RequestParam(required = false) final Integer year) {
 		navbarService.activateNavbarTab(Page.USER_MANAGEMENT, model);
-		
+
 		List<StudentModel> students;
 		boolean hasFilters = false;
-		
+
 		if (program != null && !program.isEmpty()) {
 			students = studentService.getStudentModelListByProgram(program);
 			model.addAttribute("isLicenta", "Licenta".equals(program));
@@ -107,7 +107,9 @@ public class UserManagementController {
 		} else {
 			students = studentService.getStudentModelList();
 		}
-		
+
+		model.addAttribute("adminId", adminId);
+		model.addAttribute("name", adminService.getAdminById(adminId).getName());
 		model.addAttribute("userList", students);
 		model.addAttribute("hasUsers", !students.isEmpty());
 		model.addAttribute("hasFilters", hasFilters);
@@ -118,8 +120,8 @@ public class UserManagementController {
 		return "user-management";
 	}
 
-	@GetMapping("/users/admins")
-	String getAdminsPage(Model model, @RequestParam(required = false) final Boolean duplicate) {
+	@GetMapping("/users/admins/{adminId}")
+	String getAdminsPage(Model model, @PathVariable String adminId, @RequestParam(required = false) final Boolean duplicate) {
 		navbarService.activateNavbarTab(Page.USER_MANAGEMENT, model);
 		var admins = adminService.getAdminModelList();
 		model.addAttribute("userList", admins);
@@ -128,11 +130,14 @@ public class UserManagementController {
 		model.addAttribute("admins", true);
 		model.addAttribute("students", false);
 		model.addAttribute("superusers", false);
+		model.addAttribute("adminId", adminId);
+		model.addAttribute("name", adminService.getAdminById(adminId).getName());
+
 		return "user-management";
 	}
 
-	@GetMapping("/users/professors-companies")
-	String getSuperusersPage(Model model, 
+	@GetMapping("/users/professors-companies/{adminId}")
+	String getSuperusersPage(Model model, @PathVariable String adminId,
 			@RequestParam(required = false) final Boolean duplicate,
 			@RequestParam(required = false) final String type) {
 		navbarService.activateNavbarTab(Page.USER_MANAGEMENT, model);
@@ -149,7 +154,8 @@ public class UserManagementController {
 		} else {
 			superusers = superuserService.getSuperuserModelList();
 		}
-		
+		model.addAttribute("adminId", adminId);
+		model.addAttribute("name", adminService.getAdminById(adminId).getName());
 		model.addAttribute("userList", superusers);
 		model.addAttribute("hasUsers", !superusers.isEmpty());
 		model.addAttribute("hasFilters", hasFilters);
@@ -354,8 +360,8 @@ public class UserManagementController {
 		return "confirm-reset";
 	}
 
-	@PostMapping("/import-users")
-	public String importUsers(@RequestParam("file") MultipartFile file, @RequestParam("userType") String userType) {
+	@PostMapping("/import-users/{adminId}")
+	public String importUsers(@PathVariable String adminId, @RequestParam("file") MultipartFile file, @RequestParam("userType") String userType) {
 		try {
 			Workbook workbook = WorkbookFactory.create(file.getInputStream());
 			Sheet sheet = workbook.getSheetAt(0);
@@ -396,10 +402,10 @@ public class UserManagementController {
 		}
 
 		return switch (userType) {
-			case "ADMIN" -> "redirect:/users/admins";
-			case "STUDENT" -> "redirect:/users/students";
-			case "SUPERUSER" -> "redirect:/users/professors-companies";
-			default -> "redirect:/users";
+			case "ADMIN" -> "redirect:/users/admins/" + adminId;
+			case "STUDENT" -> "redirect:/users/students/" + adminId;
+			case "SUPERUSER" -> "redirect:/users/professors-companies/" + adminId;
+			default -> "redirect:/users/" + adminId;
 		};
 	}
 

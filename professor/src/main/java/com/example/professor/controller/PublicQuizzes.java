@@ -4,6 +4,7 @@ import com.example.professor.entity.Page;
 import com.example.professor.service.NavbarService;
 import com.example.professor.service.QuestionService;
 import com.example.professor.service.QuizService;
+import com.example.professor.service.SuperuserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ public class PublicQuizzes {
 	final QuizService quizService;
 	final NavbarService navbarService;
 	final QuestionService questionService;
+	final SuperuserService superuserService;
 
 	@GetMapping("/public-quizzes/{superuserId}")
 	public String getPublicQuizzesPage(Model model, @PathVariable String superuserId) {
@@ -29,6 +31,7 @@ public class PublicQuizzes {
 		model.addAttribute("quizList", quizzList);
 		model.addAttribute("noQuizzes", quizzList.isEmpty());
 		model.addAttribute("superuserId", superuserId);
+		model.addAttribute("superuser", superuserService.getSuperuserById(superuserId).getName());
 
 		return "public-quizzes";
 	}
