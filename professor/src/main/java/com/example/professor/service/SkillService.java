@@ -1,12 +1,9 @@
 package com.example.professor.service;
 
-import com.example.professor.entity.Assignment;
-import com.example.professor.entity.Evaluation;
-import com.example.professor.entity.Quiz;
-import com.example.professor.entity.Student;
 import com.example.professor.dto.SkillChartDataDto;
 import com.example.professor.dto.SkillDetailsDto;
 import com.example.professor.dto.SkillStatisticsDto;
+import com.example.professor.entity.*;
 import com.example.professor.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,9 +22,10 @@ public class SkillService {
 	final StudentRepository studentRepository;
 	final AssignmentRepository assignmentRepository;
 	final EvaluationRepository evaluationRepository;
+	final BookmarkedSuperuserSkillRepository bookmarkedSuperuserSkillRepository;
 
-	public SkillDetailsDto getSkillInformation(String skillId) {
-		return skillRepository.getSkillDetailsById(skillId);
+	public SkillDetailsDto getSkillInformation(String skillId, String superuserId) {
+		return skillRepository.getSkillDetailsById(skillId, superuserId);
 	}
 
 	private String calculateMasteryLevel(Evaluation eval) {
@@ -167,5 +165,19 @@ public class SkillService {
 				.quizNames(quizNames)
 				.quizScores(quizScores)
 				.build();
+	}
+
+	public void toggleBookmark(String skillId, String superuserId) {
+		var existingBookmark = bookmarkedSuperuserSkillRepository.findBySuperuserIdAndSkillId(superuserId, skillId);
+
+		if (existingBookmark.isPresent()) {
+			bookmarkedSuperuserSkillRepository.delete(existingBookmark.get());
+		} else {
+			var bookmark = BookmarkedSuperuserSkill.builder()
+					.superuserId(superuserId)
+					.skillId(skillId)
+					.build();
+			bookmarkedSuperuserSkillRepository.save(bookmark);
+		}
 	}
 }

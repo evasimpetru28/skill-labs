@@ -18,7 +18,7 @@ public class CategoryService {
     final SkillRepository skillRepository;
     final CategoryRepository categoryRepository;
 
-    public List<CategoryWithSkillsDto> getAllCategoriesAndSkills() {
+    public List<CategoryWithSkillsDto> getAllCategoriesAndSkills(String superuserId) {
         return categoryRepository.findAll().stream()
             .map(category -> {
                 var categoryWithSkills = new CategoryWithSkillsDto();
@@ -27,7 +27,7 @@ public class CategoryService {
                 categoryInfo.setHasDescription(!category.getDescription().isEmpty());
                 categoryInfo.setName(category.getName());
                 categoryInfo.setId(category.getId());
-                var skills = skillRepository.findByCategoryId(category.getId()).stream().sorted().toList();
+                var skills = skillRepository.findByCategoryId(category.getId(), superuserId).stream().sorted().toList();
                 categoryWithSkills.setCategory(categoryInfo);
                 categoryWithSkills.setSkills(skills);
                 return categoryWithSkills;
@@ -35,6 +35,25 @@ public class CategoryService {
             .filter(categoryWithSkillsDto -> !categoryWithSkillsDto.getSkills().isEmpty())
             .sorted()
             .toList();
+    }
+
+    public List<CategoryWithSkillsDto> getAllBookmarkedCategoriesAndSkills(String superuserId) {
+        return categoryRepository.findAll().stream()
+                .map(category -> {
+                    var categoryWithSkills = new CategoryWithSkillsDto();
+                    var categoryInfo = new CategoryInfoDto();
+                    categoryInfo.setDescription(category.getDescription());
+                    categoryInfo.setHasDescription(!category.getDescription().isEmpty());
+                    categoryInfo.setName(category.getName());
+                    categoryInfo.setId(category.getId());
+                    var skills = skillRepository.findBookmarkedByCategoryId(category.getId(), superuserId).stream().sorted().toList();
+                    categoryWithSkills.setCategory(categoryInfo);
+                    categoryWithSkills.setSkills(skills);
+                    return categoryWithSkills;
+                })
+                .filter(categoryWithSkillsDto -> !categoryWithSkillsDto.getSkills().isEmpty())
+                .sorted()
+                .toList();
     }
 
 }

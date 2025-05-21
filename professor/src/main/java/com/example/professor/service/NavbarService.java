@@ -26,6 +26,9 @@ public class NavbarService {
 		if (tabName == Page.STUDENTS_SELF_EVALUATIONS){
 			model.addAttribute("studentsSelfEvaluationsActive", true);
 		}
+		if (tabName == Page.BOOKMARKED_SKILLS) {
+			model.addAttribute("bookmarkedSkillsActive", true);
+		}
 	}
 
 	public void inactivateAllNavbarTabs(Model model) {
@@ -34,5 +37,6 @@ public class NavbarService {
 		model.addAttribute("publicQuizzesActive", false);
 		model.addAttribute("allSkillsActive", false);
 		model.addAttribute("studentsSelfEvaluationsActive", false);
+		model.addAttribute("bookmarkedSkillsActive", false);
 	}
 }

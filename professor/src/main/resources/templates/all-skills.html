@@ -7,7 +7,6 @@
 	{{>fragments/links}}
 	<link rel="stylesheet" href="../static/style/navigation-style.css">
 	<link rel="stylesheet" href="../static/style/all-skills-style.css">
-	<script src="../static/js/skill-favorites.js"></script>
 
 </head>
 <body>
@@ -49,8 +48,8 @@
 								<div class="card-title">
 									{{name}}
 								</div>
-								<button class="favorite-btn" onclick="event.stopPropagation(); toggleFavorite('{{id}}')">
-									<i class="far fa-bookmark"></i>
+								<button class="favorite-btn {{#isBookmarked}}active{{/isBookmarked}}" onclick="event.stopPropagation(); toggleFavorite('{{id}}', '{{superuserId}}')">
+									<i class="fa-bookmark {{#isBookmarked}}fas{{/isBookmarked}} {{^isBookmarked}}far{{/isBookmarked}}"></i>
 								</button>
 							</div>
 						</div>
@@ -62,31 +61,7 @@
 	</div>
 </main>
 <!--Main layout-->
-
-<script>
-function toggleFavorite(skillId) {
-    const btn = event.currentTarget;
-    const icon = btn.querySelector('i');
-    
-    // Toggle the active class
-    btn.classList.toggle('active');
-    
-    // Toggle between regular and solid bookmark
-    if (btn.classList.contains('active')) {
-        icon.classList.remove('far');
-        icon.classList.add('fas');
-    } else {
-        icon.classList.remove('fas');
-        icon.classList.add('far');
-    }
-    
-    // Here you can add an API call to save the favorite status
-    // fetch('/api/skills/' + skillId + '/favorite', {
-    //     method: 'POST',
-    //     body: JSON.stringify({ isFavorite: btn.classList.contains('active') })
-    // });
-}
-</script>
+<script src="../static/js/skill-favorites.js"></script>
 
 </body>
 </html>

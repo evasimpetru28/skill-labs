@@ -76,12 +76,12 @@ function loadStars(studentId) {
 }
 function deleteEvaluation(callingElement, studentId){
     let id = callingElement.id;
-    let skillName = id.substring(0, id.length - 14);
+    let skillId = id.substring(0, id.length - 14);
     let criteria = id.substring(id.length - 13, id.length - 10);
 
     $.ajax({
         type : "POST",
-        url : "/delete-evaluation/" + skillName + "/" + criteria + "/" + studentId,
+        url : "/delete-evaluation/" + skillId + "/" + criteria + "/" + studentId,
         dataType: "html",
         contentType: 'application/json',
         mimeType: 'application/json',

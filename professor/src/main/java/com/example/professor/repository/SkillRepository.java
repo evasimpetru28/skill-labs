@@ -29,17 +29,28 @@ public interface SkillRepository extends JpaRepository<Skill, String> {
 
 	@Query("""
 	SELECT new com.example.professor.dto.SkillInfoDto(s.id, s.name, s.description, s.categoryId,
-		CASE WHEN s.description = '' THEN FALSE ELSE TRUE END)
+		CASE WHEN s.description = '' THEN FALSE ELSE TRUE END, CASE WHEN bss.id IS NULL THEN FALSE ELSE TRUE END)
 	FROM Skill s
+	LEFT JOIN BookmarkedSuperuserSkill bss ON bss.skillId = s.id AND bss.superuserId = :superuserId
 	WHERE s.categoryId = :categoryId
 	""")
-	List<SkillInfoDto> findByCategoryId(String categoryId);
+	List<SkillInfoDto> findByCategoryId(String categoryId, String superuserId);
 
 	@Query("""
-	SELECT new com.example.professor.dto.SkillDetailsDto(s.id, s.name, s.description, c.name)
+	SELECT new com.example.professor.dto.SkillInfoDto(s.id, s.name, s.description, s.categoryId,
+		CASE WHEN s.description = '' THEN FALSE ELSE TRUE END, CASE WHEN bss.id IS NULL THEN FALSE ELSE TRUE END)
+	FROM Skill s
+	JOIN BookmarkedSuperuserSkill bss ON bss.skillId = s.id AND bss.superuserId = :superuserId
+	WHERE s.categoryId = :categoryId
+	""")
+	List<SkillInfoDto> findBookmarkedByCategoryId(String categoryId, String superuserId);
+
+	@Query("""
+	SELECT new com.example.professor.dto.SkillDetailsDto(s.id, s.name, s.description, c.name, CASE WHEN bss.id IS NULL THEN FALSE ELSE TRUE END)
 	FROM Skill s
 	JOIN Category c on c.id = s.categoryId
+	LEFT JOIN BookmarkedSuperuserSkill  bss ON bss.skillId = s.id AND bss.superuserId = :superuserId
 	WHERE s.id = :skillId
 	""")
-	SkillDetailsDto getSkillDetailsById(String skillId);
+	SkillDetailsDto getSkillDetailsById(String skillId, String superuserId);
 }

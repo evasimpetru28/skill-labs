@@ -12,4 +12,5 @@ public class SkillDetailsDto {
 	String name;
 	String description;
 	String categoryName;
+	boolean isBookmarked;
 }

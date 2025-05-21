@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Skill Labs - Bookmarked Skills</title>
+
+    {{>fragments/links}}
+    <link rel="stylesheet" href="/static/style/navigation-style.css">
+    <link rel="stylesheet" href="/static/style/all-skills-style.css">
+</head>
+<body>
+<!--Main Navigation-->
+<header>
+    {{>fragments/logout-btn}}
+    {{>fragments/sidebar}}
+</header>
+<!--Main Navigation-->
+
+<!--Main layout-->
+<main style="margin-top: 50px;">
+    <div class="container-fluid container-custom pt-4">
+        <h2>Bookmarked Skills</h2>
+        <br>
+
+        {{#noSkills}}
+        <div class="no-skills-text d-flex align-items-center justify-content-center">
+            <h4>You haven't bookmarked any skills yet. Go to <a href="/all-skills/{{superuserId}}" class="link"><u>All Skills</u></a> to bookmark your favorite skills</h4>
+        </div>
+        {{/noSkills}}
+
+        {{#bookmarkedSkills}}
+        <div class="category-container">
+            <div class="category-header">
+                <h4>{{category.name}}</h4>
+                {{#category.hasDescription}}
+                <div class="category-description">
+                    {{category.description}}
+                </div>
+                {{/category.hasDescription}}
+            </div>
+
+            <div class="skills-container">
+                {{#skills}}
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <h5>{{name}}</h5>
+                        <button onclick="toggleFavorite('{{id}}', '{{superuserId}}')" class="favorite-btn {{#isBookmarked}}active{{/isBookmarked}}">
+                            <i class="{{#isBookmarked}}fas{{/isBookmarked}} {{^isBookmarked}}far{{/isBookmarked}} fa-bookmark"></i>
+                        </button>
+                    </div>
+                    {{#hasDescription}}
+                    <div class="skill-description">
+                        {{description}}
+                    </div>
+                    {{/hasDescription}}
+                    <div class="skill-actions">
+                        <a href="/skill-details/{{id}}/overview/{{superuserId}}" class="btn btn-primary">
+                            <i class="fas fa-info-circle me-2"></i>Details
+                        </a>
+                    </div>
+                </div>
+                {{/skills}}
+            </div>
+        </div>
+        {{/bookmarkedSkills}}
+    </div>
+</main>
+<!--Main layout-->
+
+<script src="../static/js/skill-favorites.js"></script>
+
+</body>
+</html> 

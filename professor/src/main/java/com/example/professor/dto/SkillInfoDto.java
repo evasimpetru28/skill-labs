@@ -18,6 +18,7 @@ public class SkillInfoDto implements Comparable<SkillInfoDto> {
     private String description;
     private String categoryId;
     private boolean hasDescription;
+    private boolean isBookmarked;
 
     @Override
     public int compareTo(SkillInfoDto other) {
