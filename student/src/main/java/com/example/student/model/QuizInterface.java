@@ -13,4 +13,5 @@ public interface QuizInterface {
 	String getStudentId();
 	Integer getScore();
 	String getStatus();
+	Boolean getIsExpired();
 }

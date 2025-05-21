@@ -21,4 +21,5 @@ public class QuizDto {
 	boolean isPublic;
 	String createdAt;
 	String skillLabel;
+	Boolean isExpired;
 }

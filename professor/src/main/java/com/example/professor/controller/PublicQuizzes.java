@@ -22,6 +22,10 @@ public class PublicQuizzes {
 	public String getPublicQuizzesPage(Model model, @PathVariable String superuserId) {
 		//TODO: Get logged user id from session
 		navbarService.activateNavbarTab(Page.PUBLIC_QUIZZES, model);
+		var quizzList = quizService.getPublicQuizzes();
+
+		model.addAttribute("quizList", quizzList);
+		model.addAttribute("noQuizzes", quizzList.isEmpty());
 		model.addAttribute("superuserId", superuserId);
 
 		return "public-quizzes";

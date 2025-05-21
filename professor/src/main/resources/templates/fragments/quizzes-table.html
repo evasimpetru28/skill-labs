@@ -9,10 +9,9 @@
 {{/noQuizzes}}
 
 {{^noQuizzes}}
-<table id="dtBasicExample" class="table table-hover table-striped table-bordered table-sm">
+<table id="dtBasicExample" class="dataTable table table-hover table-striped table-bordered table-sm">
 	<thead>
 	<tr>
-		<th class="th-sm">Nr.</th>
 		<th class="th-sm">Name</th>
 		<th class="th-sm">Skill</th>
 		<th class="th-sm">Created at</th>
@@ -23,7 +22,6 @@
 	<tbody>
 	{{#quizList}}
 	<tr>
-		<td class="index">{{index}}</td>
 		<td>
 			<div class="row">
 				<div class="col-10">

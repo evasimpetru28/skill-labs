@@ -1,0 +1,61 @@
+{{#noQuizzes}}
+<div class="row">
+	<div class="no-quizzes-text d-flex align-items-center justify-content-center">
+		<h4>There are no public quizzes yet.</h4>
+	</div>
+</div>
+{{/noQuizzes}}
+
+{{^noQuizzes}}
+<table id="dtBasicExample" class="dataTable table table-hover table-striped table-bordered table-sm">
+	<thead>
+	<tr>
+		<th class="th-sm">Name</th>
+		<th class="th-sm">Skill</th>
+		<th class="th-sm">Status</th>
+		<th class="th-sm">Created by</th>
+		<th class="th-sm">Created at</th>
+		<th class="th-sm">Actions</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	{{#quizList}}
+	<tr>
+		<td>
+			<div class="row">
+				<div class="col-10">
+					<strong>{{name}}</strong>
+					<br>
+					<small>{{#description}}{{description}}{{/description}}</small>
+				</div>
+				<div class="col-2">
+					{{#isPublic}}
+						<span class="badge bg-success">Public</span>
+					{{/isPublic}}
+					{{^isPublic}}
+						<span class="badge bg-warning text-dark">Private</span>
+					{{/isPublic}}
+				</div>
+			</div>
+		</td>
+		<td style="width: 100px;">
+			<span class="skillLabel">
+				{{#skillLabel}}{{skillLabel}}{{/skillLabel}}{{^skillLabel}}-{{/skillLabel}}
+			</span>
+		</td>
+		<td {{#isExpired}}style="color: red;"{{/isExpired}} {{^isExpired}}style="color: green;"{{/isExpired}} >
+			{{#isExpired}}EXPIRED{{/isExpired}}{{^isExpired}}ACTIVE{{/isExpired}}
+		</td>
+		<td class="createdBy">{{superuserName}}</td>
+		<td class="createdAt">{{createdAt}}</td>
+		<td>
+			<a href="/quiz-details/{{id}}/{{superuserId}}" class="btn btn-primary btn-sm">
+				<i class="fas fa-info-circle me-1"></i>Details
+			</a>
+		</td>
+	</tr>
+	{{/quizList}}
+	</tbody>
+</table>
+{{/noQuizzes}}

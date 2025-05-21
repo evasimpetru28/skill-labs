@@ -35,7 +35,7 @@ public class AssignmentController {
 	}
 
 	@PostMapping("edit-assigned/{quizId}")
-	public String editAsignedQuiz(@PathVariable String quizId) {
+	public String editAssignedQuiz(@PathVariable String quizId) {
 		return "redirect:/assign-students/" + quizId;
 	}
 

@@ -33,6 +33,10 @@ public class QuizService {
 		return quizRepository.getReferenceById(quizId);
 	}
 
+	public QuizDto getQuizDetailsById(String quizId) {
+		return quizRepository.getQuizDtoById(quizId);
+	}
+
 	public List<QuizDto> getDraftedQuizzesBySuperuserId(String superuserId) {
 		var index = new AtomicInteger(1);
 		return quizRepository.getAllBySuperuserIdNotReady(superuserId)
@@ -48,7 +52,8 @@ public class QuizService {
 									: quiz.getDescription(),
 							"PUBLIC".equals(quiz.getStatus()),
 							Utils.localDateTimeToString(quiz.getCreatedAt()),
-							getSkillLabel(quiz.getSkillId())
+							getSkillLabel(quiz.getSkillId()),
+						quiz.getIsExpired()
 				))
 				.toList();
 	}
@@ -76,8 +81,9 @@ public class QuizService {
 								? quiz.getDescription().substring(0, 110) + "..."
 								: quiz.getDescription(),
 								"PUBLIC".equals(quiz.getStatus()),
-								Utils.localDateTimeToString(quiz.getCreatedAt()),
-						getSkillLabel(quiz.getSkillId())
+						Utils.localDateTimeToString(quiz.getCreatedAt()),
+						getSkillLabel(quiz.getSkillId()),
+						quiz.getIsExpired()
 				))
 				.toList();
 	}
@@ -96,8 +102,9 @@ public class QuizService {
 								? quiz.getDescription().substring(0, 110) + "..."
 								: quiz.getDescription(),
 								"PUBLIC".equals(quiz.getStatus()),
-								Utils.localDateTimeToString(quiz.getCreatedAt()),
-						getSkillLabel(quiz.getSkillId())
+						Utils.localDateTimeToString(quiz.getCreatedAt()),
+						getSkillLabel(quiz.getSkillId()),
+						quiz.getIsExpired()
 				))
 				.toList();
 	}
@@ -120,8 +127,9 @@ public class QuizService {
 								? quiz.getDescription().substring(0, 110) + "..."
 								: quiz.getDescription(),
 								"PUBLIC".equals(quiz.getStatus()),
-								Utils.localDateTimeToString(quiz.getCreatedAt()),
-						getSkillLabel(quiz.getSkillId())
+						Utils.localDateTimeToString(quiz.getCreatedAt()),
+						getSkillLabel(quiz.getSkillId()),
+						quiz.getIsExpired()
 				))
 				.toList();
 	}

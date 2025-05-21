@@ -43,8 +43,8 @@ public class QuizService {
 					quizModel.setSuperuserName(quizInterface.getSuperuserName());
 					quizModel.setStudentId(quizInterface.getStudentId());
 					quizModel.setScore(quizInterface.getScore());
-					quizModel.setStatus("EXPIRED".equals(quizInterface.getStatus()) ? "EXPIRED" : "ACTIVE");
-					quizModel.setIsExpired("EXPIRED".equals(quizInterface.getStatus()));
+					quizModel.setStatus(quizInterface.getIsExpired() ? "EXPIRED" : "ACTIVE");
+					quizModel.setIsExpired(quizInterface.getIsExpired());
 					quizModel.setCanReview(quizInterface.getScore() != null);
 					quizModel.setCanAnswer(quizInterface.getScore() == null && !quizModel.getIsExpired());
 					return quizModel;

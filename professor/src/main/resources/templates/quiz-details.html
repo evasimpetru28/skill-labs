@@ -8,6 +8,10 @@
 	<link rel="stylesheet" href="/static/style/navigation-style.css">
 	<!-- Page style -->
 	<link rel="stylesheet" href="/static/style/quiz-details-style.css">
+	<!-- DataTables CSS -->
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css">
+	<!-- DataTables JS -->
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
 
 </head>
 <body>
@@ -26,6 +30,7 @@
 	<div class="container-fluid container-custom pt-4 table-responsive-lg">
 		{{#quiz}}
 		<h2>Quiz: {{name}}</h2>
+		<h5>{{skillLabel}}</h5>
 		{{#description}}<p>{{description}}</p>{{/description}}
 		{{/quiz}}
 		<br>
@@ -35,6 +40,7 @@
 	</div>
 </main>
 <!--Main layout-->
+<script type="text/javascript" src="/static/js/quizzes.js"></script>
 
 </body>
 </html>

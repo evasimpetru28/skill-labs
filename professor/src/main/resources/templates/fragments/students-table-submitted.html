@@ -11,10 +11,9 @@
 {{/noQuizzes}}
 
 {{^noQuizzes}}
-<table id="dtBasicExample" class="table table-hover table-striped table-bordered table-sm">
+<table id="dtBasicExample" class=" dataTable table table-hover table-striped table-bordered table-sm">
   <thead>
   <tr>
-    <th class="th-sm">Nr.</th>
     <th class="th-sm">Name</th>
     <th class="th-sm">Email</th>
     <th class="th-sm">Year</th>
@@ -28,7 +27,6 @@
   <tbody>
   {{#studentListSubmitted}}
   <tr>
-    <td class="">{{index}}</td>
     <td class="">{{studentName}}</td>
     <td class="">{{studentEmail}}</td>
     <td class="">{{studentYear}}</td>

@@ -22,3 +22,41 @@ table {
         display: none;
     }
 }
+
+.no-quizzes-text {
+    height: 300px;
+}
+
+.index {
+    width: 50px;
+}
+
+.skillLabel {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 350px;
+    width: 100%;
+}
+
+.createdAt {
+    width: 140px;
+}
+
+/* Table Styles */
+#dtBasicExample {
+    width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .quizzes-nav {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .quizzes-nav button {
+        width: 100%;
+    }
+}

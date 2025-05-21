@@ -82,6 +82,7 @@ public class MyQuizzesController {
 		quiz.setName("Untitled");
 		quiz.setStatus("PRIVATE");
 		quiz.setIsReady(false);
+		quiz.setIsExpired(false);
 		quizService.saveQuiz(quiz);
 
 		addQuestionAndOption(quiz.getId());
@@ -158,7 +159,7 @@ public class MyQuizzesController {
 	@PostMapping("/make-expired/{quizId}/{superuserId}")
 	public String makeExpiredQuiz(@PathVariable String quizId, @PathVariable String superuserId) {
 		var quiz = quizService.getQuizById(quizId);
-		quiz.setStatus("EXPIRED");
+		quiz.setIsExpired(true);
 		quizService.saveQuiz(quiz);
 		return "redirect:/quizzes/expired/" + superuserId;
 	}
@@ -244,7 +245,7 @@ public class MyQuizzesController {
 		var studentListSubmitted = assignmentService.getStudentInfoByQuizSubmitted(quizId);
 		var studentList = assignmentService.getStudentInfoByQuiz(quizId);
 
-		model.addAttribute("quiz", quizService.getQuizById(quizId));
+		model.addAttribute("quiz", quizService.getQuizDetailsById(quizId));
 		model.addAttribute("superuserId", superuserId);
 		model.addAttribute("studentListSubmitted", studentListSubmitted);
 		model.addAttribute("noQuizzes", studentListSubmitted.isEmpty());

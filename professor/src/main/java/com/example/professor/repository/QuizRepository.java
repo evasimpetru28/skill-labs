@@ -15,7 +15,7 @@ public interface QuizRepository extends JpaRepository<Quiz, String> {
 			from Quiz q
 			where q.superuserId = ?1
 			  and q.isReady = false
-			  and q.status <> "EXPIRED"
+			  and q.isExpired = false
 			order by q.createdAt desc
 			""")
 	List<Quiz> getAllBySuperuserIdNotReady(String superuserId);
@@ -25,7 +25,7 @@ public interface QuizRepository extends JpaRepository<Quiz, String> {
 			from Quiz q
 			where q.superuserId = ?1
 			  and q.isReady = true
-			  and q.status <> "EXPIRED"
+			  and q.isExpired = false
 			order by q.createdAt desc
 			""")
 	List<Quiz> getAllBySuperuserIdReady(String superuserId);
@@ -33,7 +33,7 @@ public interface QuizRepository extends JpaRepository<Quiz, String> {
 			select q
 			from Quiz q
 			where q.superuserId = ?1
-			  and q.status = "EXPIRED"
+			  and q.isExpired = true
 			order by q.createdAt desc
 			""")
 	List<Quiz> getAllExpiredBySuperuserId(String superuserId);
@@ -42,6 +42,7 @@ public interface QuizRepository extends JpaRepository<Quiz, String> {
 			select q
 			from Quiz q
 			where q.status = "PUBLIC"
+			and q.isReady = true
 			order by q.createdAt desc
 			""")
 	List<Quiz> getAllPublicQuizzes();
@@ -50,7 +51,7 @@ public interface QuizRepository extends JpaRepository<Quiz, String> {
 
 	@Query("""
 	SELECT new com.example.professor.dto.QuizDto(q.id, 0, q.superuserId, s.name, q.name, q.description,
-	(CASE WHEN q.status = 'PUBLIC' THEN TRUE ELSE FALSE END), TO_CHAR(q.createdAt, 'DD.MM.YYYY (HH:mm)'), q.skillId)
+	(CASE WHEN q.status = 'PUBLIC' THEN TRUE ELSE FALSE END), TO_CHAR(q.createdAt, 'DD.MM.YYYY (HH:mm)'), q.skillId, q.isExpired)
 	FROM Quiz q
 	JOIN Superuser s ON q.superuserId = s.id
 	WHERE q.skillId = :skillId
@@ -59,4 +60,16 @@ public interface QuizRepository extends JpaRepository<Quiz, String> {
 	ORDER BY q.createdAt desc
 	""")
 	List<QuizDto> findQuizDtoBySkillId(String skillId, String superuserId);
+
+	@Query("""
+	SELECT new com.example.professor.dto.QuizDto(q.id, 0, q.superuserId, s.name, q.name, q.description,
+	(CASE WHEN q.status = 'PUBLIC' THEN TRUE ELSE FALSE END), TO_CHAR(q.createdAt, 'DD.MM.YYYY (HH:mm)'),
+	s.name || ' (' || c.name || ')', q.isExpired)
+	FROM Quiz q
+	JOIN Superuser s ON q.superuserId = s.id
+	JOIN Skill sk ON q.skillId = sk.id
+	JOIN Category c ON c.id = sk.categoryId
+	WHERE q.id = :id
+	""")
+	QuizDto getQuizDtoById(String id);
 }

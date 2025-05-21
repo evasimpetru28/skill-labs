@@ -1,22 +1,26 @@
 package com.example.professor.service;
 
+import com.example.professor.dto.StudentDto;
 import com.example.professor.entity.Assignment;
 import com.example.professor.entity.Student;
-import com.example.professor.dto.StudentDto;
 import com.example.professor.repository.AssignmentRepository;
+import com.example.professor.repository.ResponseRepository;
 import com.example.professor.repository.StudentRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class AssignmentService {
 
-	final AssignmentRepository assignmentRepository;
 	final StudentRepository studentRepository;
+	final ResponseRepository responseRepository;
+	final AssignmentRepository assignmentRepository;
 
 	public List<Student> getAssignedStudentsOfQuiz(String quizId) {
 		return assignmentRepository.findAssignedByQuizOrderByName(quizId);
@@ -64,6 +68,9 @@ public class AssignmentService {
 	}
 
 	public void deleteAssignment(Assignment assignment) {
+		log.info("Delete all responses for assignment with id {}", assignment.getId());
+		responseRepository.deleteAll(responseRepository.findAllByStudentIdAndQuizId(assignment.getStudentId(), assignment.getQuizId()));
+		log.info("Delete assignment with id {}", assignment.getId());
 		assignmentRepository.delete(assignment);
 	}
 
