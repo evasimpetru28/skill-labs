@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Skill Labs - Dashboard</title>
@@ -8,7 +8,75 @@
     <link rel="stylesheet" href="../static/style/navigation-style.css">
     <!-- Page style -->
     <link rel="stylesheet" href="../static/style/dashboard-style.css">
-
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+        }
+        .tooltip-text {
+            visibility: hidden;
+            width: 260px;
+            background-color: #f8f9fa;
+            color: #495057;
+            text-align: left;
+            border-radius: 8px;
+            padding: 10px 14px;
+            position: absolute;
+            z-index: 10;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.92em;
+            line-height: 1.4;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border: 1px solid #dee2e6;
+        }
+        .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #f8f9fa transparent transparent transparent;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.08));
+        }
+        .tooltip-container:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        .tooltip-text strong {
+            color: #495057;
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        .tooltip-text ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .tooltip-text li {
+            margin-bottom: 3px;
+            color: #6c757d;
+        }
+        .section-header {
+            margin: 2rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #eee;
+        }
+        .section-header h4 {
+            color: #333;
+            font-weight: 500;
+        }
+        .section-header i {
+            opacity: 0.8;
+        }
+    </style>
 </head>
 <body>
 
@@ -19,18 +87,553 @@
 <!--Main Navigation-->
 
 <!--Main layout-->
-<main style="margin-top: 50px;">
-    <div class="container-fluid container-custom pt-4 table-responsive-lg">
-
+<main style="margin-top: 50px;" th:data-superuser-id="${superuserId}">
+    <div class="container-fluid container-custom pt-4">
         <h2>Dashboard</h2>
         <br>
 
+        <!-- Quiz Statistics Section -->
+        <div class="section-header">
+            <h4><i class="fas fa-clipboard-check me-2"></i>Quiz Statistics</h4>
+        </div>
+        <div class="row mb-4">
+            <div class="col-xl-4 col-sm-12 col-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between px-md-1">
+                            <div>
+                                <h3 class="text-primary" id="totalQuizzes">0</h3>
+                                <p class="mb-0">Total Quizzes</p>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-clipboard-list text-primary fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-sm-12 col-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between px-md-1">
+                            <div>
+                                <h3 class="text-success" id="myQuizzesAvgScore">0</h3>
+                                <p class="mb-0">Average Score (My Quizzes)</p>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-star text-success fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-sm-12 col-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between px-md-1">
+                            <div>
+                                <h3 class="text-info" id="publicQuizzesAvgScore">0</h3>
+                                <p class="mb-0">Average Score (Public Quizzes)</p>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-globe text-info fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Metrics Section -->
+        <div class="section-header">
+            <h4><i class="fas fa-chart-line me-2"></i>Performance Metrics</h4>
+        </div>
+        <div class="row mb-4">
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between px-md-1">
+                            <div>
+                                <h3 class="text-success" id="completionRate">0%</h3>
+                                <p class="mb-0 d-flex align-items-center">Quiz Completion Rate
+                                    <span class="tooltip-container ms-1">
+                                        <i class="fas fa-info-circle text-muted"></i>
+                                        <span class="tooltip-text">Percentage of assigned quizzes that have been completed by students.</span>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-tasks text-success fa-3x"></i>
+                            </div>
+                        </div>
+                        <div class="progress mt-3" style="height: 6px">
+                            <div id="completionRateProgress"
+                                 class="progress-bar bg-success"
+                                 role="progressbar"
+                                 style="width: 0%"
+                                 aria-valuenow="0"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100"></div>
+                        </div>
+                        <small class="text-muted mt-2 d-block">
+                            <span id="completedQuizzesStudents">0</span> out of <span id="totalCompletionStudents">0</span> students
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between px-md-1">
+                            <div>
+                                <h3 class="text-info" id="highPerformers">0%</h3>
+                                <p class="mb-0 d-flex align-items-center">High Performing Students
+                                    <span class="tooltip-container ms-1">
+                                        <i class="fas fa-info-circle text-muted"></i>
+                                        <span class="tooltip-text">Percentage of students with an average quiz score of 80 or above.</span>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-user-graduate text-info fa-3x"></i>
+                            </div>
+                        </div>
+                        <div class="progress mt-3" style="height: 6px">
+                            <div id="highPerformersProgress"
+                                 class="progress-bar bg-info"
+                                 role="progressbar"
+                                 style="width: 0%"
+                                 aria-valuenow="0"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100"></div>
+                        </div>
+                        <small class="text-muted mt-2 d-block">
+                            <span id="highPerformersCount">0</span> out of <span id="totalStudents">0</span> students
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between px-md-1">
+                            <div>
+                                <h3 class="text-warning" id="studentEngagement">0%</h3>
+                                <p class="mb-0 d-flex align-items-center">Student Engagement Rate
+                                    <span class="tooltip-container ms-1">
+                                        <i class="fas fa-info-circle text-muted"></i>
+                                        <span class="tooltip-text">Percentage of students who have completed at least 70% of their assigned activities (self-evaluating skills and taking quizzes).</span>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-chart-line text-warning fa-3x"></i>
+                            </div>
+                        </div>
+                        <div class="progress mt-3" style="height: 6px">
+                            <div id="engagementProgress"
+                                 class="progress-bar bg-warning"
+                                 role="progressbar"
+                                 style="width: 0%"
+                                 aria-valuenow="0"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100"></div>
+                        </div>
+                        <small class="text-muted mt-2 d-block">
+                            <span id="highlyEngagedCount">0</span> highly engaged students
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between px-md-1">
+                            <div>
+                                <h3 class="text-purple" id="skillMastery">0%</h3>
+                                <p class="mb-0 d-flex align-items-center">Skill Mastery Rate
+                                    <span class="tooltip-container ms-1">
+                                        <i class="fas fa-info-circle text-muted"></i>
+                                        <span class="tooltip-text">Percentage of students who have achieved mastery in at least half of their assigned skills.</span>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-award text-purple fa-3x"></i>
+                            </div>
+                        </div>
+                        <div class="progress mt-3" style="height: 6px">
+                            <div id="masteryProgress"
+                                 class="progress-bar bg-purple"
+                                 role="progressbar"
+                                 style="width: 0%"
+                                 aria-valuenow="0"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100"></div>
+                        </div>
+                        <small class="text-muted mt-2 d-block">
+                            <span id="masteredSkillsCount">0</span> students with skill mastery
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skill Mastery Distribution Section -->
+        <div class="row mb-4 d-flex align-items-stretch">
+            <div class="col-xl-8 col-md-12 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="mb-0"><i class="fas fa-graduation-cap me-2"></i>Skill Mastery Distribution</h5>
+                            <span class="text-muted" style="font-size: 1rem;">Total students: <span id="totalMasteryStudents">0</span></span>
+                        </div>
+                        
+                        <div class="progress-title">
+                            <span><i class="fas fa-seedling me-2"></i>Beginner</span>
+                            <span id="beginnerCount">0</span> students
+                        </div>
+                        <div class="progress" style="height: 6px">
+                            <div id="beginnerProgress"
+                                 class="progress-bar bg-success"
+                                 role="progressbar"
+                                 style="width: 0%"
+                                 aria-valuenow="0"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100"></div>
+                        </div>
+
+                        <div class="progress-title mt-3">
+                            <span><i class="fas fa-tree me-2"></i>Intermediate</span>
+                            <span id="intermediateCount">0</span> students
+                        </div>
+                        <div class="progress" style="height: 6px">
+                            <div id="intermediateProgress"
+                                 class="progress-bar bg-info"
+                                 role="progressbar"
+                                 style="width: 0%"
+                                 aria-valuenow="0"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100"></div>
+                        </div>
+
+                        <div class="progress-title mt-3">
+                            <span><i class="fas fa-award me-2"></i>Advanced</span>
+                            <span id="advancedCount">0</span> students
+                        </div>
+                        <div class="progress" style="height: 6px">
+                            <div id="advancedProgress"
+                                 class="progress-bar bg-purple"
+                                 role="progressbar"
+                                 style="width: 0%"
+                                 aria-valuenow="0"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-12 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="mb-3"><i class="fas fa-info-circle me-2"></i>How Mastery is Calculated</h5>
+                        <div class="row">
+                            <div class="col-6">
+                                <strong>Weighted Average:</strong>
+                                <ul class="mt-2 mb-0">
+                                    <li>50% knowledge</li>
+                                    <li>30% experience</li>
+                                    <li>20% interest</li>
+                                </ul>
+                            </div>
+                            <div class="col-6">
+                                <strong>Level Thresholds:</strong>
+                                <ul class="mt-2 mb-0">
+                                    <li>Advanced: ≥8.0</li>
+                                    <li>Intermediate: ≥5.0</li>
+                                    <li>Beginner: <5.0</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="section-header">
+            <h4><i class="fas fa-chart-pie me-2"></i>Analytics</h4>
+        </div>
+        <div class="row">
+            <div class="col-xl-6 col-md-12 mb-4">
+                <div class="card chart-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Most Self-Evaluated Skills</h5>
+                        <div id="topSkillsContainer">
+                            <canvas id="topSkillsChart"></canvas>
+                            <div id="noTopSkillsMessage" class="text-center d-none">
+                                <i class="fas fa-chart-pie fa-3x mb-3 text-muted"></i>
+                                <p class="text-muted">No skill evaluation data available yet.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-md-12 mb-4">
+                <div class="card chart-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Average Quiz Scores by Category</h5>
+                        <div id="categoryScoresContainer">
+                            <canvas id="categoryScoresChart"></canvas>
+                            <div id="noCategoryScoresMessage" class="text-center d-none">
+                                <i class="fas fa-chart-bar fa-3x mb-3 text-muted"></i>
+                                <p class="text-muted">No quiz score data available yet.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-md-12 mb-4">
+                <div class="card chart-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Monthly Quiz Completions</h5>
+                        <div id="monthlyQuizCompletionsContainer">
+                            <canvas id="monthlyQuizCompletionsChart"></canvas>
+                            <div id="noQuizCompletionsMessage" class="text-center d-none">
+                                <i class="fas fa-chart-line fa-3x mb-3 text-muted"></i>
+                                <p class="text-muted">No quiz completion data available yet.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-md-12 mb-4">
+                <div class="card chart-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Quiz Score Distribution</h5>
+                        <div id="quizScoreDistributionContainer">
+                            <canvas id="quizScoreDistributionChart"></canvas>
+                            <div id="noScoreDistributionMessage" class="text-center d-none">
+                                <i class="fas fa-chart-bar fa-3x mb-3 text-muted"></i>
+                                <p class="text-muted">No quiz score data available yet.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 <!--Main layout-->
 
-</body>
-
 <script type="text/javascript" src="../static/js/dashboard.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        try {
+            // Initialize tooltips
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+            [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
+            console.log('Fetching dashboard data...');
+            const superuserId = document.querySelector('main').dataset.superuserId;
+            
+            fetch(`/api/dashboard/stats/${superuserId}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Data received:', data);
+                    
+                    const { quizStats, skillStats, monthlyStats } = data;
+                    
+                    // Update quiz statistics
+                    document.getElementById('totalQuizzes').textContent = quizStats.totalQuizzes || 0;
+                    document.getElementById('myQuizzesAvgScore').textContent = quizStats.myQuizzesAvgScore || 0;
+                    document.getElementById('publicQuizzesAvgScore').textContent = quizStats.publicQuizzesAvgScore || 0;
+                    
+                    // Update completion rate
+                    const completionRate = quizStats.completionRate || 0;
+                    document.getElementById('completionRate').textContent = `${completionRate}%`;
+                    document.getElementById('completionRateProgress').style.width = `${completionRate}%`;
+                    document.getElementById('completionRateProgress').setAttribute('aria-valuenow', completionRate);
+                    document.getElementById('completedQuizzesStudents').textContent = quizStats.completedQuizzesStudents || 0;
+                    document.getElementById('totalCompletionStudents').textContent = skillStats.totalStudents || 0;
+                    
+                    // Update high performers statistics
+                    const highPerformersPercentage = skillStats.highPerformersPercentage || 0;
+                    document.getElementById('highPerformers').textContent = `${highPerformersPercentage}%`;
+                    document.getElementById('highPerformersProgress').style.width = `${highPerformersPercentage}%`;
+                    document.getElementById('highPerformersProgress').setAttribute('aria-valuenow', highPerformersPercentage);
+                    document.getElementById('highPerformersCount').textContent = skillStats.highPerformersCount || 0;
+                    document.getElementById('totalStudents').textContent = skillStats.totalStudents || 0;
+                    
+                    // Update engagement statistics
+                    const engagementRate = skillStats.engagementRate || 0;
+                    document.getElementById('studentEngagement').textContent = `${engagementRate}%`;
+                    document.getElementById('engagementProgress').style.width = `${engagementRate}%`;
+                    document.getElementById('engagementProgress').setAttribute('aria-valuenow', engagementRate);
+                    document.getElementById('highlyEngagedCount').textContent = skillStats.highlyEngagedCount || 0;
+                    
+                    // Update skill mastery statistics
+                    const skillMasteryPercentage = skillStats.skillMasteryPercentage || 0;
+                    document.getElementById('skillMastery').textContent = `${skillMasteryPercentage}%`;
+                    document.getElementById('masteryProgress').style.width = `${skillMasteryPercentage}%`;
+                    document.getElementById('masteryProgress').setAttribute('aria-valuenow', skillMasteryPercentage);
+                    document.getElementById('masteredSkillsCount').textContent = skillStats.masteredSkillsCount || 0;
+                    
+                    // Update mastery level distribution
+                    const beginnerCount = skillStats.beginnerCount || 0;
+                    const intermediateCount = skillStats.intermediateCount || 0;
+                    const advancedCount = skillStats.advancedCount || 0;
+                    const totalEvaluations = beginnerCount + intermediateCount + advancedCount;
+                    
+                    const beginnerPercentage = totalEvaluations > 0 ? (beginnerCount / totalEvaluations) * 100 : 0;
+                    const intermediatePercentage = totalEvaluations > 0 ? (intermediateCount / totalEvaluations) * 100 : 0;
+                    const advancedPercentage = totalEvaluations > 0 ? (advancedCount / totalEvaluations) * 100 : 0;
+                    
+                    document.getElementById('beginnerCount').textContent = beginnerCount;
+                    document.getElementById('intermediateCount').textContent = intermediateCount;
+                    document.getElementById('advancedCount').textContent = advancedCount;
+                    
+                    document.getElementById('beginnerProgress').style.width = `${beginnerPercentage}%`;
+                    document.getElementById('beginnerProgress').setAttribute('aria-valuenow', beginnerPercentage);
+                    
+                    document.getElementById('intermediateProgress').style.width = `${intermediatePercentage}%`;
+                    document.getElementById('intermediateProgress').setAttribute('aria-valuenow', intermediatePercentage);
+                    
+                    document.getElementById('advancedProgress').style.width = `${advancedPercentage}%`;
+                    document.getElementById('advancedProgress').setAttribute('aria-valuenow', advancedPercentage);
+                    
+                    // Update total students for mastery distribution
+                    document.getElementById('totalMasteryStudents').textContent = skillStats.totalStudents || totalEvaluations || 0;
+                    
+                    // Initialize charts
+                    initializeCharts(monthlyStats);
+                    console.log('Charts initialized successfully');
+                })
+                .catch(error => {
+                    console.error('Error fetching dashboard data:', error);
+                });
+        } catch (error) {
+            console.error('Error initializing dashboard:', error);
+        }
+    });
+
+    function initializeCharts(monthlyStats) {
+        // Most Evaluated Skills Chart (Pie)
+        const topSkillsCtx = document.getElementById('topSkillsChart').getContext('2d');
+        new Chart(topSkillsCtx, {
+            type: 'pie',
+            data: {
+                labels: monthlyStats.topSkillNames || [],
+                datasets: [{
+                    data: monthlyStats.topSkillCounts || [],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.8)',
+                        'rgba(54, 162, 235, 0.8)',
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(75, 192, 192, 0.8)',
+                        'rgba(153, 102, 255, 0.8)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right'
+                    }
+                }
+            }
+        });
+
+        // Category Scores Chart (Bar)
+        const categoryScoresCtx = document.getElementById('categoryScoresChart').getContext('2d');
+        new Chart(categoryScoresCtx, {
+            type: 'bar',
+            data: {
+                labels: monthlyStats.categoryNames || [],
+                datasets: [{
+                    label: 'Average Score',
+                    data: monthlyStats.categoryAverages || [],
+                    backgroundColor: 'rgba(75, 192, 192, 0.8)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+
+        // Monthly Quiz Completions Chart
+        const monthlyQuizCompletionsCtx = document.getElementById('monthlyQuizCompletionsChart').getContext('2d');
+        new Chart(monthlyQuizCompletionsCtx, {
+            type: 'line',
+            data: {
+                labels: monthlyStats.months || [],
+                datasets: [{
+                    label: 'Completions',
+                    data: monthlyStats.completions || [],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Quiz Score Distribution Chart
+        const quizScoreDistributionCtx = document.getElementById('quizScoreDistributionChart').getContext('2d');
+        new Chart(quizScoreDistributionCtx, {
+            type: 'bar',
+            data: {
+                labels: ['0-20', '21-40', '41-60', '61-80', '81-100'],
+                datasets: [{
+                    label: 'Number of Students',
+                    data: monthlyStats.scoreDistribution || [0, 0, 0, 0, 0],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.5)',
+                        'rgba(255, 159, 64, 0.5)',
+                        'rgba(255, 205, 86, 0.5)',
+                        'rgba(75, 192, 192, 0.5)',
+                        'rgba(54, 162, 235, 0.5)'
+                    ],
+                    borderColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(255, 159, 64)',
+                        'rgb(255, 205, 86)',
+                        'rgb(75, 192, 192)',
+                        'rgb(54, 162, 235)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+</script>
+</body>
 </html>
