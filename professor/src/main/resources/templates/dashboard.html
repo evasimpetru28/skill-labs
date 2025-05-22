@@ -10,73 +10,7 @@
     <link rel="stylesheet" href="../static/style/dashboard-style.css">
     <!-- Chart.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <style>
-        .tooltip-container {
-            position: relative;
-            display: inline-block;
-        }
-        .tooltip-text {
-            visibility: hidden;
-            width: 260px;
-            background-color: #f8f9fa;
-            color: #495057;
-            text-align: left;
-            border-radius: 8px;
-            padding: 10px 14px;
-            position: absolute;
-            z-index: 10;
-            bottom: 125%;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 0.92em;
-            line-height: 1.4;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            border: 1px solid #dee2e6;
-        }
-        .tooltip-text::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #f8f9fa transparent transparent transparent;
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.08));
-        }
-        .tooltip-container:hover .tooltip-text {
-            visibility: visible;
-            opacity: 1;
-        }
-        .tooltip-text strong {
-            color: #495057;
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-        .tooltip-text ul {
-            margin: 0;
-            padding-left: 20px;
-        }
-        .tooltip-text li {
-            margin-bottom: 3px;
-            color: #6c757d;
-        }
-        .section-header {
-            margin: 2rem 0 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #eee;
-        }
-        .section-header h4 {
-            color: #333;
-            font-weight: 500;
-        }
-        .section-header i {
-            opacity: 0.8;
-        }
-    </style>
+
 </head>
 <body>
 
@@ -103,7 +37,7 @@
                         <div class="d-flex justify-content-between px-md-1">
                             <div>
                                 <h3 class="text-primary" id="totalQuizzes">0</h3>
-                                <p class="mb-0">Total Quizzes</p>
+                                <p class="mb-0">My Total Quizzes</p>
                             </div>
                             <div class="align-self-center">
                                 <i class="fas fa-clipboard-list text-primary fa-3x"></i>
@@ -137,6 +71,36 @@
                             </div>
                             <div class="align-self-center">
                                 <i class="fas fa-globe text-info fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-sm-12 col-12 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between px-md-1">
+                            <div>
+                                <h3 class="text-warning" id="uniqueQuizParticipants">0</h3>
+                                <p class="mb-0">Unique Quiz Participants</p>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-user-check text-warning fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-sm-12 col-12 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between px-md-1">
+                            <div>
+                                <h3 class="text-danger" id="mostAttemptedQuiz">-</h3>
+                                <p class="mb-0">Most Attempted Quiz</p>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-poll-h text-danger fa-3x"></i>
                             </div>
                         </div>
                     </div>
@@ -273,6 +237,70 @@
                         </div>
                         <small class="text-muted mt-2 d-block">
                             <span id="masteredSkillsCount">0</span> students with skill mastery
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between px-md-1">
+                            <div>
+                                <h3 class="text-cyan" id="skillEvalRate">0%</h3>
+                                <p class="mb-0 d-flex align-items-center">Skill Evaluation Rate
+                                    <span class="tooltip-container ms-1">
+                                        <i class="fas fa-info-circle text-muted"></i>
+                                        <span class="tooltip-text">Percentage of students who submitted your quizzes and also self-evaluated the relevant skills.</span>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-clipboard-check text-cyan fa-3x"></i>
+                            </div>
+                        </div>
+                        <div class="progress mt-3" style="height: 6px">
+                            <div id="skillEvalRateProgress"
+                                 class="progress-bar bg-cyan"
+                                 role="progressbar"
+                                 style="width: 0%"
+                                 aria-valuenow="0"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100"></div>
+                        </div>
+                        <small class="text-muted mt-2 d-block">
+                            <span id="skillEvalRateCount">0</span> out of <span id="skillEvalRateTotal">0</span> students
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between px-md-1">
+                            <div>
+                                <h3 class="text-danger" id="quizSkillAlignment">0%</h3>
+                                <p class="mb-0 d-flex align-items-center">Quiz-Skill Alignment
+                                    <span class="tooltip-container ms-1">
+                                        <i class="fas fa-info-circle text-muted"></i>
+                                        <span class="tooltip-text">Number and percentage of quiz participants whose self-evaluation (knowledge) closely matches their quiz score for the same skill (difference ≤ 10 points).</span>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="align-self-center">
+                                <i class="fas fa-balance-scale text-danger fa-3x"></i>
+                            </div>
+                        </div>
+                        <div class="progress mt-3" style="height: 6px">
+                            <div id="quizSkillAlignmentProgress"
+                                 class="progress-bar bg-danger"
+                                 role="progressbar"
+                                 style="width: 0%"
+                                 aria-valuenow="0"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100"></div>
+                        </div>
+                        <small class="text-muted mt-2 d-block">
+                            <span id="quizSkillAlignmentCount">0</span> out of <span id="quizSkillAlignmentTotal">0</span> students
                         </small>
                     </div>
                 </div>
@@ -427,213 +455,6 @@
 <!--Main layout-->
 
 <script type="text/javascript" src="../static/js/dashboard.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        try {
-            // Initialize tooltips
-            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-            [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
-            console.log('Fetching dashboard data...');
-            const superuserId = document.querySelector('main').dataset.superuserId;
-            
-            fetch(`/api/dashboard/stats/${superuserId}`)
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Data received:', data);
-                    
-                    const { quizStats, skillStats, monthlyStats } = data;
-                    
-                    // Update quiz statistics
-                    document.getElementById('totalQuizzes').textContent = quizStats.totalQuizzes || 0;
-                    document.getElementById('myQuizzesAvgScore').textContent = quizStats.myQuizzesAvgScore || 0;
-                    document.getElementById('publicQuizzesAvgScore').textContent = quizStats.publicQuizzesAvgScore || 0;
-                    
-                    // Update completion rate
-                    const completionRate = quizStats.completionRate || 0;
-                    document.getElementById('completionRate').textContent = `${completionRate}%`;
-                    document.getElementById('completionRateProgress').style.width = `${completionRate}%`;
-                    document.getElementById('completionRateProgress').setAttribute('aria-valuenow', completionRate);
-                    document.getElementById('completedQuizzesStudents').textContent = quizStats.completedQuizzesStudents || 0;
-                    document.getElementById('totalCompletionStudents').textContent = skillStats.totalStudents || 0;
-                    
-                    // Update high performers statistics
-                    const highPerformersPercentage = skillStats.highPerformersPercentage || 0;
-                    document.getElementById('highPerformers').textContent = `${highPerformersPercentage}%`;
-                    document.getElementById('highPerformersProgress').style.width = `${highPerformersPercentage}%`;
-                    document.getElementById('highPerformersProgress').setAttribute('aria-valuenow', highPerformersPercentage);
-                    document.getElementById('highPerformersCount').textContent = skillStats.highPerformersCount || 0;
-                    document.getElementById('totalStudents').textContent = skillStats.totalStudents || 0;
-                    
-                    // Update engagement statistics
-                    const engagementRate = skillStats.engagementRate || 0;
-                    document.getElementById('studentEngagement').textContent = `${engagementRate}%`;
-                    document.getElementById('engagementProgress').style.width = `${engagementRate}%`;
-                    document.getElementById('engagementProgress').setAttribute('aria-valuenow', engagementRate);
-                    document.getElementById('highlyEngagedCount').textContent = skillStats.highlyEngagedCount || 0;
-                    
-                    // Update skill mastery statistics
-                    const skillMasteryPercentage = skillStats.skillMasteryPercentage || 0;
-                    document.getElementById('skillMastery').textContent = `${skillMasteryPercentage}%`;
-                    document.getElementById('masteryProgress').style.width = `${skillMasteryPercentage}%`;
-                    document.getElementById('masteryProgress').setAttribute('aria-valuenow', skillMasteryPercentage);
-                    document.getElementById('masteredSkillsCount').textContent = skillStats.masteredSkillsCount || 0;
-                    
-                    // Update mastery level distribution
-                    const beginnerCount = skillStats.beginnerCount || 0;
-                    const intermediateCount = skillStats.intermediateCount || 0;
-                    const advancedCount = skillStats.advancedCount || 0;
-                    const totalEvaluations = beginnerCount + intermediateCount + advancedCount;
-                    
-                    const beginnerPercentage = totalEvaluations > 0 ? (beginnerCount / totalEvaluations) * 100 : 0;
-                    const intermediatePercentage = totalEvaluations > 0 ? (intermediateCount / totalEvaluations) * 100 : 0;
-                    const advancedPercentage = totalEvaluations > 0 ? (advancedCount / totalEvaluations) * 100 : 0;
-                    
-                    document.getElementById('beginnerCount').textContent = beginnerCount;
-                    document.getElementById('intermediateCount').textContent = intermediateCount;
-                    document.getElementById('advancedCount').textContent = advancedCount;
-                    
-                    document.getElementById('beginnerProgress').style.width = `${beginnerPercentage}%`;
-                    document.getElementById('beginnerProgress').setAttribute('aria-valuenow', beginnerPercentage);
-                    
-                    document.getElementById('intermediateProgress').style.width = `${intermediatePercentage}%`;
-                    document.getElementById('intermediateProgress').setAttribute('aria-valuenow', intermediatePercentage);
-                    
-                    document.getElementById('advancedProgress').style.width = `${advancedPercentage}%`;
-                    document.getElementById('advancedProgress').setAttribute('aria-valuenow', advancedPercentage);
-                    
-                    // Update total students for mastery distribution
-                    document.getElementById('totalMasteryStudents').textContent = skillStats.totalStudents || totalEvaluations || 0;
-                    
-                    // Initialize charts
-                    initializeCharts(monthlyStats);
-                    console.log('Charts initialized successfully');
-                })
-                .catch(error => {
-                    console.error('Error fetching dashboard data:', error);
-                });
-        } catch (error) {
-            console.error('Error initializing dashboard:', error);
-        }
-    });
-
-    function initializeCharts(monthlyStats) {
-        // Most Evaluated Skills Chart (Pie)
-        const topSkillsCtx = document.getElementById('topSkillsChart').getContext('2d');
-        new Chart(topSkillsCtx, {
-            type: 'pie',
-            data: {
-                labels: monthlyStats.topSkillNames || [],
-                datasets: [{
-                    data: monthlyStats.topSkillCounts || [],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.8)',
-                        'rgba(54, 162, 235, 0.8)',
-                        'rgba(255, 206, 86, 0.8)',
-                        'rgba(75, 192, 192, 0.8)',
-                        'rgba(153, 102, 255, 0.8)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'right'
-                    }
-                }
-            }
-        });
-
-        // Category Scores Chart (Bar)
-        const categoryScoresCtx = document.getElementById('categoryScoresChart').getContext('2d');
-        new Chart(categoryScoresCtx, {
-            type: 'bar',
-            data: {
-                labels: monthlyStats.categoryNames || [],
-                datasets: [{
-                    label: 'Average Score',
-                    data: monthlyStats.categoryAverages || [],
-                    backgroundColor: 'rgba(75, 192, 192, 0.8)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 100
-                    }
-                }
-            }
-        });
-
-        // Monthly Quiz Completions Chart
-        const monthlyQuizCompletionsCtx = document.getElementById('monthlyQuizCompletionsChart').getContext('2d');
-        new Chart(monthlyQuizCompletionsCtx, {
-            type: 'line',
-            data: {
-                labels: monthlyStats.months || [],
-                datasets: [{
-                    label: 'Completions',
-                    data: monthlyStats.completions || [],
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    tension: 0.1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-
-        // Quiz Score Distribution Chart
-        const quizScoreDistributionCtx = document.getElementById('quizScoreDistributionChart').getContext('2d');
-        new Chart(quizScoreDistributionCtx, {
-            type: 'bar',
-            data: {
-                labels: ['0-20', '21-40', '41-60', '61-80', '81-100'],
-                datasets: [{
-                    label: 'Number of Students',
-                    data: monthlyStats.scoreDistribution || [0, 0, 0, 0, 0],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.5)',
-                        'rgba(255, 159, 64, 0.5)',
-                        'rgba(255, 205, 86, 0.5)',
-                        'rgba(75, 192, 192, 0.5)',
-                        'rgba(54, 162, 235, 0.5)'
-                    ],
-                    borderColor: [
-                        'rgb(255, 99, 132)',
-                        'rgb(255, 159, 64)',
-                        'rgb(255, 205, 86)',
-                        'rgb(75, 192, 192)',
-                        'rgb(54, 162, 235)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    }
-</script>
 </body>
 </html>
