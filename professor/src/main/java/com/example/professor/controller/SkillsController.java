@@ -31,10 +31,13 @@ public class SkillsController {
 		navbarService.activateNavbarTab(Page.ALL_SKILLS, model);
 		
         List<CategoryWithSkillsDto> categories = categoryService.getAllCategoriesAndSkills(superuserId);
+		var superuser = superuserService.getSuperuserById(superuserId);
 
-        model.addAttribute("noSkills", categories.isEmpty());
-        model.addAttribute("categories", categories);
+		model.addAttribute("noSkills", categories.isEmpty());
+		model.addAttribute("categories", categories);
 		model.addAttribute("superuserId", superuserId);
+		model.addAttribute("name", superuser.getName());
+		model.addAttribute("isProfessor", "PROFESSOR".equals(superuser.getType()));
 		model.addAttribute("superuser", superuserService.getSuperuserById(superuserId).getName());
 		return "all-skills";
 	}
@@ -44,10 +47,13 @@ public class SkillsController {
         navbarService.activateNavbarTab(Page.BOOKMARKED_SKILLS, model);
         
         var bookmarkedSkills = categoryService.getAllBookmarkedCategoriesAndSkills(superuserId);
+		var superuser = superuserService.getSuperuserById(superuserId);
 
-        model.addAttribute("noSkills", bookmarkedSkills.isEmpty());
-        model.addAttribute("bookmarkedSkills", bookmarkedSkills);
+		model.addAttribute("noSkills", bookmarkedSkills.isEmpty());
+		model.addAttribute("bookmarkedSkills", bookmarkedSkills);
 		model.addAttribute("superuserId", superuserId);
+		model.addAttribute("name", superuser.getName());
+		model.addAttribute("isProfessor", "PROFESSOR".equals(superuser.getType()));
 		model.addAttribute("superuser", superuserService.getSuperuserById(superuserId).getName());
         return "bookmarked-skills";
     }
@@ -62,10 +68,13 @@ public class SkillsController {
 	@GetMapping("/skill-details/{skillId}/overview/{superuserId}")
 	public String getSkillDetailsOverviewPage(Model model, @PathVariable String skillId, @PathVariable String superuserId) {
 		navbarService.activateNavbarTab(Page.ALL_SKILLS, model);
+		var superuser = superuserService.getSuperuserById(superuserId);
 
 		model.addAttribute("skill", skillService.getSkillInformation(skillId, superuserId));
 		model.addAttribute("statistics", skillService.getSkillStatistics(skillId));
 		model.addAttribute("superuserId", superuserId);
+		model.addAttribute("name", superuser.getName());
+		model.addAttribute("isProfessor", "PROFESSOR".equals(superuser.getType()));
 		model.addAttribute("superuser", superuserService.getSuperuserById(superuserId).getName());
 		model.addAttribute("isOverview", true);
 		return "skill-details-overview";
@@ -76,10 +85,13 @@ public class SkillsController {
 		navbarService.activateNavbarTab(Page.ALL_SKILLS, model);
 
 		var evaluations = studentService.getAllStudentsSelfEvaluationBySkillId(skillId);
+		var superuser = superuserService.getSuperuserById(superuserId);
 		model.addAttribute("skill", skillService.getSkillInformation(skillId, superuserId));
 		model.addAttribute("evaluations", evaluations);
 		model.addAttribute("noEvaluations", evaluations.isEmpty());
 		model.addAttribute("superuserId", superuserId);
+		model.addAttribute("name", superuser.getName());
+		model.addAttribute("isProfessor", "PROFESSOR".equals(superuser.getType()));
 		model.addAttribute("superuser", superuserService.getSuperuserById(superuserId).getName());
 		model.addAttribute("isEvaluations", true);
 		return "skill-details-evaluations";
@@ -90,10 +102,13 @@ public class SkillsController {
 		navbarService.activateNavbarTab(Page.ALL_SKILLS, model);
 
 		var quizzes = quizService.getQuizListBySkillId(skillId, superuserId);
+		var superuser = superuserService.getSuperuserById(superuserId);
 		model.addAttribute("skill", skillService.getSkillInformation(skillId, superuserId));
 		model.addAttribute("quizzes", quizzes);
 		model.addAttribute("noQuizzes", quizzes.isEmpty());
 		model.addAttribute("superuserId", superuserId);
+		model.addAttribute("name", superuser.getName());
+		model.addAttribute("isProfessor", "PROFESSOR".equals(superuser.getType()));
 		model.addAttribute("superuser", superuserService.getSuperuserById(superuserId).getName());
 		model.addAttribute("isQuizzes", true);
 		return "skill-details-quizzes";

@@ -20,9 +20,10 @@ public class DashboardController {
 	String getDashboardPage(Model model, @PathVariable String superuserId) {
 		//TODO: Get logged user id from session
 		navbarService.activateNavbarTab(Page.DASHBOARD, model);
+		var superuser = superuserService.getSuperuserById(superuserId);
 		model.addAttribute("superuserId", superuserId);
-		model.addAttribute("name", superuserService.getSuperuserById(superuserId).getName());
-
+		model.addAttribute("name", superuser.getName());
+		model.addAttribute("isProfessor", "PROFESSOR".equals(superuser.getType()));
 		return "dashboard";
 	}
 

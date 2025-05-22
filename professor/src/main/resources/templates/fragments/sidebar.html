@@ -34,5 +34,20 @@
 			</a>
 		</div>
 	</div>
+
+	<div style="height: 45%;"></div>
+
+	<div class="list-group list-group-flush mx-3 mt-auto">
+		<div class="list-group-item py-2 d-flex align-items-center">
+			<i class="fas {{#isProfessor}}fa-chalkboard-teacher{{/isProfessor}}{{^isProfessor}}fa-building{{/isProfessor}} fa-fw me-3"></i>
+			<span>Hello, {{name}}</span>
+		</div>
+	</div>
+	<div class="list-group list-group-flush mx-3 mt-auto">
+		<a href="/logout" class="ms-auto  list-group-item list-group-item-action py-2 ripple active">
+			<i class="fas fa-sign-out-alt fa-fw me-3"></i><span>Logout</span>
+		</a>
+	</div>
+
 </nav>
 <!-- Sidebar -->

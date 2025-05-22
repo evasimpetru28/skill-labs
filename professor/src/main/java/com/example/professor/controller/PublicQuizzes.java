@@ -24,13 +24,14 @@ public class PublicQuizzes {
 
 	@GetMapping("/public-quizzes/{superuserId}")
 	public String getPublicQuizzesPage(Model model, @PathVariable String superuserId) {
-		//TODO: Get logged user id from session
 		navbarService.activateNavbarTab(Page.PUBLIC_QUIZZES, model);
 		var quizzList = quizService.getPublicQuizzes();
-
+		var superuser = superuserService.getSuperuserById(superuserId);
 		model.addAttribute("quizList", quizzList);
 		model.addAttribute("noQuizzes", quizzList.isEmpty());
 		model.addAttribute("superuserId", superuserId);
+		model.addAttribute("name", superuser.getName());
+		model.addAttribute("isProfessor", "PROFESSOR".equals(superuser.getType()));
 		model.addAttribute("superuser", superuserService.getSuperuserById(superuserId).getName());
 
 		return "public-quizzes";
@@ -38,13 +39,15 @@ public class PublicQuizzes {
 
 	@GetMapping("/quiz-preview/{quizId}/{superuserId}")
 	public String getQuizPreviewPage(Model model, @PathVariable String quizId, @PathVariable String superuserId) {
-		//TODO: Get logged user id from session
 		navbarService.activateNavbarTab(Page.PUBLIC_QUIZZES, model);
 
 		var quiz = quizService.getQuizDetailsById(quizId);
+		var superuser = superuserService.getSuperuserById(superuserId);
 		model.addAttribute("quiz", quiz);
 		model.addAttribute("questionMap", questionService.getQuestionMap(quizId));
 		model.addAttribute("superuserId", quiz.getSuperuserId());
+		model.addAttribute("name", superuser.getName());
+		model.addAttribute("isProfessor", "PROFESSOR".equals(superuser.getType()));
 
 		return "quiz-preview";
 	}

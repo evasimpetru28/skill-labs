@@ -34,9 +34,11 @@ public class MyQuizzesController {
 		//TODO: Get logged user id from session
 		navbarService.activateNavbarTab(Page.MY_QUIZZES, model);
 		var assignedQuizzesBySuperuserId = quizService.getAssignedQuizzesBySuperuserId(superuserId);
+		var superuser = superuserService.getSuperuserById(superuserId);
 
 		model.addAttribute("superuserId", superuserId);
-		model.addAttribute("name", superuserService.getSuperuserById(superuserId).getName());
+		model.addAttribute("name", superuser.getName());
+		model.addAttribute("isProfessor", "PROFESSOR".equals(superuser.getType()));
 		model.addAttribute("assigned", true);
 		model.addAttribute("expired", false);
 		model.addAttribute("drafted", false);
@@ -48,12 +50,13 @@ public class MyQuizzesController {
 
 	@GetMapping("/quizzes/expired/{superuserId}")
 	public String getExpiredQuizzesPage(Model model, @PathVariable String superuserId) {
-		//TODO: Get logged user id from session
 		navbarService.activateNavbarTab(Page.MY_QUIZZES, model);
 		var expiredQuizzesBySuperuserId = quizService.getExpiredQuizzesBySuperuserId(superuserId);
+		var superuser = superuserService.getSuperuserById(superuserId);
 
 		model.addAttribute("superuserId", superuserId);
-		model.addAttribute("name", superuserService.getSuperuserById(superuserId).getName());		model.addAttribute("assigned", false);
+		model.addAttribute("name", superuser.getName());
+		model.addAttribute("isProfessor", "PROFESSOR".equals(superuser.getType()));
 		model.addAttribute("expired", true);
 		model.addAttribute("drafted", false);
 		model.addAttribute("quizList", expiredQuizzesBySuperuserId);
@@ -64,11 +67,12 @@ public class MyQuizzesController {
 
 	@GetMapping("/quizzes/drafted/{superuserId}")
 	public String getDraftedQuizzesPage(Model model, @PathVariable String superuserId) {
-		//TODO: Get logged user id from session
 		navbarService.activateNavbarTab(Page.MY_QUIZZES, model);
+		var superuser = superuserService.getSuperuserById(superuserId);
 		var draftedQuizzesBySuperuserId = quizService.getDraftedQuizzesBySuperuserId(superuserId);
 		model.addAttribute("superuserId", superuserId);
-		model.addAttribute("name", superuserService.getSuperuserById(superuserId).getName());		model.addAttribute("assigned", false);
+		model.addAttribute("name", superuser.getName());
+		model.addAttribute("isProfessor", "PROFESSOR".equals(superuser.getType()));
 		model.addAttribute("expired", false);
 		model.addAttribute("drafted", true);
 		model.addAttribute("quizList", draftedQuizzesBySuperuserId);
@@ -116,8 +120,10 @@ public class MyQuizzesController {
 			model.addAttribute("skillLabel", quizService.getSkillLabel(quiz.getSkillId()));
 		}
 		navbarService.activateNavbarTab(Page.MY_QUIZZES, model);
+		var superuser = superuserService.getSuperuserById(quiz.getSuperuserId());
 		model.addAttribute("superuserId", quiz.getSuperuserId());
-		model.addAttribute("name", superuserService.getSuperuserById(quiz.getSuperuserId()).getName());		model.addAttribute("quizId", quizId);
+		model.addAttribute("name", superuser.getName());
+		model.addAttribute("isProfessor", "PROFESSOR".equals(superuser.getType()));
 		model.addAttribute("quiz", quiz);
 		model.addAttribute("isPublic", "PUBLIC".equals(quiz.getStatus()));
 		model.addAttribute("questionMap", questionService.getQuestionMap(quizId));
@@ -228,14 +234,16 @@ public class MyQuizzesController {
 
 	@GetMapping("/details/{quizId}/{superuserId}")
 	public String getQuizDetailsPage(Model model, @PathVariable String quizId, @PathVariable String superuserId) {
-		//TODO: Get logged user id from session
 		navbarService.activateNavbarTab(Page.MY_QUIZZES, model);
 		var studentListSubmitted = assignmentService.getStudentInfoByQuizSubmitted(quizId);
 		var studentList = assignmentService.getStudentInfoByQuiz(quizId);
+		var superuser = superuserService.getSuperuserById(superuserId);
 
 		model.addAttribute("quiz", quizService.getQuizDetailsById(quizId));
 		model.addAttribute("superuserId", superuserId);
-		model.addAttribute("name", superuserService.getSuperuserById(superuserId).getName());		model.addAttribute("studentListSubmitted", studentListSubmitted);
+		model.addAttribute("name", superuser.getName());
+		model.addAttribute("isProfessor", "PROFESSOR".equals(superuser.getType()));
+		model.addAttribute("studentListSubmitted", studentListSubmitted);
 		model.addAttribute("noQuizzes", studentListSubmitted.isEmpty());
 		model.addAttribute("studentList", studentList);
 		model.addAttribute("submissionsNumber", studentListSubmitted.size());
@@ -248,12 +256,14 @@ public class MyQuizzesController {
 	public String getAnswersPage(Model model, @PathVariable String quizId, @PathVariable String studentId) {
 		navbarService.activateNavbarTab(Page.MY_QUIZZES, model);
 		var quiz = quizService.getQuizDetailsById(quizId);
+		var superuser = superuserService.getSuperuserById(quiz.getSuperuserId());
 		model.addAttribute("quiz", quiz);
 		model.addAttribute("score", assignmentService.getAssignmentByStudentAndQuiz(studentId, quizId).getScore());
 		model.addAttribute("studentName", studentService.getStudentById(studentId).getName());
 		model.addAttribute("questionMap", questionService.getQuestionMapForStudent(quizId, studentId));
 		model.addAttribute("superuserId", quiz.getSuperuserId());
-		model.addAttribute("name", superuserService.getSuperuserById(quiz.getSuperuserId()).getName());
+		model.addAttribute("name", superuser.getName());
+		model.addAttribute("isProfessor", "PROFESSOR".equals(superuser.getType()));
 		return "quiz-answers";
 	}
 

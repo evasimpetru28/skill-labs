@@ -24,11 +24,13 @@ public class AssignmentController {
 	public String getAssignStudentsPage(Model model, @PathVariable String quizId) {
 		navbarService.activateNavbarTab(Page.MY_QUIZZES, model);
 		var quiz = quizService.getQuizById(quizId);
+		var superuser = superuserService.getSuperuserById(quiz.getSuperuserId());
 		model.addAttribute("studentList", studentService.getAllStudentsNotAssignedByQuiz(quizId));
 		model.addAttribute("assignedStudents", assignmentService.getAssignedStudentsOfQuiz(quizId));
 		model.addAttribute("quiz", quiz);
 		model.addAttribute("superuserId", quiz.getSuperuserId());
-		model.addAttribute("name", superuserService.getSuperuserById(quiz.getSuperuserId()).getName());
+		model.addAttribute("isProfessor", "PROFESSOR".equals(superuser.getType()));
+		model.addAttribute("name", superuser.getName());
 
 		return "assign-students";
 	}
