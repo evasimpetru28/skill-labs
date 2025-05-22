@@ -4,6 +4,7 @@ import com.example.professor.dto.QuizDto;
 import com.example.professor.entity.Quiz;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -82,4 +83,25 @@ public interface QuizRepository extends JpaRepository<Quiz, String> {
 	WHERE q.superuserId = :superuserId
 	""")
 	List<Quiz> findBySuperuserIdAndHasAssignments(String superuserId);
+
+	@Query(value = """
+	SELECT Q.NAME
+	FROM quiz Q
+	JOIN assignment A ON A.quiz_id = Q.id
+	WHERE A.score IS NOT NULL
+	AND Q.superuser_id = :superuserId
+	GROUP BY Q.ID, Q.name
+	ORDER BY COUNT(A.ID) DESC
+	LIMIT 1
+	""", nativeQuery = true)
+	String getQuizNameWithMaxAssignmentsBySuperuserId(String superuserId);
+
+	@Query(value = """
+	SELECT ROUND(COUNT(CASE WHEN A.score IS NOT NULL THEN A.ID END) * 1.0 / COUNT(A.ID) * 100, 2)
+	FROM quiz Q
+	JOIN assignment A ON A.quiz_id = Q.id
+	WHERE Q.superuser_id = :superuserId
+	""", nativeQuery = true)
+	double getPercentageOfCompletionQuizzesBySuperuserId(String superuserId);
+
 }

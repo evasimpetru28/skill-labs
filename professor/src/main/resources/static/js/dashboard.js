@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         console.log('Fetching dashboard data...');
         const superuserId = document.querySelector('main').dataset.superuserId;
-        console.log('Superuser ID:', superuserId);
 
         fetch(`/api/dashboard/stats/${superuserId}`)
             .then(response => response.json())
@@ -19,10 +18,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('totalQuizzes').textContent = quizStats.totalQuizzes || 0;
                 document.getElementById('myQuizzesAvgScore').textContent = quizStats.myQuizzesAvgScore + '%' || 0;
                 document.getElementById('publicQuizzesAvgScore').textContent = quizStats.publicQuizzesAvgScore + '%' || 0;
+                document.getElementById('uniqueQuizParticipants').textContent = quizStats.uniqueQuizParticipants || 0;
+                document.getElementById('mostAttemptedQuiz').textContent = quizStats.mostAttemptedQuiz || '-';
 
                 // Update completion rate
-                const completionRate = quizStats.completionRate || 0;
-                document.getElementById('completionRate').textContent = `${completionRate}%`;
+                const completionRate = skillStats.completionRate || 0;
+                console.log(completionRate)
+                document.getElementById('completionRate').textContent = completionRate + '%';
                 document.getElementById('completionRateProgress').style.width = `${completionRate}%`;
                 document.getElementById('completionRateProgress').setAttribute('aria-valuenow', completionRate);
                 document.getElementById('completedQuizzesStudents').textContent = quizStats.completedQuizzesStudents || 0;
@@ -35,13 +37,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('highPerformersProgress').setAttribute('aria-valuenow', highPerformersPercentage);
                 document.getElementById('highPerformersCount').textContent = skillStats.highPerformersCount || 0;
                 document.getElementById('totalStudents').textContent = skillStats.totalStudents || 0;
-
-                // Update engagement statistics
-                const engagementRate = skillStats.engagementRate || 0;
-                document.getElementById('studentEngagement').textContent = `${engagementRate}%`;
-                document.getElementById('engagementProgress').style.width = `${engagementRate}%`;
-                document.getElementById('engagementProgress').setAttribute('aria-valuenow', engagementRate);
-                document.getElementById('highlyEngagedCount').textContent = skillStats.highlyEngagedCount || 0;
 
                 // Update skill mastery statistics
                 const skillMasteryPercentage = skillStats.skillMasteryPercentage || 0;

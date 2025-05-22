@@ -111,7 +111,9 @@ public class DashboardController {
 		
 		double publicAvgScore = totalPublicSubmissions == 0 ? 0 : totalPublicScore / totalPublicSubmissions;
 		quizStats.put("publicQuizzesAvgScore", Math.round(publicAvgScore * 100.0) / 100.0);
-		
+		quizStats.put("uniqueQuizParticipants", quizService.getNumberOfUniqueParticipantsForQuizCreatedBYSuperuser(superuserId));
+		quizStats.put("mostAttemptedQuiz", quizService.getMostAttemptedQuizNameCreatedBySuperuser(superuserId));
+
 		// Get skills statistics
 		var bookmarkedSkills = categoryService.getAllBookmarkedCategoriesAndSkills(superuserId);
 		int totalBookmarkedSkills = bookmarkedSkills.stream()
@@ -146,6 +148,7 @@ public class DashboardController {
 			(double) studentsWithHighScores / totalStudents * 100;
 		
 		skillStats.put("totalStudents", totalStudents);
+		skillStats.put("completionRate", quizService.getQuizCompletionRate(superuserId));
 		skillStats.put("highPerformersCount", studentsWithHighScores);
 		skillStats.put("highPerformersPercentage", Math.round(highPerformersPercentage * 100.0) / 100.0);
 		
@@ -188,10 +191,7 @@ public class DashboardController {
 		
 		double engagementRate = totalStudents == 0 ? 0 : 
 			(double) highlyEngagedCount / totalStudents * 100;
-		
-		skillStats.put("highlyEngagedCount", highlyEngagedCount);
-		skillStats.put("engagementRate", Math.round(engagementRate * 100.0) / 100.0);
-		
+
 		// Calculate skill mastery metrics
 		Map<String, Map<String, Double>> studentSkillLevels = new HashMap<>();
 		Map<String, Integer> studentTotalSkills = new HashMap<>();

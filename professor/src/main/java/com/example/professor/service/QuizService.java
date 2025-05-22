@@ -2,10 +2,7 @@ package com.example.professor.service;
 
 import com.example.professor.entity.Quiz;
 import com.example.professor.dto.QuizDto;
-import com.example.professor.repository.CategoryRepository;
-import com.example.professor.repository.QuizRepository;
-import com.example.professor.repository.SkillRepository;
-import com.example.professor.repository.SuperuserRepository;
+import com.example.professor.repository.*;
 import com.example.professor.util.Utils;
 
 import jakarta.servlet.http.PushBuilder;
@@ -23,6 +20,7 @@ public class QuizService {
 
 	final QuizRepository quizRepository;
 	final SkillRepository skillRepository;
+	final StudentRepository studentRepository;
 	final CategoryRepository categoryRepository;
 	final SuperuserRepository superuserRepository;
 
@@ -145,6 +143,18 @@ public class QuizService {
 
 	public List<QuizDto> getQuizListBySkillId(String skillId, String superuserId) {
 		return quizRepository.findQuizDtoBySkillId(skillId, superuserId);
+	}
+
+	public long getNumberOfUniqueParticipantsForQuizCreatedBYSuperuser(String superuserId) {
+		return studentRepository.countByAssignmentsForQuizzesCreatedBySuperuserId(superuserId);
+	}
+
+	public String getMostAttemptedQuizNameCreatedBySuperuser(String superuserId) {
+		return quizRepository.getQuizNameWithMaxAssignmentsBySuperuserId(superuserId);
+	}
+
+	public double getQuizCompletionRate(String superuserId) {
+		return quizRepository.getPercentageOfCompletionQuizzesBySuperuserId(superuserId);
 	}
 
 }

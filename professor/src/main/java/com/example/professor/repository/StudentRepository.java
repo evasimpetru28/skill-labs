@@ -31,4 +31,13 @@ public interface StudentRepository extends JpaRepository<Student, String> {
 	ORDER BY s.name
 	""")
 	List<StudentSelfEvaluationDto> findStudentSelfEvaluationDtoBySkillId(String skillId);
+
+	@Query(value = """
+	select count(s.student_id)
+	FROM (SELECT distinct a.student_id
+			FROM Assignment a
+			JOIN Quiz q on a.quiz_id = q.id
+			WHERE q.superuser_id = :superuserId) s
+	""", nativeQuery = true)
+	long countByAssignmentsForQuizzesCreatedBySuperuserId(String superuserId);
 }
