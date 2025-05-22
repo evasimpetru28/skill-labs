@@ -8,6 +8,7 @@ import com.example.professor.repository.SkillRepository;
 import com.example.professor.repository.SuperuserRepository;
 import com.example.professor.util.Utils;
 
+import jakarta.servlet.http.PushBuilder;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +36,10 @@ public class QuizService {
 
 	public QuizDto getQuizDetailsById(String quizId) {
 		return quizRepository.getQuizDtoById(quizId);
+	}
+
+	public long getMyQuizNumber(String superuserId) {
+		return quizRepository.countBySuperuserId(superuserId);
 	}
 
 	public List<QuizDto> getDraftedQuizzesBySuperuserId(String superuserId) {
@@ -86,6 +91,10 @@ public class QuizService {
 						quiz.getIsExpired()
 				))
 				.toList();
+	}
+
+	public List<Quiz> getQuizzesWithAssignmentsForSuperuserId(String superuserId) {
+		return quizRepository.findBySuperuserIdAndHasAssignments(superuserId);
 	}
 
 	public List<QuizDto> getExpiredQuizzesBySuperuserId(String superuserId) {

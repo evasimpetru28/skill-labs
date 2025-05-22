@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         console.log('Fetching dashboard data...');
         const superuserId = document.querySelector('main').dataset.superuserId;
+        console.log('Superuser ID:', superuserId);
 
         fetch(`/api/dashboard/stats/${superuserId}`)
             .then(response => response.json())
@@ -16,8 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Update quiz statistics
                 document.getElementById('totalQuizzes').textContent = quizStats.totalQuizzes || 0;
-                document.getElementById('myQuizzesAvgScore').textContent = quizStats.myQuizzesAvgScore || 0;
-                document.getElementById('publicQuizzesAvgScore').textContent = quizStats.publicQuizzesAvgScore || 0;
+                document.getElementById('myQuizzesAvgScore').textContent = quizStats.myQuizzesAvgScore + '%' || 0;
+                document.getElementById('publicQuizzesAvgScore').textContent = quizStats.publicQuizzesAvgScore + '%' || 0;
 
                 // Update completion rate
                 const completionRate = quizStats.completionRate || 0;

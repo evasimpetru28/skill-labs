@@ -72,4 +72,14 @@ public interface QuizRepository extends JpaRepository<Quiz, String> {
 	WHERE q.id = :id
 	""")
 	QuizDto getQuizDtoById(String id);
+
+	long countBySuperuserId(String superuserId);
+
+	@Query("""
+	SELECT DISTINCT q
+	FROM Quiz q
+	JOIN Assignment a ON q.id = a.quizId
+	WHERE q.superuserId = :superuserId
+	""")
+	List<Quiz> findBySuperuserIdAndHasAssignments(String superuserId);
 }

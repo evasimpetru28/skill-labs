@@ -47,12 +47,11 @@ public class DashboardController {
 		Map<String, Object> stats = new HashMap<>();
 		
 		// Get all assigned quizzes
-		var assignedQuizzes = quizService.getAssignedQuizzesBySuperuserId(superuserId);
-		var expiredQuizzes = quizService.getExpiredQuizzesBySuperuserId(superuserId);
-		
+		var quizzesWithAssignations = quizService.getQuizzesWithAssignmentsForSuperuserId(superuserId);
+
 		// Quiz Statistics
 		Map<String, Object> quizStats = new HashMap<>();
-		quizStats.put("totalQuizzes", assignedQuizzes.size() + expiredQuizzes.size());
+		quizStats.put("totalQuizzes", quizService.getMyQuizNumber(superuserId));
 		
 		// Calculate average scores for personal quizzes
 		double totalPersonalScore = 0;
@@ -73,22 +72,20 @@ public class DashboardController {
 		}
 		
 		// Process personal quizzes
-		for (var quiz : assignedQuizzes) {
+		for (var quiz : quizzesWithAssignations) {
 			var submissions = assignmentService.getStudentInfoByQuizSubmitted(quiz.getId());
 			
 			for (var submission : submissions) {
-				if (submission.getScore() != null) {
-					totalPersonalScore += submission.getScore();
-					totalPersonalSubmissions++;
-					
-					// Add to score distribution
-					int bucket = Math.min((int) (submission.getScore() / 20), 4);
-					scoreDistribution[bucket]++;
-					
-					// Add to monthly completions
-					String monthKey = now.format(monthFormatter);
-					monthlyCompletions.put(monthKey, monthlyCompletions.getOrDefault(monthKey, 0) + 1);
-				}
+				totalPersonalScore += submission.getScore();
+				totalPersonalSubmissions++;
+
+				// Add to score distribution
+				int bucket = Math.min((submission.getScore() / 20), 4);
+				scoreDistribution[bucket]++;
+
+				// Add to monthly completions
+				String monthKey = now.format(monthFormatter);
+				monthlyCompletions.put(monthKey, monthlyCompletions.getOrDefault(monthKey, 0) + 1);
 			}
 		}
 		
@@ -131,7 +128,7 @@ public class DashboardController {
 		Set<String> uniqueStudents = new HashSet<>();
 		Set<String> highPerformingStudents = new HashSet<>();
 		
-		for (var quiz : assignedQuizzes) {
+		for (var quiz : quizzesWithAssignations) {
 			var submissions = assignmentService.getStudentInfoByQuizSubmitted(quiz.getId());
 			for (var submission : submissions) {
 				String studentId = submission.getStudentId();
@@ -156,7 +153,7 @@ public class DashboardController {
 		Map<String, Integer> studentActivity = new HashMap<>();
 		
 		// Count quiz participations
-		for (var quiz : assignedQuizzes) {
+		for (var quiz : quizzesWithAssignations) {
 			var submissions = assignmentService.getStudentInfoByQuizSubmitted(quiz.getId());
 			for (var submission : submissions) {
 				String studentId = submission.getStudentId();
@@ -176,7 +173,7 @@ public class DashboardController {
 		
 		// Calculate engagement levels
 		int highlyEngagedCount = 0;
-		int totalActivities = assignedQuizzes.size() + categoryService.getAllCategoriesAndSkills(superuserId)
+		int totalActivities = quizzesWithAssignations.size() + categoryService.getAllCategoriesAndSkills(superuserId)
 				.stream()
 				.mapToInt(category -> category.getSkills().size())
 				.sum();
