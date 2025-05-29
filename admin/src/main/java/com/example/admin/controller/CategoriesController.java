@@ -69,7 +69,6 @@ public class CategoriesController {
 			Workbook workbook = WorkbookFactory.create(file.getInputStream());
 			Sheet sheet = workbook.getSheetAt(0);
 
-			List<Category> categories = new ArrayList<>();
 			boolean isFirstRow = true;
 
 			for (Row row : sheet) {
@@ -89,13 +88,12 @@ public class CategoriesController {
 						Category category = new Category();
 						category.setName(name);
 						category.setDescription(description);
-						categories.add(category);
+						categoryService.saveCategory(category);
 					}
 				}
 			}
 
 			workbook.close();
-			categories.forEach(categoryService::saveCategory);
 
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -69,7 +69,6 @@ public class SkillsController {
 			Workbook workbook = WorkbookFactory.create(file.getInputStream());
 			Sheet sheet = workbook.getSheetAt(0);
 
-			List<Skill> skills = new ArrayList<>();
 			boolean isFirstRow = true;
 
 			for (Row row : sheet) {
@@ -94,13 +93,12 @@ public class SkillsController {
 						skill.setName(name);
 						skill.setCategoryId(category.getId());
 						skill.setDescription(description);
-						skills.add(skill);
+						skillService.saveSkill(skill);
 					}
 				}
 			}
 
 			workbook.close();
-			skills.forEach(skillService::saveSkill);
 
 		} catch (IOException e) {
 			e.printStackTrace();
