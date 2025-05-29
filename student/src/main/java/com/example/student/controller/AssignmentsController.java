@@ -37,6 +37,7 @@ public class AssignmentsController {
 		model.addAttribute("studentId", studentId);
 		model.addAttribute("name", studentService.getStudentById(studentId).getName());
 		model.addAttribute("quiz", quizService.getQuizById(quizId));
+		model.addAttribute("skillLabel", quizService.getQuizSkillLabel(quizId));
 		model.addAttribute("score", assignmentService.getAssignmentByStudentAndQuiz(studentId, quizId).getScore());
 		model.addAttribute("questionMap", questionService.getQuestionMap(quizId, studentId));
 		model.addAttribute("reviewMode", false);
@@ -86,6 +87,7 @@ public class AssignmentsController {
 		model.addAttribute("studentId", studentId);
 		model.addAttribute("name", studentService.getStudentById(studentId).getName());
 		model.addAttribute("quiz", quizService.getQuizById(quizId));
+		model.addAttribute("skillLabel", quizService.getQuizSkillLabel(quizId));
 		model.addAttribute("score", assignmentService.getAssignmentByStudentAndQuiz(studentId, quizId).getScore());
 		model.addAttribute("questionMap", questionService.getQuestionMap(quizId, studentId));
 		model.addAttribute("reviewMode", true);

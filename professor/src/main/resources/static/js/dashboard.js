@@ -28,30 +28,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('completionRateProgress').style.width = `${completionRate}%`;
                 document.getElementById('completionRateProgress').setAttribute('aria-valuenow', completionRate);
                 document.getElementById('completedQuizzesStudents').textContent = quizStats.completedQuizzesStudents || 0;
-                document.getElementById('totalCompletionStudents').textContent = skillStats.totalStudents || 0;
+                document.getElementById('totalCompletionStudents').textContent = skillStats.completionTotalStudents || 0;
 
                 // Update high performers statistics
                 const highPerformersPercentage = skillStats.highPerformersPercentage || 0;
+                const skillEvalRate = skillStats.skillEvalRate || 0;
+                document.getElementById('skillEvalRate').textContent = (skillEvalRate || 0) + '%'
+                document.getElementById('skillEvalRateCount').textContent = skillStats.skillEvalRateCount || 0
+                document.getElementById('skillEvalRateTotal').textContent = quizStats.uniqueQuizParticipants || 0
+                document.getElementById('skillEvalRateProgress').style.width = `${skillEvalRate}%`;
+                document.getElementById('skillEvalRateProgress').setAttribute('aria-valuenow', skillEvalRate);
                 document.getElementById('highPerformers').textContent = `${highPerformersPercentage}%`;
                 document.getElementById('highPerformersProgress').style.width = `${highPerformersPercentage}%`;
                 document.getElementById('highPerformersProgress').setAttribute('aria-valuenow', highPerformersPercentage);
                 document.getElementById('highPerformersCount').textContent = skillStats.highPerformersCount || 0;
                 document.getElementById('totalStudents').textContent = skillStats.totalStudents || 0;
 
-                // Update skill mastery statistics
-                const skillMasteryPercentage = skillStats.skillMasteryPercentage || 0;
-                document.getElementById('skillMastery').textContent = `${skillMasteryPercentage}%`;
-                document.getElementById('masteryProgress').style.width = `${skillMasteryPercentage}%`;
-                document.getElementById('masteryProgress').setAttribute('aria-valuenow', skillMasteryPercentage);
-                document.getElementById('masteredSkillsCount').textContent = skillStats.masteredSkillsCount || 0;
-
                 // Update mastery level distribution
                 const beginnerCount = skillStats.beginnerCount || 0;
                 const intermediateCount = skillStats.intermediateCount || 0;
                 const advancedCount = skillStats.advancedCount || 0;
                 const totalEvaluations = beginnerCount + intermediateCount + advancedCount;
-
                 const beginnerPercentage = totalEvaluations > 0 ? (beginnerCount / totalEvaluations) * 100 : 0;
+
                 const intermediatePercentage = totalEvaluations > 0 ? (intermediateCount / totalEvaluations) * 100 : 0;
                 const advancedPercentage = totalEvaluations > 0 ? (advancedCount / totalEvaluations) * 100 : 0;
 

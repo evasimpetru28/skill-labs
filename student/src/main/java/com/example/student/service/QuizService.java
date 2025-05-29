@@ -2,7 +2,9 @@ package com.example.student.service;
 
 import com.example.student.entity.Quiz;
 import com.example.student.model.QuizModel;
+import com.example.student.repository.CategoryRepository;
 import com.example.student.repository.QuizRepository;
+import com.example.student.repository.SkillRepository;
 import com.example.student.util.Utils;
 
 import lombok.AllArgsConstructor;
@@ -18,9 +20,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class QuizService {
 
 	final QuizRepository quizRepository;
+	private final SkillRepository skillRepository;
+	private final CategoryRepository categoryRepository;
 
 	public Quiz getQuizById(String quizId) {
 		return quizRepository.getReferenceById(quizId);
+	}
+
+	public String getQuizSkillLabel(String quizId) {
+		var quiz = quizRepository.getReferenceById(quizId);
+		var skill = skillRepository.getReferenceById(quiz.getSkillId());
+		var category = categoryRepository.getReferenceById(skill.getCategoryId());
+		return skill.getName() + " (" + category.getName() + ")";
 	}
 
 	public List<QuizModel> getQuizzesAssignedForStudent(String studentId) {
@@ -42,6 +53,7 @@ public class QuizService {
 					quizModel.setSuperuserId(quizInterface.getSuperuserId());
 					quizModel.setSuperuserName(quizInterface.getSuperuserName());
 					quizModel.setStudentId(quizInterface.getStudentId());
+					quizModel.setSkillLabel(quizInterface.getSkillName() + " (" + quizInterface.getCategoryName() + ")");
 					quizModel.setScore(quizInterface.getScore());
 					quizModel.setStatus(quizInterface.getIsExpired() ? "EXPIRED" : "ACTIVE");
 					quizModel.setIsExpired(quizInterface.getIsExpired());

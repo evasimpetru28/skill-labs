@@ -20,11 +20,15 @@ public interface QuizRepository extends JpaRepository<Quiz, String> {
 		   a.studentId   as studentId,
 		   a.score       as score,
 		   q.status 	 as status,
-		   q.isExpired   as isExpired
+		   q.isExpired   as isExpired,
+		   sk.name 		 as skillName,
+		   c.name 		 as categoryName
 	from Assignment a
 			 join Quiz q on a.quizId = q.id
 			 join Student s on a.studentId = s.id
 			 join Superuser s2 on q.superuserId = s2.id
+	join Skill sk on sk.id = q.skillId
+	join Category c on c.id = sk.categoryId
 	where a.studentId = :studentId
 	and q.isReady = true
 	order by a.createdAt desc

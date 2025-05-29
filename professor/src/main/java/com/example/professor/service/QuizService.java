@@ -1,5 +1,6 @@
 package com.example.professor.service;
 
+import com.example.professor.dto.QuizCompletionInfoDto;
 import com.example.professor.entity.Quiz;
 import com.example.professor.dto.QuizDto;
 import com.example.professor.repository.*;
@@ -153,8 +154,12 @@ public class QuizService {
 		return quizRepository.getQuizNameWithMaxAssignmentsBySuperuserId(superuserId);
 	}
 
-	public double getQuizCompletionRate(String superuserId) {
+	public QuizCompletionInfoDto getQuizCompletionRate(String superuserId) {
 		return quizRepository.getPercentageOfCompletionQuizzesBySuperuserId(superuserId);
+	}
+
+	public long getUniqueQuizParticipantsNumberWhoEvaluatedTheSkill(String superuserId) {
+		return quizRepository.countUniqueStudentsQuizSubmissionsWithEvaluatedSkill(superuserId);
 	}
 
 }

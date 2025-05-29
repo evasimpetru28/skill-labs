@@ -16,8 +16,21 @@ import java.util.concurrent.atomic.AtomicInteger;
 @AllArgsConstructor
 public class ResponseService {
 
-	final ResponseRepository responseRepository;
 	final OptionRepository optionRepository;
+	final ResponseRepository responseRepository;
+
+	public Integer calculateScore(List<String> questionIdList, String studentId) {
+		AtomicInteger score = new AtomicInteger(0);
+		questionIdList.forEach(questionId -> {
+			var correctOptions = optionRepository.findAllByQuestionIdAndIsCorrectEqualsTrue(questionId);
+			var selectedOptions = responseRepository.getSelectedOptionsByStudentIdAndQuestionId(studentId, questionId);
+
+			if (correctOptions.equals(selectedOptions)) {
+				score.getAndIncrement();
+			}
+		});
+		return 100 * score.get() / questionIdList.size();
+	}
 
 	public Response getResponseById(String responseId) {
 		return responseRepository.getReferenceById(responseId);
@@ -39,16 +52,4 @@ public class ResponseService {
 		return responseRepository.getAnsweredQuestionsByStudentIdAndQuestionIdInList(studentId, questionIdList).size();
 	}
 
-	public Integer calculateScore(List<String> questionIdList, String studentId) {
-		AtomicInteger score = new AtomicInteger(0);
-		questionIdList.forEach(questionId -> {
-			var correctOptions = optionRepository.findAllByQuestionIdAndIsCorrectEqualsTrue(questionId);
-			var selectedOptions = responseRepository.getSelectedOptionsByStudentIdAndQuestionId(studentId, questionId);
-
-			if (correctOptions.equals(selectedOptions)) {
-				score.getAndIncrement();
-			}
-		});
-		return 100 * score.get() / questionIdList.size();
-	}
 }

@@ -11,7 +11,6 @@ public class SkillStatisticsDto {
     private int quizCount;
     private double averageScore;
     
-    // Skill mastery distribution
     private int beginnerCount;
     private int intermediateCount;
     private int advancedCount;

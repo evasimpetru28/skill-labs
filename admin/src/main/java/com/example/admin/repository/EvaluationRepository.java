@@ -26,10 +26,10 @@ public interface EvaluationRepository extends JpaRepository<Evaluation, String> 
 	Integer countStudentsWithEvaluations();
 
 	@Query("""
-			SELECT CASE 
-				WHEN COUNT(DISTINCT e.studentId) = 0 THEN 0.0 
-				ELSE CAST(COUNT(e.id) AS double) / COUNT(DISTINCT e.studentId) 
-			END 
+			SELECT CASE
+				WHEN COUNT(DISTINCT e.studentId) = 0 THEN 0.0
+				ELSE CAST(COUNT(e.id) AS double) / COUNT(DISTINCT e.studentId)
+			END
 			FROM Evaluation e
 			""")
 	Double getAverageEvaluationsPerStudent();

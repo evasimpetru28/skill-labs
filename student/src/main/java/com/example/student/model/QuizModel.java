@@ -20,6 +20,7 @@ public class QuizModel {
 	String superuserId;
 	String superuserName;
 	String studentId;
+	String skillLabel;
 	Integer score;
 	String status;
 	Boolean isExpired;

@@ -4,6 +4,7 @@
   <tr>
     <th class="th-sm">Name</th>
     <th class="th-sm">Author</th>
+    <th class="th-sm">Skill</th>
     <th class="th-sm">Created at</th>
     <th class="th-sm">Status</th>
     <th class="th-sm">Score</th>
@@ -24,7 +25,8 @@
       {{/description}}
     </td>
     <td class="col-2">{{superuserName}}</td>
-    <td class="">{{createdAt}}</td>
+    <td class="col-2">{{skillLabel}}</td>
+    <td class="col-2">{{createdAt}}</td>
     <td class="col-1" {{#isExpired}}style="color: red;"{{/isExpired}} {{^isExpired}}style="color: green;"{{/isExpired}}><b>{{status}}</b></td>
     <td class="col-1">
       {{#score}}<b>{{score}}%</b>{{/score}}

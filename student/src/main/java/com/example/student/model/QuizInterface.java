@@ -14,4 +14,6 @@ public interface QuizInterface {
 	Integer getScore();
 	String getStatus();
 	Boolean getIsExpired();
+	String getSkillName();
+	String getCategoryName();
 }

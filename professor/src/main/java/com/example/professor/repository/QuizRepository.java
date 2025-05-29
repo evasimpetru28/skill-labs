@@ -1,5 +1,6 @@
 package com.example.professor.repository;
 
+import com.example.professor.dto.QuizCompletionInfoDto;
 import com.example.professor.dto.QuizDto;
 import com.example.professor.entity.Quiz;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -50,6 +51,16 @@ public interface QuizRepository extends JpaRepository<Quiz, String> {
 
 	List<Quiz> findBySkillId(String skillId);
 
+	@Query(value = """
+	SELECT new com.example.professor.dto.QuizCompletionInfoDto(CAST(ROUND(COUNT(CASE WHEN A.score IS NOT NULL THEN A.id END) * 1.0 / COUNT(A.id) * 100, 2) AS java.math.BigDecimal),
+	       COUNT(CASE WHEN A.score IS NOT NULL THEN A.id END),
+	       COUNT(A.id))
+	FROM Quiz Q
+	JOIN Assignment A ON A.quizId = Q.id
+	WHERE Q.superuserId = :superuserId
+	""")
+	QuizCompletionInfoDto getPercentageOfCompletionQuizzesBySuperuserId(String superuserId);
+
 	@Query("""
 	SELECT new com.example.professor.dto.QuizDto(q.id, 0, q.superuserId, s.name, q.name, q.description,
 	(CASE WHEN q.status = 'PUBLIC' THEN TRUE ELSE FALSE END), TO_CHAR(q.createdAt, 'DD.MM.YYYY (HH:mm)'), q.skillId, q.isExpired)
@@ -97,11 +108,14 @@ public interface QuizRepository extends JpaRepository<Quiz, String> {
 	String getQuizNameWithMaxAssignmentsBySuperuserId(String superuserId);
 
 	@Query(value = """
-	SELECT ROUND(COUNT(CASE WHEN A.score IS NOT NULL THEN A.ID END) * 1.0 / COUNT(A.ID) * 100, 2)
-	FROM quiz Q
-	JOIN assignment A ON A.quiz_id = Q.id
-	WHERE Q.superuser_id = :superuserId
+	SELECT COUNT(S.STUDENT_ID)
+	FROM (SELECT DISTINCT A.student_id
+		FROM assignment A
+		JOIN QUIZ Q ON Q.ID = A.quiz_id
+		JOIN EVALUATION E ON E.skill_id = Q.skill_id AND E.student_id = A.student_id
+		WHERE A.score IS NOT NULL
+		AND Q.superuser_id = :superuserId) S
 	""", nativeQuery = true)
-	double getPercentageOfCompletionQuizzesBySuperuserId(String superuserId);
+	long countUniqueStudentsQuizSubmissionsWithEvaluatedSkill(String superuserId);
 
 }
