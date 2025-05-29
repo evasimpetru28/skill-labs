@@ -226,10 +226,14 @@ public class DashboardController {
 		stats.put("skillStats", skillStats);
 		stats.put("monthlyStats", monthlyStats);
 
-
 		var submittedAssignmentsAndSkillEvaluatedCount = quizService.getUniqueQuizParticipantsNumberWhoEvaluatedTheSkill(superuserId);
 		skillStats.put("skillEvalRate", uniqueQuizParticipants == 0 ? 0 : Math.round(submittedAssignmentsAndSkillEvaluatedCount * 10000.0 / uniqueQuizParticipants) / 100.0);
 		skillStats.put("skillEvalRateCount", submittedAssignmentsAndSkillEvaluatedCount);
+
+		var quizSkillAlignment = quizService.getQuizSkillAlignment(superuserId);
+		skillStats.put("quizSkillAlignment", quizSkillAlignment.getQuizSkillAlignment());
+		skillStats.put("quizSkillAlignmentCount", quizSkillAlignment.getQuizSkillAlignmentCount());
+		skillStats.put("quizSkillAlignmentTotal", quizSkillAlignment.getQuizSkillAlignmentTotal());
 
 		return stats;
 	}

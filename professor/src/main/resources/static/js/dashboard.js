@@ -23,12 +23,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Update completion rate
                 const completionRate = skillStats.completionRate || 0;
-                console.log(completionRate)
                 document.getElementById('completionRate').textContent = completionRate + '%';
                 document.getElementById('completionRateProgress').style.width = `${completionRate}%`;
                 document.getElementById('completionRateProgress').setAttribute('aria-valuenow', completionRate);
                 document.getElementById('completedQuizzesStudents').textContent = quizStats.completedQuizzesStudents || 0;
                 document.getElementById('totalCompletionStudents').textContent = skillStats.completionTotalStudents || 0;
+
+                // Update quiz-skill alignment
+                const quizSkillAlignment = skillStats.quizSkillAlignment || 0;
+                document.getElementById('quizSkillAlignment').textContent = quizSkillAlignment + '%';
+                document.getElementById('quizSkillAlignmentProgress').style.width = `${quizSkillAlignment}%`;
+                document.getElementById('quizSkillAlignmentProgress').setAttribute('aria-valuenow', quizSkillAlignment);
+                document.getElementById('quizSkillAlignmentCount').textContent = quizStats.completedQuizzesStudents || 0;
+                document.getElementById('quizSkillAlignmentTotal').textContent = skillStats.completionTotalStudents || 0;
 
                 // Update high performers statistics
                 const highPerformersPercentage = skillStats.highPerformersPercentage || 0;

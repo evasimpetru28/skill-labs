@@ -2,6 +2,7 @@ package com.example.professor.repository;
 
 import com.example.professor.dto.QuizCompletionInfoDto;
 import com.example.professor.dto.QuizDto;
+import com.example.professor.dto.QuizSkillAlignmentDto;
 import com.example.professor.entity.Quiz;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -118,4 +119,15 @@ public interface QuizRepository extends JpaRepository<Quiz, String> {
 	""", nativeQuery = true)
 	long countUniqueStudentsQuizSubmissionsWithEvaluatedSkill(String superuserId);
 
+	@Query(value = """
+	SELECT new com.example.professor.dto.QuizSkillAlignmentDto(CAST(ROUND(COUNT(CASE WHEN (ABS(A.score - E.knowledge * 10) <= 10) THEN A.id END) * 1.0 / COUNT(A.id) * 100, 2) AS java.math.BigDecimal),
+	       COUNT(CASE WHEN (ABS(A.score - E.knowledge * 10) <= 10) THEN A.id END),
+	       COUNT(A.id))
+	FROM Quiz Q
+	JOIN Assignment A ON A.quizId = Q.id
+	JOIN Evaluation E ON E.skillId = Q.skillId and E.studentId = A.studentId
+	WHERE Q.superuserId = :superuserId
+	AND A.score IS NOT NULL
+	""")
+	QuizSkillAlignmentDto getQuizSkillAlignmentDto(String superuserId);
 }

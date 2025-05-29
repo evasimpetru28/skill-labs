@@ -1,6 +1,7 @@
 package com.example.professor.service;
 
 import com.example.professor.dto.QuizCompletionInfoDto;
+import com.example.professor.dto.QuizSkillAlignmentDto;
 import com.example.professor.entity.Quiz;
 import com.example.professor.dto.QuizDto;
 import com.example.professor.repository.*;
@@ -162,4 +163,7 @@ public class QuizService {
 		return quizRepository.countUniqueStudentsQuizSubmissionsWithEvaluatedSkill(superuserId);
 	}
 
+	public QuizSkillAlignmentDto getQuizSkillAlignment(String superuserId) {
+		return quizRepository.getQuizSkillAlignmentDto(superuserId);
+	}
 }
